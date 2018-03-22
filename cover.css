@@ -151,6 +151,7 @@ body {
   }
   /* Start the vertical centering */
   .site-wrapper-inner {
+    padding-top: 0.25em;
     vertical-align: middle;
   }
   /* Handle the widths */
