@@ -1,6 +1,0 @@
-baseURL = 'https://alexfinnarn.github.io/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
-
-# This is where GH peeps...
-publishDir = 'docs'
