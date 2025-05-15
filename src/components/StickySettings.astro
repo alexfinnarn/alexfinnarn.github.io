@@ -1,0 +1,285 @@
+---
+// src/components/StickySettings.astro
+---
+<div class="settings-widget">
+  <button class="settings-trigger" aria-label="Open Settings" aria-controls="settings-panel" aria-expanded="false">
+    <!-- Or use an icon instead of text -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.94 8.81c-.11.2-.06.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.41.48.41h3.84c.24 0 .43-.17.47.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.11-.2.06-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+  </button>
+  <div class="settings-panel surface" id="settings-panel" role="region" aria-labelledby="settings-title">
+    <h2 id="settings-title">Settings</h2>
+    <button class="close-button" aria-label="Close Settings">&times;</button>
+    <form id="settings-form">
+      <p>Your settings form goes here.</p>
+      <div>
+        <label for="theme">Theme:</label>
+        <select id="theme" name="theme">
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      {/* Add more settings fields */}
+    </form>
+  </div>
+  <div class="settings-overlay"></div>
+</div>
+
+<style>
+  .settings-widget {
+    svg {
+      width: var(--size-7);
+      height: var(--size-7);
+      vertical-align: middle;
+      margin-inline-end: var(--size-1);
+    }
+  }
+
+  .settings-trigger {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) rotate(270deg); /* Rotate text vertically */
+    transform-origin: bottom right; /* Adjust origin for rotation */
+    z-index: 1001; /* Ensure it's above the panel */
+    padding: var(--size-2) var(--size-3);
+    /* Use existing button styles or define new ones */
+    cursor: pointer;
+    border-radius: var(--radius-2) var(--radius-2) 0 0; /* Rounded top corners */
+    border: 1px solid var(--clr-fg-1);
+    border-bottom: none; /* Remove bottom border */
+    background-color: var(--clr-accent);
+    color: var(--clr-bg-1);
+    font-size: var(--font-size-2);
+    white-space: nowrap; /* Prevent text wrapping */
+
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out; /* Match panel transition duration */
+    pointer-events: auto;
+  }
+
+  .settings-trigger.is-hidden {
+    opacity: 0;
+    pointer-events: none; /* Prevent clicks when hidden */
+  }
+
+  .settings-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(80vw, 400px); /* Adjust width, responsive */
+    max-width: 400px; /* Max width */
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: var(--shadow-5);
+    padding: var(--size-5);
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    border-inline-start: 1px solid var(--clr-fg-2); /* Subtle border */
+
+    /* Inherit background from global styles via .surface class */
+    /* background-color: var(--clr-bg-1); defined by .surface class */
+    color: var(--clr-fg-1);
+  }
+
+  .settings-panel.is-open {
+    transform: translateX(0);
+  }
+
+  .settings-panel h2 {
+    margin-block-start: 0;
+    margin-block-end: var(--size-5);
+  }
+
+  .close-button {
+    position: absolute;
+    top: var(--size-3);
+    right: var(--size-3);
+    background: none;
+    border: none;
+    font-size: var(--font-size-5);
+    cursor: pointer;
+    color: var(--clr-fg-1);
+    padding: var(--size-1);
+    line-height: 1;
+  }
+
+  /* Simple form styling example */
+  .settings-panel form div {
+    margin-block-end: var(--size-4);
+  }
+
+  .settings-panel label {
+    display: block;
+    margin-block-end: var(--size-1);
+    font-weight: var(--font-weight-6);
+  }
+
+  .settings-panel select,
+  .settings-panel input {
+    width: 100%;
+    padding: var(--size-2);
+    border: 1px solid var(--clr-fg-2);
+    background-color: var(--clr-bg-2);
+    color: var(--clr-fg-1);
+    border-radius: var(--radius-1);
+  }
+
+  /* Optional: Overlay for background */
+  .settings-overlay {
+    position: fixed;
+    inset: 0;
+    //background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    // Disable blur for now.
+    // backdrop-filter: blur(4px);
+    // -webkit-backdrop-filter: blur(4px);
+  }
+  .settings-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+</style>
+
+<script>
+  // Client-side script to toggle the panel
+  const trigger = document.querySelector('.settings-trigger');
+  const panel = document.querySelector('.settings-panel');
+  const closeButton = panel?.querySelector('.close-button');
+  const overlay = document.querySelector('.settings-overlay');
+  const settingsForm = document.getElementById('settings-form') as HTMLFormElement;
+
+  // Storage key for settings
+  const STORAGE_KEY = 'site-settings';
+
+  // Function to load settings from localStorage
+  function loadSettings() {
+    try {
+      const savedSettings = localStorage.getItem(STORAGE_KEY);
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+
+        // Apply saved values to form elements
+        Object.entries(settings).forEach(([key, value]) => {
+          const element = settingsForm?.elements.namedItem(key) as HTMLInputElement | HTMLSelectElement;
+          if (element) {
+            element.value = value as string;
+          }
+        });
+
+        // Apply settings to the page
+        applySettings(settings);
+      }
+    } catch (error) {
+      console.error('Error loading settings:', error);
+    }
+  }
+
+  // Function to save settings to localStorage
+  function saveSettings(event?: Event) {
+    if (!settingsForm) return;
+
+    // Get form data as an object
+    const formData = new FormData(settingsForm);
+    const settings: Record<string, string> = {};
+
+    formData.forEach((value, key) => {
+      settings[key] = value.toString();
+    });
+
+    // Save to localStorage
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+      // Apply settings to the page
+      applySettings(settings);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    }
+  }
+
+  // Function to apply settings to the page (CSS variables, class names, etc.)
+  function applySettings(settings: Record<string, string>) {
+    // Apply theme setting
+    if (settings.theme) {
+      // Remove existing theme attribute
+      document.documentElement.removeAttribute('data-color-scheme');
+
+      // Apply the selected theme, unless it's 'system'
+      if (settings.theme !== 'system') {
+        document.documentElement.setAttribute('data-color-scheme', settings.theme);
+      }
+    }
+
+    // Add more settings application logic here as needed
+    // For example, you could apply custom colors, fonts, etc.
+  }
+
+  // Single function to toggle panel state
+  function togglePanel(shouldOpen?: boolean) {
+    if (shouldOpen === undefined) {
+      shouldOpen = !panel?.classList.contains('is-open');
+    }
+
+    if (shouldOpen) {
+      panel?.classList.add('is-open');
+      trigger?.setAttribute('aria-expanded', 'true');
+      trigger?.classList.add('is-hidden');
+    } else {
+      panel?.classList.remove('is-open');
+      trigger?.setAttribute('aria-expanded', 'false');
+      trigger?.classList.remove('is-hidden');
+    }
+
+    // Add overlay handling
+    if (shouldOpen) {
+      overlay?.classList.add('is-visible');
+    } else {
+      overlay?.classList.remove('is-visible');
+    }
+  }
+
+  // Event Listeners
+  trigger?.addEventListener('click', () => togglePanel(!panel?.classList.contains('is-open')));
+  closeButton?.addEventListener('click', () => togglePanel(false));
+  overlay?.addEventListener('click', () => togglePanel(false));
+
+  // Add input/change event listeners to form fields for instant updates
+  if (settingsForm) {
+    const formElements = settingsForm.querySelectorAll('input, select');
+    formElements.forEach(element => {
+      element.addEventListener('change', saveSettings);
+      // For text inputs, we might want to use 'input' event too for real-time changes
+      if (element.tagName === 'INPUT' && element.type !== 'checkbox' && element.type !== 'radio') {
+        element.addEventListener('input', saveSettings);
+      }
+    });
+  }
+
+  // Close panel on 'Escape' key press
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && panel?.classList.contains('is-open')) {
+      togglePanel(false);
+    }
+  });
+
+  // Close panel if clicking outside it or the trigger button
+  document.addEventListener('click', (event) => {
+    if (!panel?.classList.contains('is-open')) return;
+
+    const isClickInsidePanel = panel?.contains(event.target as Node);
+    const isClickOnTrigger = trigger?.contains(event.target as Node);
+
+    if (!isClickInsidePanel && !isClickOnTrigger) {
+      togglePanel(false);
+    }
+  });
+
+  // Load settings when the page loads
+  document.addEventListener('DOMContentLoaded', loadSettings);
+</script>

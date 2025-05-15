@@ -1,0 +1,42 @@
+
+---
+
+interface Props {
+    date?: string;
+    stringFormat?: string;
+    className?: string;
+    prefix?: string;
+}
+
+const {
+    date,
+    stringFormat = "%d",
+    className = "",
+    prefix
+} = Astro.props;
+const showPrefix = Boolean(prefix);
+const formattedDate = (date: string | undefined, stringFormat: string): string => {
+    if (!date) return '';
+    try {
+        const dateObj = new Date(date);
+        if (isNaN(dateObj.getTime())) {
+            new Error('Invalid date');
+        }
+        return stringFormat.replace('%d', dateObj.toLocaleDateString());
+    } catch (error) {
+        console.error(`Error formatting date: ${error}`);
+        return '';
+    }
+};
+---
+
+<time datetime={date || ''} class={className}>
+    {showPrefix && <span class="date-prefix">{prefix}</span>}
+    {formattedDate(date, stringFormat)}
+</time>
+
+<style>
+    .date-prefix {
+        margin-right: 0.25rem;
+    }
+</style>

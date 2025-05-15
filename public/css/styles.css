@@ -1,0 +1,304 @@
+/* the props */
+@import "https://unpkg.com/open-props";
+
+/* optional imports that use the props */
+/*@import "https://unpkg.com/open-props/normalize.min.css";*/
+/*@import "https://unpkg.com/open-props/buttons.min.css";*/
+
+@view-transition {
+    navigation: auto;
+}
+
+@layer reset, vars, base, layout, components;
+
+@layer reset {
+    /* https://piccalil.li/blog/a-more-modern-css-reset/ */
+    /* https://website-from-scratch-1.netlify.app/lessons/setting-the-stage/resetting-our-css */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    /* Prevent font size inflation */
+    /* https://kilianvalkhof.com/2022/css-html/your-css-reset-needs-text-size-adjust-probably/ */
+    html {
+        -moz-text-size-adjust: none;
+        -webkit-text-size-adjust: none;
+        text-size-adjust: none;
+    }
+
+    /* Remove default margin in favour of better control in authored CSS */
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    figure,
+    blockquote,
+    dl,
+    dd {
+        /*margin: 0;*/
+        margin-block-end: 0;
+    }
+
+    /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+    /* https://www.scottohara.me/blog/2019/01/12/lists-and-safari.html */
+    ul[role="list"],
+    ol[role="list"] {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Set core body defaults */
+    body {
+        min-block-size: 100vh;
+        line-height: 1.5;
+    }
+
+    /* Set shorter line heights on headings and interactive elements */
+    h1,
+    h2,
+    h3,
+    h4,
+    button,
+    input,
+    label {
+        line-height: 1.1;
+    }
+
+    /* Balance text wrapping on headings */
+    h1,
+    h2,
+    h3,
+    h4 {
+        text-wrap: balance;
+    }
+
+    /* Prevent one-word orphan text on a line. */
+    p,
+    li {
+        text-wrap: pretty;
+        /* https://moderncss.dev/generating-font-size-css-rules-and-creating-a-fluid-type-scale/#preventing-text-overflow */
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    /* Always fill the available space. */
+    img,
+    picture {
+        max-inline-size: 100%;
+        display: block;
+    }
+
+    /* Inherit fonts for inputs and buttons */
+    input,
+    button,
+    textarea,
+    select {
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    /* A elements that don't have a class get default styles */
+    a:not([class]) {
+        text-decoration-skip-ink: auto;
+        color: currentColor;
+    }
+
+    /* Make sure textareas without a rows attribute are not tiny */
+    textarea:not([rows]) {
+        min-height: 10em;
+    }
+
+    /* Anything that has been anchored to should have extra scroll margin */
+    :target {
+        scroll-margin-block: 5ex;
+    }
+}
+
+@layer vars {
+    :root {
+        --font-base: var(--font-classical-humanist);
+
+        --size-content-4: 72ch;
+
+        /* Colors. */
+        /* https://12daysofweb.dev/2024/css-light-dark/ */
+        --clr-accent: light-dark(hsl(328, 100%, 54%), hsl(330, 100%, 71%));
+        --clr-bg-1: light-dark(hsl(0, 0%, 100%), hsl(0, 0%, 0%));
+        --clr-bg-2: light-dark(hsl(0, 0%, 95%), hsl(0, 0%, 05%));
+        --clr-fg-1: light-dark(hsl(0, 0%, 0%), hsl(0, 0%, 100%));
+        --clr-fg-2: light-dark(hsl(0, 0%, 05%), hsl(0, 0%, 95%));
+    }
+}
+
+@layer base {
+    html {
+        font-family: var(--font-humanist), sans-serif;
+        line-height: 1.5;
+
+        /*scroll-behavior: smooth;*/
+        /*scroll-padding-top: 10vh;*/
+
+        accent-color: var(--clr-accent);
+        background-color: var(--clr-bg-2);
+        color: var(--clr-fg-1);
+
+        color-scheme: light dark;
+
+        &[data-color-scheme="light"] {
+            color-scheme: light;
+        }
+
+        &[data-color-scheme="dark"] {
+            color-scheme: dark;
+        }
+    }
+
+    *:focus-visible {
+        outline: 2px solid var(--clr-accent);
+    }
+
+    :any-link {
+        color: var(--clr-fg-1);
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--size-4);
+    }
+
+    main {
+        flex-grow: 1;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: var(--font-base), sans-serif;
+    }
+
+    h1 {
+        font-size: var(--font-size-7);
+    }
+
+    h2 {
+        font-size: var(--font-size-6);
+    }
+
+    h3 {
+        font-size: var(--font-size-5);
+    }
+
+    h4 {
+        font-size: var(--font-size-4);
+    }
+
+
+    button {
+        color: var(--clr-bg-1);
+        background-color: var(--clr-accent);
+        border: 1px solid var(--clr-fg-1);
+    }
+
+    svg {
+        fill: var(--clr-fg-1);
+    }
+
+    p {
+        font-size: var(--font-size-3);
+        max-inline-size: var(--size-content-4);
+        padding-block: var(--size-1);
+        padding-inline: var(--size-2);
+    }
+
+    blockquote {
+        position: relative; /* for pseudo-elements positioning if needed */
+        border-inline-start: 0.25rem solid gray; /* Adjust border style */
+        max-inline-size: var(--size-content-4);
+        padding-inline: var(--size-3); /* Space inside blockquote */
+        margin-block: var(--size-4); /* Top and bottom spacing */
+        font-style: italic; /* Common style for quotes */
+        color: var(--clr-fg-2, gray); /* Softer text color */
+
+        &::before {
+            content: open-quote; /* Adds the opening quote */
+            font-size: 3.5rem; /* Larger font for emphasis */
+            line-height: 0; /* No extra height added */
+            position: absolute; /* Float the quote */
+            inline-size: auto; /* Allow proper fit */
+            inset-inline-start: 0; /* Align to the left edge */
+            inset-block-start: 0; /* Align to the top of the blockquote */
+            color: var(--clr-accent); /* Matches the accent or border color */
+        }
+
+        &::after {
+            content: close-quote; /* Adds the closing quote */
+            font-size: 3.5rem; /* Matches the size of the opening quote */
+            line-height: 0;
+            position: absolute; /* Float the quote */
+            inline-size: auto;
+            inset-inline-end: 0; /* Align to the right edge */
+            inset-block-end: 0; /* Align to the bottom of the blockquote */
+            color: var(--clr-accent);
+        }
+
+        /* Optional: Style for the inner text for clarity */
+        > p {
+            margin: 0; /* Remove paragraph margins inside blockquotes */
+            padding: var(--size-2); /* Padding inside for spacing */
+            font-family: var(--font-base, serif); /* Define font family */
+        }
+    }
+}
+
+@layer layout {
+    .container {
+        max-width: var(--size-lg);
+        margin-inline: auto;
+        padding: var(--size-4);
+        /*background-color: var(--clr-bg-1);*/
+    }
+
+    /* Is this really better than Flexbox? */
+    /* The gap property basically applies margins between elements and is more responsive. */
+    /* https://codepen.io/kevinpowell/pen/WNVaqeZ */
+    .flow > :where(:not(:first-child)) {
+        margin-block-start: var(--size-4, 1em);
+    }
+
+    /* Taken from https://website-from-scratch-2.netlify.app/lessons/the-second-page-content/the-mushroom-guide .*/
+    .grid-auto-fit {
+        --grid-auto-fit-min-column-size: 450px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-auto-fit-min-column-size), 100%), 1fr)
+  );
+    }
+}
+
+@layer components {
+
+    /* h/t Scott O'Hara https://css-tricks.com/inclusively-hidden/ */
+    /* Can use this to add to link text for things like "Learn More" button. */
+    /* You can make that "Learn More <span class="visually-hidden"> about the thing</span>" and only screen readers will see it. */
+    .visually-hidden:not(:focus):not(:active) {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+    .surface {
+        background-color: var(--clr-bg-1);
+    }
+
+    .container.writing {
+        width: fit-content;
+    }
+}
+

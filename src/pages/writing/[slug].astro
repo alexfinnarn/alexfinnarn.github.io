@@ -1,0 +1,94 @@
+---
+import {getCollection, getEntry, type CollectionEntry} from 'astro:content';
+import MainLayout from '../../layouts/Layout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+// Define the interface for your props
+interface Props {
+    entry: CollectionEntry<'writing'>;
+}
+
+// Generate paths for all writing entries that aren't drafts
+export async function getStaticPaths() {
+    const writingEntries = await getCollection('writing',
+        ({data}: CollectionEntry<'writing'>) => {
+            return import.meta.env.PROD ? !data.draft : true;
+        });
+
+    return writingEntries.map((entry: CollectionEntry<'writing'>) => ({
+        params: {slug: entry.slug},
+        props: {entry} as Props,
+    }));
+}
+
+// Get the entry directly from the prop passed via getStaticPaths
+const {entry} = Astro.props;
+// Render the entry's content
+const {Content} = await entry.render();
+---
+
+<MainLayout title={`${entry.data.title} | Your Site`}>
+  <article class="post-container">
+    <h1>{entry.data.title}</h1>
+    <FormattedDate date={entry.data.publishedDate || entry.data.startDate}/>
+      {entry.data.updatedDate && (
+          <div class="updated-date">
+            Updated:
+            <time datetime={entry.data.updatedDate}>
+                {new Date(entry.data.updatedDate).toLocaleDateString()}
+            </time>
+          </div>
+      )}
+
+      {entry.data.tags && (
+          <div class="tags">
+              {entry.data.tags.map(tag => (
+                  <span class="tag">{tag}</span>
+              ))}
+          </div>
+      )}
+
+    <div class="content">
+      <Content/>
+    </div>
+  </article>
+</MainLayout>
+
+<style>
+    .post-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    h1 {
+        margin-bottom: 1.5rem;
+    }
+
+    time, .updated-date {
+        display: block;
+        color: var(--clr-fg-2);
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        font-weight: bold;
+    }
+
+    .tag {
+        background-color: var(--clr-accent);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+
+    .content {
+        margin-top: 2rem;
+        line-height: 1.6;
+    }
+</style>

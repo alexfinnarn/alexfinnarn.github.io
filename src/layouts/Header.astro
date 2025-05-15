@@ -1,0 +1,139 @@
+<style>
+  header {
+    :any-link {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .container {
+      container-type: inline-size;
+      container-name: header;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--size-4);
+
+      /* Prevent horizontal scrolling */
+      overflow-x: clip;
+    }
+
+    svg {
+      width: var(--size-7);
+      display: inline-block;
+    }
+
+    h1 a {
+      display: flex;
+      align-items: baseline;
+      gap: var(--size-2);
+      font-size: var(--size-8);
+
+      svg {
+        width: var(--size-8);
+      }
+    }
+  }
+
+  /* Navigation menu styles */
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--size-3);
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav li a {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    font-size: var(--size-5);
+    justify-content: center;
+    padding: var(--size-2);
+    border-radius: var(--radius-2);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--surface-2);
+      text-decoration: none;
+    }
+  }
+
+  /* Responsive layout adjustments */
+  @container header (max-width: 780px) {
+    header .container {
+      justify-content: center;
+      text-align: center;
+    }
+
+    header h1 {
+      width: 100%;
+      text-align: center;
+    }
+
+    header h1 a {
+      justify-content: center;
+    }
+
+    header nav {
+      width: 100%;
+    }
+
+    /* Switch to grid for medium screens */
+    nav ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+  }
+
+  /* Small screen adjustments */
+  @container header (max-width: 480px) {
+    nav ul {
+      grid-template-columns: 1fr;
+    }
+
+    nav li a {
+      padding: var(--size-3);
+    }
+  }
+</style>
+
+<header>
+  <div class="container">
+    <h1>
+      <a href="/" aria-label="Click for home.">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true" style="display: inline-block;">
+          <path d="M493.7 .9L299.4 75.6l2.3-29.3c1-12.8-12.8-21.5-24-15.1L101.3 133.4C38.6 169.7 0 236.6 0 309C0 421.1 90.9 512 203 512c72.4 0 139.4-38.6 175.7-101.3L480.8 234.3c6.5-11.1-2.2-25-15.1-24l-29.3 2.3L511.1 18.3c.6-1.5 .9-3.2 .9-4.8C512 6 506 0 498.5 0c-1.7 0-3.3 .3-4.8 .9zM192 192a128 128 0 1 1 0 256 128 128 0 1 1 0-256zm0 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm16 96a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"/>
+        </svg>
+        <span>Finn's Web</span>
+      </a>
+    </h1>
+    <nav>
+      <ul class="menu">
+        <li>
+          <a href="/projects">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+              <path d="M184 48l144 0c4.4 0 8 3.6 8 8l0 40L176 96l0-40c0-4.4 3.6-8 8-8zm-56 8l0 40L64 96C28.7 96 0 124.7 0 160l0 96 192 0 128 0 192 0 0-96c0-35.3-28.7-64-64-64l-64 0 0-40c0-30.9-25.1-56-56-56L184 0c-30.9 0-56 25.1-56 56zM512 288l-192 0 0 32c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32l0-32L0 288 0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-128z"/>
+            </svg>
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="/writing">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+              <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
+            </svg>
+            Writing
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

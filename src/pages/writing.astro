@@ -1,0 +1,70 @@
+---
+// pages/Writing.astro
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/Layout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+// Get only published writings in production, or all in development
+const writings = await getCollection('writing', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Sort by publication date (newest first)
+writings.sort((a, b) => 
+  new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime()
+);
+---
+
+<MainLayout title="Writing | Your Site">
+  <div class="writing-container">
+    <h1>Writing</h1>
+    <p>Welcome to my writing space. Here are my latest thoughts and articles.</p>
+    
+    <div class="writing-list">
+      {writings.map((post) => (
+        <article class="writing-card">
+          <h2>
+            <a href={`/writing/${post.slug}`}>{post.data.title}</a>
+          </h2>
+          <FormattedDate date={post.data.publishedDate || post.data.startDate}/>
+          {post.data.description && <p>{post.data.description}</p>}
+          <a href={`/writing/${post.slug}`} class="read-more">Read more →</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .writing-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .writing-list {
+    margin-top: 3rem;
+  }
+
+  .writing-card {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .writing-card h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .writing-card time {
+    display: block;
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .read-more {
+    display: inline-block;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+</style>
