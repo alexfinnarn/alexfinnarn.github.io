@@ -1,6 +1,12 @@
 # Current Tasks
 
-This document contains the current tasks for building out this web application. Tasks are organized by category and include details to facilitate collaboration between Alex and Junie.
+This document contains the current tasks for building out this web application. Tasks are 
+organized by category and include details to facilitate collaboration between Alex and Junie.
+
+## Task Location
+
+Tasks will be ordered sequentially in their own directory located in `docs/tasks/XXX-task-name.md`. 
+Here is an example of a file name for a task to add testing: `docs/tasks/01-add-testing.md`. 
 
 ## Task Structure
 
@@ -28,28 +34,11 @@ Any additional information, references, or considerations.
 
 ## Content Tasks
 
-### CONT-001 - Create New Blog Post on Astro Development
-- **Category**: Content
-- **Priority**: Medium
-- **Status**: Not Started
-- **Assignee**: Both
-- **Due Date**: 2023-12-15
-
-**Description**:
-Create a new blog post sharing experiences and best practices for developing with Astro. The post should highlight the benefits of Astro for personal blogs and include code examples.
-
-**Acceptance Criteria**:
-- Post includes an introduction to Astro and its benefits
-- Contains at least 2 code examples showing Astro components
-- Includes discussion of content collections and MDX usage
-- Has appropriate metadata (title, description, tags)
-- Includes at least one image or diagram
-
-**Notes**:
-Reference existing Astro documentation and personal experiences with the framework. Consider including comparison with other frameworks like Next.js or Gatsby.
-
 ## Design Tasks
 
 ## Technical Tasks
+
+### Testing:
+- [Add Testing](tasks/tech/001-add-testing.md)
 
 ## Other Tasks

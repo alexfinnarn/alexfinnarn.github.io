@@ -28,11 +28,25 @@ content (articles/blog posts) with a simple, clean design.
 - **Preview**: Run `npm run preview` to preview the build locally before deploying
 
 ## Testing Guidelines
+
+### Manual Testing
 When making changes:
 1. Run the development server to verify changes work as expected
 2. Check that content displays correctly
 3. Ensure responsive design works on different screen sizes
 4. Verify that navigation between pages works correctly
+
+### Automated Testing
+Playwright is used to run functional tests.
+
+```bash
+npm run test
+```
+
+Guidelines for adding tests:
+- Add tests to the appropriate file for each page, if the test is related to an individual page or part of a page
+- Add tests to the appropriate feature file, if the test relates to a feature across the whole website
+- Where possible, test for accessibility compliance to WCAG standards
 
 ## Code Style Guidelines
 - Follow Astro's component structure with frontmatter at the top

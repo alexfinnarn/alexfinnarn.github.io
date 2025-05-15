@@ -9,3 +9,5 @@ The site is built using Astro and you can read more about [Astro docs here](docs
 
 Alex likes to live in the open and very dangeously, so he gladly publishes his dirty laundry and 
 works in progress in [a tasks document](docs/tasks.md) you can review yourself. 
+
+Testing is tested in the testing-most way: [see how I do testing](docs/testing.md) 
