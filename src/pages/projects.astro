@@ -1,33 +1,111 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import React from "react";
-import { ShippingContainerBuild } from '../components/ShippingContainerBuild.jsx';
 
 export const title = "Projects";
+
+// Define projects data
+const projects = [
+  {
+    title: "Shipping Container Project",
+    description: "A 3D visualization of my shipping container build project. This interactive model shows the design and layout of a custom shipping container conversion.",
+    image: "/images/shipping-container-image.png",
+    link: "/projects/shipping-container"
+  },
+  {
+    title: "Garden Renovation",
+    description: "A complete redesign of an urban garden space, focusing on sustainable practices and native plant species. This project transformed a barren backyard into a thriving ecosystem.",
+    image: "/images/rosebud.jpeg",
+    link: "#"
+  },
+  {
+    title: "Home Automation System",
+    description: "A custom-built home automation system using open-source technologies. This project integrates lighting, climate control, and security into a single, user-friendly interface.",
+    image: "/images/curtains-background.jpeg",
+    link: "#"
+  }
+];
 ---
 <style>
-  #three-buildings {
-    max-width: 93%;
-    margin-inline-start: 6%;
-    background-color: var(--clr-bg-1);
+  #projects-listing {
+    margin-inline: 2.5rem;
+  }
+
+  .project-container {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 0;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .project-container.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .project-image {
+    flex: 1.25;
+  }
+
+  .project-content {
+    flex: 1;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-description {
+    margin-bottom: 1rem;
+  }
+
+  .project-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--clr-accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  /* Mobile responsive design */
+  @media (max-width: 768px) {
+    .project-container, .project-container.reverse {
+      flex-direction: column;
+    }
+
+    .project-image, .project-content {
+      flex: 1 1 100%;
+    }
   }
 </style>
+
 <Layout>
   <div class="container">
     <h1>{title}</h1>
   </div>
   <p>Here are some of my projects.</p>
-  <div id="three-buildings">
-    <ShippingContainerBuild client:visible />
+  <div id="projects-listing">
+    {projects.map((project, index) => (
+      <div class={`project-container ${index % 2 === 1 ? 'reverse' : ''}`}>
+        <div class="project-image">
+          <img src={project.image} alt={project.title} />
+        </div>
+        <div class="project-content">
+          <h2 class="project-title">{project.title}</h2>
+          <p class="project-description">{project.description}</p>
+          <a href={project.link} class="project-link">View Project</a>
+        </div>
+      </div>
+    ))}
   </div>
 </Layout>
-
-<script>
-  // setTimeout(() => {
-  //   // Set transform property of .info-panel to none
-  //   let infoPanel = document.querySelector('.info-panel');
-  //   infoPanel.style.transform = 'none';
-  //   infoPanel.style.top = '10px';
-  //   infoPanel.style.left = '10px';
-  // }, 2000);
-</script>

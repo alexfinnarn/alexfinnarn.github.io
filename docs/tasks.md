@@ -35,6 +35,8 @@ Any additional information, references, or considerations.
 ## Content Tasks
 
 ## Design Tasks
+- [Animate Text](tasks/design/001-move-text-around.md)
+- [Update Project Page Design](tasks/design/002-update-projects-page.md)
 
 ## Technical Tasks
 

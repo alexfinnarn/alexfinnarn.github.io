@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import React from "react";
+import { ShippingContainerBuild } from '../../components/ShippingContainerBuild.jsx';
+
+export const title = "Shipping Container Project";
+---
+
+<style>
+    #three-buildings {
+        max-width: 93%;
+        margin-inline-start: 6%;
+        background-color: var(--clr-bg-1);
+    }
+</style>
+
+<Layout>
+  <div class="container">
+    <h1>{title}</h1>
+  </div>
+  <p>Here is my shipping container project.</p>
+  <div id="three-buildings">
+    <ShippingContainerBuild client:visible />
+  </div>
+</Layout>
+
+<script>
+
+</script>
