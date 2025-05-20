@@ -6,7 +6,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://astro.build',
+  site: 'https://alexfinnarn.github.io',
   base: '/',
   output: 'static',
   srcDir: './src',
