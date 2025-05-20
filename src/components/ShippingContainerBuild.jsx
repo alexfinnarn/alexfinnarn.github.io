@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, Suspense, useEffect, useRef} from 'react';
 import {Canvas, useLoader, useThree} from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls, Html, Environment, useProgress} from '@react-three/drei';
 import * as THREE from 'three';
 // @todo Will theatre.js ever release 1.0?
