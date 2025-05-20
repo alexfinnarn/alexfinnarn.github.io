@@ -35,6 +35,7 @@ const projects = [
   .thread-container {
     position: relative;
     z-index: -1;
+    height: 120px;
   }
 
   .background-thread {
@@ -89,39 +90,17 @@ const projects = [
 
 
   @keyframes ropeWave {
-    0% {
-      transform: translateX(0) translateY(0) rotate(0deg);
-    }
-    10% {
-      transform: translateX(2.5px) translateY(5px) rotate(1deg);
-    }
-    20% {
-      transform: translateX(5px) translateY(10px) rotate(2deg);
-    }
-    30% {
-      transform: translateX(2.5px) translateY(15px) rotate(1deg);
-    }
-    40% {
-      transform: translateX(-2.5px) translateY(20px) rotate(-1deg);
-    }
-    50% {
-      transform: translateX(-5px) translateY(15px) rotate(-2deg);
-    }
-    60% {
-      transform: translateX(-4px) translateY(10px) rotate(-1.5deg);
-    }
-    70% {
-      transform: translateX(-2.5px) translateY(5px) rotate(-1deg);
-    }
-    80% {
-      transform: translateX(0px) translateY(10px) rotate(0deg);
-    }
-    90% {
-      transform: translateX(1.5px) translateY(5px) rotate(0.5deg);
-    }
-    100% {
-      transform: translateX(0) translateY(0) rotate(0deg);
-    }
+    0% {transform: translateX(0) translateY(0) rotate(0deg);}
+    10% {transform: translateX(2.5px) translateY(5px) rotate(1deg);}
+    20% {transform: translateX(5px) translateY(10px) rotate(2deg);}
+    30% {transform: translateX(2.5px) translateY(15px) rotate(1deg);}
+    40% {transform: translateX(-2.5px) translateY(20px) rotate(-1deg);}
+    50% {transform: translateX(-5px) translateY(15px) rotate(-2deg);}
+    60% {transform: translateX(-4px) translateY(10px) rotate(-1.5deg);}
+    70% {transform: translateX(-2.5px) translateY(5px) rotate(-1deg);}
+    80% {transform: translateX(0px) translateY(10px) rotate(0deg);}
+    90% {transform: translateX(1.5px) translateY(5px) rotate(0.5deg);}
+    100% {transform: translateX(0) translateY(0) rotate(0deg);}
   }
 
   /* Add knots at project connections */
@@ -198,8 +177,12 @@ const projects = [
   /* Mobile responsive design */
   @media (max-width: 768px) {
     .background-thread {
-      top: 0px;
+      top: -50px;
       height: 250px;
+    }
+
+    .thread-container {
+      height: 24px;
     }
 
     .project-container, .project-container.reverse {
@@ -221,7 +204,7 @@ const projects = [
     {projects.map((project, index) => (
       <>
         {index > 0 && (
-          <div class="thread-container" style="height: 120px;">
+          <div class="thread-container">
             <div class="background-thread">
               <div class="thread-knot"></div>
             </div>
