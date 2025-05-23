@@ -18,14 +18,8 @@ This site is automatically deployed to GitHub Pages when changes are pushed to t
 branch. The deployment is handled by a GitHub Actions workflow defined in 
 `.github/workflows/deploy.yml`.
 
-### Setting up GitHub Pages
-
-To complete the setup for GitHub Pages deployment:
-
-1. Go to your repository settings on GitHub
-2. Navigate to "Pages" in the sidebar
-3. Under "Build and deployment", select "GitHub Actions" as the source
-4. The site will be available at https://alexfinnarn.github.io/ (or your custom domain if configured)
+The site will be available at https://alexfinnarn.github.io/ . Some blog posts are marked as 
+drafts and will not be accessible on the production site until they are published.
 
 ### Manual Deployment
 
