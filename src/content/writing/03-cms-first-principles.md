@@ -110,7 +110,7 @@ code until I have laid out the principles that will instruct the code at all tim
 Its never easy to uncover principles and much more fun to build, so I will just go ahead and 
 start listing the principles. 
 
-### The CMS is not the base. It is a management system for content.
+> 1. The CMS is not the base. It is a management system for content.
 
 I think every CMS project I've encountered renders the content. And before you scream "what 
 about headless CMSes?" I will repeat: I think every CMS project I've encountered renders the 
@@ -133,4 +133,6 @@ npm install trend looks good for Astro and hopefully the project has long legs.
 ## More Principles To Come
 
 I will write more about CMS first principles, but this gives you enough information to know 
-where I'm coming from and to decide if you want to follow me on the continuing journey. 
+where I'm coming from and to decide if you want to follow me on the continuing journey. In first 
+principles thinking, it's good to start with limits and boundaries, and hopefully limiting 
+"scope creep" makes you excited to read on. 
