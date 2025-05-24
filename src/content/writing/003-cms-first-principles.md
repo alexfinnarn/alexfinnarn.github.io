@@ -2,7 +2,7 @@
 title: "Creating CMS First Principles"
 description: "Content Management Systems have principles once you get the code out of the way."
 startDate: "2025-05-23"
-publishedDate: ""
+publishedDate: "2025-05-23"
 draft: false
 tags: ["content", "first principles"]
 ---

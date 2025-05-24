@@ -215,41 +215,45 @@
     }
 
     blockquote {
-        position: relative; /* for pseudo-elements positioning if needed */
-        border-inline-start: 0.25rem solid gray; /* Adjust border style */
+        position: relative;
+        background-color: var(--clr-bg-2);
+        border-inline-start: 0.35rem solid var(--clr-accent);
         max-inline-size: var(--size-content-4);
-        padding-inline: var(--size-3); /* Space inside blockquote */
-        margin-block: var(--size-4); /* Top and bottom spacing */
-        font-style: italic; /* Common style for quotes */
-        color: var(--clr-fg-2, gray); /* Softer text color */
+        padding: var(--size-5) var(--size-6);
+        margin-block: var(--size-6);
+        margin-inline: var(--size-2);
+        border-radius: var(--radius-2);
+        box-shadow: var(--shadow-2);
 
-        &::before {
-            content: open-quote; /* Adds the opening quote */
-            font-size: 3.5rem; /* Larger font for emphasis */
-            line-height: 0; /* No extra height added */
-            position: absolute; /* Float the quote */
-            inline-size: auto; /* Allow proper fit */
-            inset-inline-start: 0; /* Align to the left edge */
-            inset-block-start: 0; /* Align to the top of the blockquote */
-            color: var(--clr-accent); /* Matches the accent or border color */
-        }
-
-        &::after {
-            content: close-quote; /* Adds the closing quote */
-            font-size: 3.5rem; /* Matches the size of the opening quote */
-            line-height: 0;
-            position: absolute; /* Float the quote */
-            inline-size: auto;
-            inset-inline-end: 0; /* Align to the right edge */
-            inset-block-end: 0; /* Align to the bottom of the blockquote */
-            color: var(--clr-accent);
-        }
-
-        /* Optional: Style for the inner text for clarity */
+        /* Style for the inner text */
         > p {
-            margin: 0; /* Remove paragraph margins inside blockquotes */
-            padding: var(--size-2); /* Padding inside for spacing */
-            font-family: var(--font-base, serif); /* Define font family */
+            margin: 0;
+            padding: 0;
+            font-size: var(--font-size-4); /* Larger text size */
+            font-family: var(--font-base, serif);
+            color: var(--clr-fg-1); /* Use main text color for better readability */
+            font-style: normal; /* Remove italic */
+            line-height: 1.6;
+            text-wrap: balance;
+        }
+
+        /* Add a decorative quote mark at the beginning */
+        &::before {
+            content: "\201C"; /* Unicode for opening double quote */
+            position: absolute;
+            top: -0.5rem;
+            left: var(--size-3);
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--clr-accent);
+            opacity: 0.3;
+            font-family: serif;
+            z-index: 0;
+        }
+
+        /* Remove the closing quote */
+        &::after {
+            content: none;
         }
     }
 }
@@ -301,4 +305,3 @@
         width: fit-content;
     }
 }
-
