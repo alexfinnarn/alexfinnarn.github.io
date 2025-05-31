@@ -44,6 +44,16 @@ export function ShippingContainerBuild() {
               // handle click events
             }}
           />
+          <ModelInContainer
+            name="Desk and Chair"
+            url="/models/desk_chair_combo.glb"
+            position={[4.5, 0, 5]}
+            scale={1.5}
+            rotation={[0, 0, 0]}
+            onClick={(e) => {
+              // handle click events
+            }}
+          />
         </Suspense>
       </Canvas>
     </SceneContext.Provider>

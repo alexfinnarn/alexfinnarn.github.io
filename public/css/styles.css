@@ -225,6 +225,8 @@
         border-radius: var(--radius-2);
         box-shadow: var(--shadow-2);
 
+        container-type: inline-size;
+
         /* Style for the inner text */
         > p {
             margin: 0;
@@ -256,6 +258,29 @@
             content: none;
         }
     }
+
+    /* Scale quote mark based on actual blockquote container width */
+    @container (max-width: 500px) {
+        blockquote::before {
+            font-size: 3.5rem;
+            top: -0.4rem;
+        }
+    }
+
+    @container (max-width: 350px) {
+        blockquote::before {
+            font-size: 2.5rem;
+            top: -0.3rem;
+        }
+    }
+
+    @container (max-width: 250px) {
+        blockquote::before {
+            font-size: 2rem;
+            top: -0.2rem;
+        }
+    }
+
 }
 
 @layer layout {
