@@ -1,6 +1,6 @@
 ---
 title: "Dicking Around With Windows"
-description: "Windows: How do they work?"
+description: "Windows: How do they work? Let's both figure out windows together."
 startDate: "2025-04-22"
 publishedDate: "2025-05-31"
 draft: false
