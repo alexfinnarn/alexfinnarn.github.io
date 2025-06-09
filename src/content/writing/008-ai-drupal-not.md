@@ -3,7 +3,7 @@ title: "How Not To AI: Adapt your big bloated framework"
 description: "Many devs want AI to fix their bloated codebase. It can't."
 startDate: "2025-06-06"
 publishedDate: "2025-06-06"
-draft: true
+draft: false
 tags: ["AI", "refactoring"]
 ---
 
