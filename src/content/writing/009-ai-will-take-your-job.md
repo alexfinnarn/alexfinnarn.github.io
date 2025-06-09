@@ -1,13 +1,12 @@
 ---
 title: "AI Musings: Yes, your job is definitely in jeopardy"
-description: "It might"
+description: "It might take a while, but AI assisted everything will happen. You need to change 
+how you do work."
 startDate: "2025-06-09"
 publishedDate: "2025-06-09"
 draft: false
 tags: ["AI", "jobs"]
 ---
-
-https://www.linkedin.com/posts/stuart-todd-developer_vibe-coding-is-giving-people-wildly-unrealistic-activity-7337200091121786880-X08k/
 
 At this point, anyone looking into AI and coding has encountered the many posts where developers 
 point out mistakes that originated with AI-assisted code. Heck, there's even "vibe coding" a 
