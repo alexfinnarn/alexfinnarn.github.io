@@ -1,0 +1,81 @@
+.visualNovel {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #f5f5f5;
+}
+
+.loading {
+    text-align: center;
+    padding: 4rem;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.storyContent {
+    min-height: 400px;
+}
+
+.storyText {
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.storyText p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.choiceButton {
+    padding: 1rem 1.5rem;
+    background: rgba(139, 69, 19, 0.8);
+    border: 2px solid #8B4513;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.choiceButton:hover {
+    background: rgba(160, 82, 45, 0.9);
+    border-color: #A0522D;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
+}
+
+.storyEnd {
+    text-align: center;
+    padding: 2rem;
+    border-top: 2px solid rgba(139, 69, 19, 0.5);
+    margin-top: 2rem;
+}
+
+.restartButton {
+    padding: 0.75rem 2rem;
+    background: #8B4513;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s ease;
+}
+
+.restartButton:hover {
+    background: #A0522D;
+}
