@@ -127,7 +127,7 @@
 
         /* Colors. */
         /* https://12daysofweb.dev/2024/css-light-dark/ */
-        --clr-accent: light-dark(hsl(328, 100%, 54%), hsl(330, 100%, 71%));
+        --clr-accent: light-dark(hsl(14, 100%, 45%), hsl(14, 90%, 65%));
         --clr-bg-1: light-dark(hsl(0, 0%, 100%), hsl(0, 0%, 0%));
         --clr-bg-2: light-dark(hsl(0, 0%, 95%), hsl(0, 0%, 05%));
         --clr-fg-1: light-dark(hsl(0, 0%, 0%), hsl(0, 0%, 100%));
