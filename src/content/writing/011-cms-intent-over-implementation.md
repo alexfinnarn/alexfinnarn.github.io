@@ -1,6 +1,9 @@
 ---
 title: "CMS First Principles: Intent over Implementation"
-description: ""
+description: "Every CMS forces content creators to manipulate layout builders without ever 
+declaring what they're trying to communicate. Just like \"program to the interface, not the 
+implementation,\" content management should capture intent first, then let AI assistants handle 
+the visual details through collaborative design conversations."
 startDate: "2025-06-18"
 publishedDate: "2025-06-18"
 draft: false
