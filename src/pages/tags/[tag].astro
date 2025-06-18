@@ -1,0 +1,161 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import MainLayout from '../../layouts/Layout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('writing', 
+    ({ data }: CollectionEntry<'writing'>) => {
+      return import.meta.env.PROD ? !data.draft : true;
+    }
+  );
+  
+  // Get all unique tags
+  const uniqueTags = [...new Set(
+    allPosts.flatMap(post => post.data.tags || [])
+  )];
+  
+  // Create a path for each tag
+  return uniqueTags.map(tag => {
+    // Filter posts that have this tag (case-insensitive)
+    const filteredPosts = allPosts.filter(post => 
+      post.data.tags?.some(postTag => 
+        postTag.toLowerCase() === tag.toLowerCase()
+      )
+    );
+    
+    // Sort posts by publication date (newest first)
+    const sortedPosts = filteredPosts.sort((a, b) => {
+      const dateA = new Date(a.data.publishedDate || a.data.startDate || '');
+      const dateB = new Date(b.data.publishedDate || b.data.startDate || '');
+      return dateB.getTime() - dateA.getTime();
+    });
+    
+    return {
+      params: { tag: tag.toLowerCase() },
+      props: { 
+        posts: sortedPosts,
+        tag: tag
+      }
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts, tag: displayTag } = Astro.props;
+---
+
+<MainLayout title={`Posts tagged with ${displayTag} | Finn's Big Web`}>
+  <div class="tag-page">
+    <div class="header">
+      <a href="/writing/" class="back-link">← Back to all writing</a>
+      <h1>Posts tagged with "{displayTag}"</h1>
+      <p class="post-count">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
+    </div>
+    
+    <div class="posts">
+      {posts.map((post: CollectionEntry<'writing'>) => (
+        <div class="post-card">
+          <h2>
+            <a href={`/writing/${post.slug}/`}>{post.data.title}</a>
+          </h2>
+          <FormattedDate date={post.data.publishedDate || post.data.startDate} />
+          
+          {post.data.description && (
+            <p class="description">{post.data.description}</p>
+          )}
+          
+          {post.data.tags && (
+            <div class="tags">
+              {post.data.tags.map((tag: string) => (
+                <a href={`/tags/${tag.toLowerCase()}/`} class="tag">{tag}</a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .tag-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .header {
+    margin-bottom: 2rem;
+  }
+  
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--clr-accent);
+    text-decoration: none;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+  .post-count {
+    color: var(--clr-fg-2);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .post-card {
+    border-bottom: 1px solid var(--clr-border);
+    padding-bottom: 2rem;
+  }
+  
+  .post-card:last-child {
+    border-bottom: none;
+  }
+  
+  .post-card h2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .post-card h2 a {
+    text-decoration: none;
+    color: var(--clr-fg);
+  }
+  
+  .post-card h2 a:hover {
+    text-decoration: underline;
+  }
+  
+  .description {
+    margin: 1rem 0;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .tag {
+    background-color: var(--clr-accent);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+  }
+  
+  .tag:hover {
+    opacity: 0.8;
+  }
+</style>

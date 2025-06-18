@@ -1,0 +1,118 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import MainLayout from '../../layouts/Layout.astro';
+
+// Get all published posts
+const allPosts = await getCollection('writing', 
+  ({ data }: CollectionEntry<'writing'>) => {
+    return import.meta.env.PROD ? !data.draft : true;
+  }
+);
+
+// Extract all tags and count their occurrences
+interface TagInfo {
+  count: number;
+  displayTag: string;
+}
+
+const tagCounts: Record<string, TagInfo> = {};
+allPosts.forEach(post => {
+  if (post.data.tags) {
+    post.data.tags.forEach(tag => {
+      const normalizedTag = tag.toLowerCase();
+      // Store with original casing for display
+      if (!tagCounts[normalizedTag]) {
+        tagCounts[normalizedTag] = {
+          count: 0,
+          displayTag: tag
+        };
+      }
+      tagCounts[normalizedTag].count += 1;
+    });
+  }
+});
+
+// Convert to array and sort alphabetically
+const sortedTags = Object.entries(tagCounts)
+  .map(([key, value]) => ({
+    tag: key,
+    displayTag: value.displayTag,
+    count: value.count
+  }))
+  .sort((a, b) => a.tag.localeCompare(b.tag));
+---
+
+<MainLayout title="All Tags | Finn's Big Web">
+  <div class="tags-page">
+    <div class="header">
+      <a href="/writing/" class="back-link">← Back to all writing</a>
+      <h1>All Tags</h1>
+      <p class="tag-count">{sortedTags.length} tag{sortedTags.length !== 1 ? 's' : ''} total</p>
+    </div>
+
+    <div class="tag-grid">
+      {sortedTags.map(({ tag, displayTag, count }) => (
+        <a href={`/tags/${tag}/`} class="tag-card">
+          <span class="tag-name">{displayTag}</span>
+          <span class="tag-count">{count} post{count !== 1 ? 's' : ''}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .tags-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--clr-accent);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .tag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .tag-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--clr-bg-2);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tag-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .tag-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-count {
+    font-size: 0.9rem;
+    color: var(--clr-fg-2);
+  }
+</style>

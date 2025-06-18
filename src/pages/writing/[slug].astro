@@ -43,7 +43,7 @@ const {Content} = await entry.render();
       {entry.data.tags && (
           <div class="tags">
               {entry.data.tags.map(tag => (
-                  <span class="tag">{tag}</span>
+                  <a href={`/tags/${tag.toLowerCase()}/`} class="tag">{tag}</a>
               ))}
           </div>
       )}
@@ -85,6 +85,13 @@ const {Content} = await entry.render();
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.8rem;
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.2s ease;
+    }
+
+    .tag:hover {
+        opacity: 0.8;
     }
 
     .content {

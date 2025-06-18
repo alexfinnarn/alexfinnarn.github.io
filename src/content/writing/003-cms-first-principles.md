@@ -4,7 +4,7 @@ description: "Content Management Systems have principles once you get the code o
 startDate: "2025-05-23"
 publishedDate: "2025-05-23"
 draft: false
-tags: ["content", "first principles"]
+tags: ["cms", "first principles"]
 ---
 
 For the past 12 years or so I could say I worked on "content management systems" primarily using 
