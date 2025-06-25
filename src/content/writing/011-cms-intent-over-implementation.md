@@ -54,7 +54,7 @@ at least two layers of abstraction to writing content: intent and narrative.
 
 Each piece of content can be unique in its narrative, but if we wind back up to the intent layer,
 most websites only have a set of intents they are trying to get across in the narrative pieces. 
-In fact, if every blog post on a site was pushing singular intent, then no one would want to 
+In fact, if every blog post on a site was pushing unique intent, then no one would want to 
 read the collection of posts. Readers go back to content they like because it shares intent. 
 
 Just like writing code should look towards interfaces and away from implementations, any good 
