@@ -1,8 +1,11 @@
 ---
 title: "CMS First Principles: Content Over Complexity"
-description: ""
-startDate: "2025-06-18"
-publishedDate: "2025-06-18"
+description: "Complex codebases kill simplicity. When CMSes abandon documentation-as-code 
+approaches, they create unmaintainable monsters. What's the solution? Enforce minimum viable 
+complexity by treating content as living documentation - if you can't explain your workflow in 
+markdown, it's too complex to continue with code."
+startDate: "2025-06-24"
+publishedDate: "2025-06-25"
 draft: false
 tags: [ "AI", "CMS" ]
 ---
