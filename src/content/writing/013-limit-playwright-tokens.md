@@ -2,7 +2,7 @@
 title: "AI Musings: Limit Tokens for Web Scraping"
 description: ""
 startDate: "2025-07-08"
-publishedDate: "2025-07-08"
+publishedDate: "2025-07-09"
 draft: false
 tags: [ "AI", "MCP" ]
 ---
@@ -43,7 +43,8 @@ up a neat token reauthorization workflow where it gives me a URL to paste into a
 to agree to permissions, and then paste back the callback URL into the paused CLI command script.
 
 Claude could have completed the whole reauthorization process, since Playwright uses Chrome 
-profiles that store user data and auth, but due to token issues.
+profiles that store user data and auth, but due to token issues I ended up turning off the 
+Playwright MCP server. A tale for the next section. 
 
 ## Playwright MCP Token Issues
 
@@ -77,6 +78,9 @@ entirely sure on that part.
 ## LinkedIn Briefing Workflow Takes Me Back
 
 I kept the Playwright MCP server turned off until I had another need for it: scraping LinkedIn. 
+LinkedIn data is authenticated and they guard it very well so it was a great case to return to 
+using a tool, Playwright, that works well setting up an authenticated experience. 
+
 I am trying to model some AI-assisted workflows I see companies creating products around and one 
 that caught my eye involved LinkedIn.
 
@@ -121,9 +125,9 @@ So, of course, I went to Claude to have a chat and devise a solution.
 ## Text Extraction Workflow
 
 I knew I could limit the response via CSS selectors, and I navigated to LinkedIn to check out 
-the source code. 
+the source code. Here's an image approximating what I found.
 
-...insert horror meme here...
+<img src="https://media.tenor.com/CDRf2HejLxUAAAAC/pennywise-the-dancing-clown-dont-cha-want-it.gif">
 
 Shocking. It's been a while since I've clicked "View Source" on one of the corporate, big boy 
 sites to see what the smoke and mirror frontend devs are up to these days and boy has it not 
@@ -136,6 +140,11 @@ or doesn't do functional testing at all.
 I had a really hard time discerning legitimate patterns of CSS selectors and HTML elements to 
 target. I even thought I saw dark patterns to try and screw up parsing of a screen scraper. 
 
+For example, the "About" section has an empty div, `<div id="about" 
+class="pv-profile-card__anchor"></div>`, you think would contain text about the LinkedIn profile 
+when it is blank. The real text is buried in `class="visually-hidden"` element that seems like 
+an accessibility violation to me. 
+
 Then, it dawned on me that while LinkedIn could pummel me with horrendous markup, they could 
 never hide the actual text from me. And what are LLMs good at if nothing else? Parsing and 
 understanding text; exactly!
@@ -147,6 +156,14 @@ forth.
 
 The key was to grab `node.innerText || node.textContent` on each valid element while also using 
 a `metadata=false` to strip the HTML tag information from the text. 
+
+And when I tested out my new `browser_extract_text` tool vs. `browser_snapshot` I was using 
+before the results were pretty good with around a 67% reduction of tokens used.
+
+Token savings comparison:
+- Clean text only (browser_extract_text): ~2,090 tokens
+- Text + full page structure (browser_snapshot): ~6,250 tokens
+- Token savings: ~4,160 tokens (67% reduction)
 
 ## Code and Improvements
 
@@ -164,8 +181,8 @@ And to get this working on Claude Desktop you must:
 3. Run `npm run build`.
 4. Add configuration to Claude Desktop's config file which you can access from the Developer 
    Settings UI. I tend to use full paths to executables just to be super explicit.
-   5. `which node` should give you the path to node on your machine
-   6. You need to enter the full path to the repo and target the `cli.js` in the root directory.
+   - `which node` should give you the path to node on your machine 
+   - You need to enter the full path to the repo and target the `cli.js` in the root directory.
 
 ```json
 {
