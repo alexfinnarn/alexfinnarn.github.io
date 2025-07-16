@@ -1,6 +1,8 @@
 ---
 title: "AI Musings: Limit Tokens for Web Scraping"
-description: ""
+description: "Tired of hitting token limits while web scraping with AI? Discover how I hacked 
+the Playwright MCP server to slash token usage by 67% when scraping LinkedIn profiles, turning a 
+frustrating workflow killer into a smooth AI-assisted briefing tool."
 startDate: "2025-07-08"
 publishedDate: "2025-07-09"
 draft: false
