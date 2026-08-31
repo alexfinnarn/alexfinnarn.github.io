@@ -10,11 +10,13 @@ export async function getStaticPaths() {
     }
   );
   
-  // Get all unique tags
-  const uniqueTags = [...new Set(
-    allPosts.flatMap(post => post.data.tags || [])
-  )];
-  
+  // Collapse tags that differ only by casing (e.g. "CMS" and "cms") so we emit
+  // one route per slug. Keeps the first-seen casing for display.
+  const uniqueTags = [...allPosts
+    .flatMap(post => post.data.tags || [])
+    .reduce((acc, tag) => acc.set(tag.toLowerCase(), acc.get(tag.toLowerCase()) ?? tag), new Map<string, string>())
+    .values()];
+
   // Create a path for each tag
   return uniqueTags.map(tag => {
     // Filter posts that have this tag (case-insensitive)
@@ -41,7 +43,6 @@ export async function getStaticPaths() {
   });
 }
 
-const { tag } = Astro.params;
 const { posts, tag: displayTag } = Astro.props;
 ---
 
@@ -57,7 +58,7 @@ const { posts, tag: displayTag } = Astro.props;
       {posts.map((post: CollectionEntry<'writing'>) => (
         <div class="post-card">
           <h2>
-            <a href={`/writing/${post.slug}/`}>{post.data.title}</a>
+            <a href={`/writing/${post.id}/`}>{post.data.title}</a>
           </h2>
           <FormattedDate date={post.data.publishedDate || post.data.startDate} />
           

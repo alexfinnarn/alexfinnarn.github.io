@@ -251,7 +251,7 @@
 
   // Add input/change event listeners to form fields for instant updates
   if (settingsForm) {
-    const formElements = settingsForm.querySelectorAll('input, select');
+    const formElements = settingsForm.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
     formElements.forEach(element => {
       element.addEventListener('change', saveSettings);
       // For text inputs, we might want to use 'input' event too for real-time changes

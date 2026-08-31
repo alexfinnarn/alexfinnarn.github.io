@@ -23,7 +23,15 @@ interface NavState {
     path: string[];
 }
 
-const WebStrand = ({ start, end, thickness = 0.01, color = '#aaaaaa', highlighted = false }) => {
+interface WebStrandProps {
+    start: THREE.Vector3;
+    end: THREE.Vector3;
+    thickness?: number;
+    color?: string;
+    highlighted?: boolean;
+}
+
+const WebStrand = ({ start, end, thickness = 0.01, color = '#aaaaaa', highlighted = false }: WebStrandProps) => {
     const ref = useRef<THREE.Mesh>(null);
 
     // Calculate the midpoint and length of the strand
@@ -37,12 +45,13 @@ const WebStrand = ({ start, end, thickness = 0.01, color = '#aaaaaa', highlighte
     direction.normalize();
     quaternion.setFromUnitVectors(startingDirection, direction);
 
-    // Create spring animation for highlight effect
-    const { thickness: animatedThickness, glowColor } = useSpring({
-        thickness: highlighted ? thickness * 2 : thickness,
+    // Create spring animation for highlight effect. Only the colour is spring-driven:
+    // geometry `args` are constructor arguments and cannot take an animated value.
+    const { glowColor } = useSpring({
         glowColor: highlighted ? '#ffffff' : color,
         config: { tension: 170, friction: 26 }
     });
+    const radius = highlighted ? thickness * 2 : thickness;
 
     return (
         <animated.mesh
@@ -50,13 +59,22 @@ const WebStrand = ({ start, end, thickness = 0.01, color = '#aaaaaa', highlighte
             position={midpoint}
             quaternion={quaternion}
         >
-            <animated.cylinderGeometry args={[animatedThickness, animatedThickness, length, 6]} />
+            <cylinderGeometry args={[radius, radius, length, 6]} />
             <animated.meshStandardMaterial color={glowColor} emissive={glowColor} emissiveIntensity={highlighted ? 2 : 0.2} />
         </animated.mesh>
     );
 };
 
-const WebNode = ({ node, onClick, isActive, isHighlighted }) => {
+interface WebNodeProps {
+    node: WebNode;
+    onClick: (node: WebNode) => void;
+    isActive: boolean;
+    isHighlighted: boolean;
+    onPointerOver?: () => void;
+    onPointerOut?: () => void;
+}
+
+const WebNode = ({ node, onClick, isActive, isHighlighted, onPointerOver, onPointerOut }: WebNodeProps) => {
     const nodeRef = useRef<THREE.Mesh>(null);
 
     const { scale, nodeColor } = useSpring({
@@ -71,6 +89,8 @@ const WebNode = ({ node, onClick, isActive, isHighlighted }) => {
                 ref={nodeRef}
                 scale={scale}
                 onClick={() => onClick(node)}
+                onPointerOver={onPointerOver}
+                onPointerOut={onPointerOut}
             >
                 <sphereGeometry args={[0.05, 16, 16]} />
                 <animated.meshStandardMaterial
@@ -169,7 +189,7 @@ const flattenNodes = (nodes: WebNode[]): WebNode[] => {
     return result;
 };
 
-const FractalWebScene = ({ onNavigate }) => {
+const FractalWebScene = ({ onNavigate }: { onNavigate: (url: string) => void }) => {
     // Generate the entire fractal web structure
     const webStructure = React.useMemo(() => generateFractalLevel(), []);
     const flatNodes = React.useMemo(() => flattenNodes(webStructure), [webStructure]);
@@ -185,7 +205,7 @@ const FractalWebScene = ({ onNavigate }) => {
 
     const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
     const { camera } = useThree();
-    const controlsRef = useRef(null);
+    const controlsRef = useRef<React.ComponentRef<typeof OrbitControls>>(null);
 
     // Find the current node
     const currentNode = flatNodes.find(node => node.id === navState.currentNodeId) || flatNodes[0];

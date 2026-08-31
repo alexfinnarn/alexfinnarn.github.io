@@ -1,5 +1,5 @@
 ---
-import {getCollection, getEntry, type CollectionEntry} from 'astro:content';
+import {getCollection, render, type CollectionEntry} from 'astro:content';
 import MainLayout from '../../layouts/Layout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 
@@ -16,7 +16,7 @@ export async function getStaticPaths() {
         });
 
     return writingEntries.map((entry: CollectionEntry<'writing'>) => ({
-        params: {slug: entry.slug},
+        params: {slug: entry.id},
         props: {entry} as Props,
     }));
 }
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 // Get the entry directly from the prop passed via getStaticPaths
 const {entry} = Astro.props;
 // Render the entry's content
-const {Content} = await entry.render();
+const {Content} = await render(entry);
 ---
 
 <MainLayout title={`${entry.data.title} | Your Site`}>

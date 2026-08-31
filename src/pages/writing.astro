@@ -10,8 +10,9 @@ const writings = await getCollection('writing', ({ data }) => {
 });
 
 // Sort by publication date (newest first)
-writings.sort((a, b) => 
-  new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime()
+writings.sort((a, b) =>
+  new Date(b.data.publishedDate || b.data.startDate || '').getTime() -
+  new Date(a.data.publishedDate || a.data.startDate || '').getTime()
 );
 ---
 
@@ -24,11 +25,11 @@ writings.sort((a, b) =>
       {writings.map((post) => (
         <article class="writing-card">
           <h2>
-            <a href={`/writing/${post.slug}`}>{post.data.title}</a>
+            <a href={`/writing/${post.id}`}>{post.data.title}</a>
           </h2>
           <FormattedDate date={post.data.publishedDate || post.data.startDate}/>
           {post.data.description && <p>{post.data.description}</p>}
-          <a href={`/writing/${post.slug}`} class="read-more">Read more →</a>
+          <a href={`/writing/${post.id}`} class="read-more">Read more →</a>
         </article>
       ))}
     </div>
