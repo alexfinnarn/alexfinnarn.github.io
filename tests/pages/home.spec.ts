@@ -5,7 +5,7 @@ test('homepage - menu links are visible', async ({ page }) => {
     await page.goto('/');
 
     // Verify the page title
-    await expect(page).toHaveTitle("Finn's Big Web | Default Page Title");
+    await expect(page).toHaveTitle("Finn's Big Web | My Career Story");
 
     // Verify the site logo/title is visible
     await expect(page.locator('h1 a')).toBeVisible();

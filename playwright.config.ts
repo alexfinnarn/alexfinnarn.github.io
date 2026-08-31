@@ -11,6 +11,17 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+/**
+ * Where the tests point, and who owns the server.
+ *
+ * - PLAYWRIGHT_BASE_URL set -> test that URL and do NOT start a server
+ *   (you already have `npm run dev` running somewhere).
+ * - Otherwise -> start our own dev server on PLAYWRIGHT_PORT (default 4321).
+ */
+const envBaseURL = process.env.PLAYWRIGHT_BASE_URL;
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 4321);
+const baseURL = envBaseURL ?? `http://localhost:${port}`;
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -26,7 +37,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:4321',
+    baseURL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -70,10 +81,15 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:4321',
-    reuseExistingServer: !process.env.CI,
-  },
+  /* Run your local dev server before starting the tests.
+   * Skipped entirely when PLAYWRIGHT_BASE_URL points at a server you manage.
+   * reuseExistingServer is false so a stray process squatting the port fails
+   * loudly instead of being silently tested against. */
+  webServer: envBaseURL
+    ? undefined
+    : {
+        command: `npm run dev -- --port ${port}`,
+        url: baseURL,
+        reuseExistingServer: false,
+      },
 });

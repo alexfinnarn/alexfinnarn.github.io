@@ -31,7 +31,7 @@ test('projects page - content is visible', async ({ page }) => {
     await expect(page.locator('.project-container').nth(2)).not.toHaveClass(/reverse/);
 
     // Verify the background thread is present
-    await expect(page.locator('.background-thread')).toBeVisible();
+    await expect(page.locator('.background-thread').first()).toBeVisible();
 });
 
 test('projects page - responsive design', async ({ page }) => {
