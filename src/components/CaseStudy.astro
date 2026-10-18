@@ -1,0 +1,95 @@
+---
+// One case study in the fixed Situation / What I did / Result format, plus a translation line.
+interface Props {
+  name: string;
+  meta?: string;
+  situation: string;
+  did: string;
+  result: string;
+  translation?: string;
+}
+
+const { name, meta, situation, did, result, translation } = Astro.props;
+---
+
+<article class="case">
+  <header>
+    <h2>{name}</h2>
+    {meta && <p class="meta">{meta}</p>}
+  </header>
+  <dl>
+    <div>
+      <dt>Situation</dt>
+      <dd>{situation}</dd>
+    </div>
+    <div>
+      <dt>What I did</dt>
+      <dd>{did}</dd>
+    </div>
+    <div>
+      <dt>Result</dt>
+      <dd>{result}</dd>
+    </div>
+  </dl>
+  {translation && <p class="translation">{translation}</p>}
+</article>
+
+<style>
+  .case {
+    padding-block: var(--space-block);
+    border-top: var(--rule-strong);
+  }
+
+  h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .meta {
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+    color: var(--color-text-muted);
+  }
+
+  dl {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-5) 0;
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-4);
+  }
+
+  dt {
+    font-family: var(--font-label);
+    font-size: var(--label-size);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--label-tracking);
+    text-transform: var(--label-case);
+    color: var(--color-text-muted);
+    padding-top: 0.2em;
+  }
+
+  dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  .translation {
+    max-width: calc(var(--measure) + 10rem);
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-accent-tint);
+    border-left: var(--line-3) solid var(--color-accent);
+    border-radius: var(--radius);
+  }
+
+  @media (max-width: 40rem) {
+    dl > div {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+// Closing block on every article: who wrote it, what he's building toward, a contact link.
+// Default slot holds the two sentences.
+import { site } from '../site';
+---
+
+<aside class="article-footer" aria-label="About the author">
+  <p class="name">{site.name}</p>
+  <div class="body"><slot /></div>
+  <a href="/contact">Get in touch</a>
+</aside>
+
+<style>
+  .article-footer {
+    max-width: var(--measure);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: var(--rule-strong);
+  }
+
+  .name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+  }
+
+  .body {
+    color: var(--color-text-muted);
+  }
+
+  a {
+    font-weight: 600;
+  }
+</style>

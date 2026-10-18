@@ -1,0 +1,57 @@
+---
+// Numbered steps, e.g. the consulting process.
+interface Props {
+  steps: { title: string; text?: string }[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="steps">
+  {steps.map(({ title, text }, i) => (
+    <li>
+      <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+      <div>
+        <h3>{title}</h3>
+        {text && <p>{text}</p>}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: var(--rule-strong);
+  }
+
+  .num {
+    font-family: var(--font-figure);
+    font-size: var(--size-lg);
+    font-weight: 700;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h3 {
+    font-size: var(--size-lg);
+    margin-bottom: var(--space-1);
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--size-md);
+  }
+</style>

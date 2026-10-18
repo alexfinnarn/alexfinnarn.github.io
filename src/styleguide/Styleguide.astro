@@ -1,0 +1,1040 @@
+---
+// Dev-only style guide: tokens and components, switchable between options A, B and C.
+// All text here is dummy text. None of it is site copy.
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import Hero from '../components/Hero.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import ServiceBlock from '../components/ServiceBlock.astro';
+import CaseStudy from '../components/CaseStudy.astro';
+import ArticleListItem from '../components/ArticleListItem.astro';
+import NowBlock from '../components/NowBlock.astro';
+import Portrait from '../components/Portrait.astro';
+import ArticleFooter from '../components/ArticleFooter.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import Callout from '../components/Callout.astro';
+import ContactList from '../components/ContactList.astro';
+import drawing from '../../archive/public/images/me0oh3.jpeg';
+import { theme } from '../site';
+import { currentRound } from './rounds';
+
+const options = [
+  {
+    id: 'b',
+    name: 'Editorial (reference)',
+    summary:
+      'The option you picked: warm paper, serif headings, muted orange, square corners. Kept unchanged so the bolder options have something to be compared against.',
+  },
+  {
+    id: 'b1',
+    name: 'Broadsheet',
+    summary:
+      'A newspaper front page. Very large serif headlines, thick ink rules, a Browns-orange bar across the top, black buttons. Bold through type and lines; orange used sparingly but at full strength.',
+  },
+  {
+    id: 'b2',
+    name: 'Workshop',
+    summary:
+      'Browns brown and orange. Deep brown bands for the header, hero, proof strip and footer, warmer paper in between, condensed uppercase labels. Bold through contrast.',
+  },
+  {
+    id: 'b3',
+    name: 'Modern editorial',
+    summary:
+      'Heavy, tight sans-serif headlines over a serif body (the reverse of B). The proof strip becomes a solid orange block; the footer goes ink-black. Bold through color blocks and weight.',
+  },
+  {
+    id: 'r1',
+    name: 'Broadsheet type, modern blocks',
+    summary: "B1's big serif headlines, orange top bar and thick rules, with B3's solid orange proof strip. Light footer, black buttons.",
+  },
+  {
+    id: 'r2',
+    name: 'Modern type, broadsheet frame',
+    summary: "B3's heavy sans headlines over a serif body, inside B1's frame: orange top bar, thick rules, big orange figures. Light footer, black buttons.",
+  },
+  {
+    id: 'r3',
+    name: 'All sans, orange forward',
+    summary: 'Heavy sans headlines and sans body (no serif), orange top bar, solid orange proof strip, orange buttons. Light footer.',
+  },
+  {
+    id: 'r3-less',
+    name: 'R3, less orange area',
+    summary: 'R3 with the proof strip back on paper and the figures in orange. Everything else unchanged.',
+  },
+  {
+    id: 'r3-light',
+    name: 'R3, lighter orange',
+    summary: 'R3 with a lighter orange (#FF6B33) for the top bar, proof block and buttons. Links unchanged.',
+  },
+  {
+    id: 'r3-one',
+    name: 'R3, orange in one place',
+    summary: 'R3 with orange only on the proof block: no top bar, black buttons.',
+  },
+  {
+    id: 'r3-soft',
+    name: 'R3, softer headlines',
+    summary: 'R3 with bold (not extra-bold), slightly less tightly spaced headlines. Orange unchanged.',
+  },
+];
+// The decision table only covers the first round (B to B3).
+const optionIds = ['b', 'b1', 'b2', 'b3'];
+const tableOptions = options.filter((o) => optionIds.includes(o.id));
+
+// How the options differ, one design decision per row.
+const axes = [
+  { axis: 'Where the boldness comes from', b: '(Not bold: the baseline)', b1: 'Type size and heavy rules', b2: 'Dark bands of color (contrast)', b3: 'Solid color blocks and heavy weight' },
+  { axis: 'Orange', b: 'Muted rust #A4471F', b1: 'Browns #FF3C00 for bars and figures; deeper #C72E00 for links', b2: 'Browns #FF3C00 on brown; #C72E00 for links on paper', b3: 'Browns #FF3C00 as a filled block; #C72E00 for links' },
+  { axis: 'Paper', b: 'Warm off-white', b1: 'Warm off-white', b2: 'Warmer, slightly darker paper', b3: 'Warm off-white' },
+  { axis: 'Dark color', b: 'Warm near-black text', b1: 'Ink black (text, rules, buttons)', b2: 'Browns brown #311D00 (bands)', b3: 'Ink black (footer)' },
+  { axis: 'Headline face', b: 'Serif, semibold', b1: 'Serif, bold, much larger, tight', b2: 'Serif, bold, large', b3: 'Sans-serif, extra-bold, very tight' },
+  { axis: 'Body face', b: 'Sans-serif', b1: 'Sans-serif', b2: 'Sans-serif', b3: 'Serif' },
+  { axis: 'Labels', b: 'Sentence case', b1: 'Uppercase, wide spacing', b2: 'Condensed uppercase', b3: 'Small, extra-bold uppercase' },
+  { axis: 'Header', b: 'Paper, hairline below', b1: 'Orange bar above, thick ink rule below', b2: 'Solid brown band', b3: 'Paper, no rule' },
+  { axis: 'Proof strip', b: 'Hairlines', b1: 'Thick ink rule, big orange figures', b2: 'Continues the brown hero band, orange rule below', b3: 'Solid orange block, black figures' },
+  { axis: 'Footer', b: 'Light warm gray', b1: 'Light warm gray', b2: 'Brown band', b3: 'Ink-black band' },
+  { axis: 'Primary button', b: 'Rust, white text', b1: 'Ink black, paper text', b2: 'Orange, brown text', b3: 'Orange, black text' },
+];
+
+const baseColors = [
+  ['Browns', ['--browns-orange', '--browns-orange-hover', '--orange-text', '--orange-text-hover', '--brown-900', '--brown-700', '--tan-300', '--ink-black']],
+  ['Cool gray', ['--gray-0', '--gray-50', '--gray-100', '--gray-200', '--gray-400', '--gray-600', '--gray-800', '--gray-900']],
+  ['Warm', ['--warm-0', '--warm-25', '--warm-50', '--warm-200', '--warm-600', '--warm-900']],
+  ['Orange', ['--orange-50', '--orange-500', '--orange-600', '--orange-700']],
+] as const;
+
+const roleColors = [
+  ['--color-bg', 'Page background'],
+  ['--color-bg-alt', 'Footer and panel background'],
+  ['--color-text', 'Body text and headings'],
+  ['--color-text-muted', 'Dates, labels, secondary text'],
+  ['--color-rule', 'Divider lines'],
+  ['--color-accent', 'Links, buttons, figures'],
+  ['--color-accent-hover', 'Hover state for accent'],
+  ['--color-accent-tint', 'Callout and translation backgrounds'],
+  ['--color-brand', 'Brand orange: bars, figures, fills (large things only)'],
+  ['--header-bg', 'Header surface'],
+  ['--hero-bg', 'Hero surface'],
+  ['--proof-bg', 'Proof strip surface'],
+  ['--footer-bg', 'Footer surface'],
+  ['--button-bg', 'Primary button'],
+] as const;
+
+const roleOther = [
+  ['--font-heading', 'Heading family'],
+  ['--font-body', 'Body family'],
+  ['--font-label', 'Label family'],
+  ['--font-figure', 'Figure family (numbers)'],
+  ['--weight-heading', 'Heading weight'],
+  ['--h1-size', 'Largest headline size'],
+  ['--label-case', 'Label capitalization'],
+  ['--text-body', 'Body text size'],
+  ['--radius', 'Corner radius'],
+  ['--rule-strong', 'Strong rule (top of blocks)'],
+  ['--space-section', 'Space between sections'],
+  ['--measure', 'Reading width'],
+] as const;
+
+const typeScale = ['--size-sm', '--size-md', '--size-lg', '--size-xl', '--size-2xl', '--size-3xl', '--size-4xl'];
+const spaceScale = ['--space-1', '--space-2', '--space-3', '--space-4', '--space-5', '--space-6', '--space-7', '--space-8', '--space-9'];
+
+const lorem =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+---
+
+<!doctype html>
+<html lang="en" data-theme={theme}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Style guide</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="sg-toolbar">
+      <div class="container sg-toolbar-inner">
+        <strong class="sg-title">Style guide</strong>
+        <div class="sg-switch" role="group" aria-label="Design option">
+          {options.map((o) => (
+            <button type="button" data-option={o.id} aria-pressed={o.id === theme ? 'true' : 'false'} title={o.name}>
+              {o.id.toUpperCase()}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="container sg-intro">
+      {options.map((o) => (
+        <p class="sg-summary" data-summary={o.id} hidden={o.id !== theme}>
+          <strong>Option {o.id.toUpperCase()}: {o.name}.</strong> {o.summary}
+        </p>
+      ))}
+      <p class="sg-note">
+        All text below is dummy text. The components use only role tokens, so every difference between the
+        options comes from <code>src/styles/tokens/themes.css</code>. Mix and match by copying a row from one
+        option into another. Start with the <a href="#eye-test">eye test</a>.
+      </p>
+      <nav class="sg-toc" aria-label="Sections">
+        <a href="#eye-test">Eye test</a>
+        <a href="#compare">How the options differ</a>
+        <a href="#orange">About the orange</a>
+        <a href="#tokens">Tokens</a>
+        <a href="#type">Typography</a>
+        <a href="#components">Components</a>
+      </nav>
+    </div>
+
+    <!-- ───────────── Eye test ───────────── -->
+    <section id="eye-test" class="container sg-section" data-round={JSON.stringify(currentRound)} data-names={JSON.stringify(Object.fromEntries(options.map((o) => [o.id, `${o.id.toUpperCase()} · ${o.name}`])))}>
+      <h2 class="sg-h">Eye test · {currentRound.name}</h2>
+      <p class="sg-desc">
+        Like the optometrist: flip between <strong>1</strong> and <strong>2</strong> (the buttons, or
+        the <kbd>1</kbd> and <kbd>2</kbd> keys), scroll if you like, then say which is better. The winner stays on
+        for the next comparison. Names stay hidden until the end. Dummy text throughout.
+      </p>
+      <div class="sg-exam-bar">
+        <span class="sg-exam-progress" id="exam-progress"></span>
+        <div class="sg-exam-group" role="group" aria-label="Show option">
+          <button type="button" data-lens="0" aria-pressed="true">1</button>
+          <button type="button" data-lens="1" aria-pressed="false">2</button>
+        </div>
+        <div class="sg-exam-group">
+          <button type="button" class="sg-pick" data-pick="0">1 is better</button>
+          <button type="button" class="sg-pick" data-pick="1">2 is better</button>
+        </div>
+      </div>
+      <div class="sg-exam-result" id="exam-result" hidden>
+        <p class="sg-exam-winner" id="exam-winner"></p>
+        <ol id="exam-log"></ol>
+        <p class="sg-desc">Paste these results into the chat, or just tell me the winner.</p>
+        <div class="sg-exam-group">
+          <button type="button" id="exam-copy">Copy results</button>
+          <button type="button" id="exam-restart">Start over</button>
+        </div>
+      </div>
+      <div class="sg-frame flush sg-page sg-lens" id="exam-lens" data-theme={currentRound.start}>
+        <Header current="/" />
+        <Hero label="Label · Location" title="Headline text sample, about this long">
+          <p>Lede text. {lorem}</p>
+          <Fragment slot="actions">
+            <Button href="#eye-test">Primary action</Button>
+            <Button href="#eye-test" variant="secondary">Secondary action</Button>
+          </Fragment>
+        </Hero>
+        <ProofStrip
+          items={[
+            { figure: '00+', label: 'Label for the first figure' },
+            { figure: '00', label: 'Label for the second figure' },
+            { figure: '$0.0M', label: 'Label for the third figure' },
+            { figure: 'AAA', label: 'Label for the fourth item' },
+          ]}
+        />
+        <div class="container section">
+          <h2>Section heading sample</h2>
+          <div class="sg-grid-3">
+            <ServiceBlock title="Service title one"><p>{loremShort}</p></ServiceBlock>
+            <ServiceBlock title="Service title two"><p>{loremShort}</p></ServiceBlock>
+            <ServiceBlock title="Service title three"><p>{loremShort}</p></ServiceBlock>
+          </div>
+        </div>
+        <div class="container section">
+          <h2>Second section heading</h2>
+          <ul class="sg-list">
+            <ArticleListItem title="Article title sample one" href="#eye-test" date={new Date('2026-10-01')} description={loremShort} />
+            <ArticleListItem title="Article title sample two" href="#eye-test" date={new Date('2026-09-01')} description={loremShort} />
+          </ul>
+        </div>
+        <Footer />
+      </div>
+    </section>
+
+    <!-- ───────────── Compare ───────────── -->
+    <section id="compare" class="container sg-section">
+      <h2 class="sg-h">How the options differ</h2>
+      <p class="sg-desc">Each row is one design decision. Pick per row, not per column.</p>
+      <div class="sg-table-wrap">
+        <table class="sg-table">
+          <thead>
+            <tr><th>Decision</th>{tableOptions.map((o) => <th>{o.id.toUpperCase()} · {o.name}</th>)}</tr>
+          </thead>
+          <tbody>
+            {axes.map((r) => (
+              <tr><th scope="row">{r.axis}</th>{optionIds.map((id) => <td>{r[id as keyof typeof r]}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ───────────── Orange ───────────── -->
+    <section id="orange" class="container sg-section">
+      <h2 class="sg-h">About the orange</h2>
+      <div class="sg-desc sg-prose">
+        <p>
+          Browns orange (<code>#FF3C00</code>) is bright, and bright colors don't contrast much with a light
+          background. Accessibility guidelines (WCAG AA) ask for a contrast ratio of at least
+          <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text, icons and lines.
+        </p>
+        <div class="sg-contrast">
+          <div style="background: var(--warm-0); color: var(--browns-orange)"><strong>Aa</strong> #FF3C00 on paper · 3.4:1 · large text, rules and fills only</div>
+          <div style="background: var(--warm-0); color: var(--orange-text)"><strong>Aa</strong> #C72E00 on paper · 5.3:1 · safe for links and small text</div>
+          <div style="background: var(--browns-orange); color: var(--ink-black)"><strong>Aa</strong> Ink black on #FF3C00 · 5.3:1 · safe</div>
+          <div style="background: var(--brown-900); color: var(--browns-orange)"><strong>Aa</strong> #FF3C00 on Browns brown · 4.5:1 · safe</div>
+        </div>
+        <p>
+          So the bold options use two oranges: true Browns orange for big, graphic things (bars, figures, filled
+          blocks, buttons with dark text), and a slightly deeper orange for links. Brand guidelines usually
+          work the same way. If you want the orange a bit lighter, it can only appear on dark backgrounds
+          or as a fill behind dark text, never as text on paper.
+        </p>
+      </div>
+    </section>
+
+    <!-- ───────────── Tokens ───────────── -->
+    <section id="tokens" class="container sg-section">
+      <h2 class="sg-h">Tokens</h2>
+      <p class="sg-desc">
+        <strong>Base tokens</strong> are the raw palette and scales (<code>tokens/base.css</code>); they're the
+        same in every option. <strong>Role tokens</strong> say what a value is for (<code>tokens/themes.css</code>);
+        each option assigns them differently. Values update when you switch options.
+      </p>
+
+      <h3 class="sg-sub">Role tokens: color</h3>
+      <div class="sg-roles">
+        {roleColors.map(([name, use]) => (
+          <div class="sg-role">
+            <span class="sg-chip" style={`background: var(${name})`}></span>
+            <div>
+              <code>{name}</code>
+              <span class="sg-use">{use}</span>
+              <span class="sg-val" data-var={name}></span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="sg-sub">Role tokens: type, shape, space</h3>
+      <dl class="sg-kv">
+        {roleOther.map(([name, use]) => (
+          <div>
+            <dt><code>{name}</code><span class="sg-use">{use}</span></dt>
+            <dd class="sg-val" data-var={name}></dd>
+          </div>
+        ))}
+      </dl>
+
+      <h3 class="sg-sub">Base palette</h3>
+      {baseColors.map(([group, names]) => (
+        <div class="sg-palette">
+          <span class="sg-palette-name">{group}</span>
+          <div class="sg-swatches">
+            {names.map((n) => (
+              <div class="sg-swatch">
+                <span class="sg-chip lg" style={`background: var(${n})`}></span>
+                <code>{n}</code>
+                <span class="sg-val" data-var={n}></span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <h3 class="sg-sub">Type scale</h3>
+      <div class="sg-scale">
+        {typeScale.map((n) => (
+          <div class="sg-scale-row">
+            <code>{n} <span class="sg-val" data-var={n}></span></code>
+            <span style={`font-size: var(${n}); font-family: var(--font-heading); line-height: 1.2`}>Plant floor data</span>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="sg-sub">Spacing scale</h3>
+      <div class="sg-scale">
+        {spaceScale.map((n) => (
+          <div class="sg-scale-row">
+            <code>{n} <span class="sg-val" data-var={n}></span></code>
+            <span class="sg-bar" style={`width: var(${n})`}></span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ───────────── Typography ───────────── -->
+    <section id="type" class="container sg-section">
+      <h2 class="sg-h">Typography</h2>
+      <div class="sg-frame">
+        <div class="prose measure">
+          <span class="label">Label text</span>
+          <h1>Heading level one sample</h1>
+          <p class="lede">Lede paragraph. {lorem}</p>
+          <h2>Heading level two sample</h2>
+          <p>Body paragraph. {lorem} <a href="#type">An inline link</a> sits in the middle of the text. {loremShort}</p>
+          <h3>Heading level three sample</h3>
+          <ul>
+            <li>List item one. {loremShort}</li>
+            <li>List item two. {loremShort}</li>
+            <li>List item three.</li>
+          </ul>
+          <blockquote><p>Block quote. {lorem}</p></blockquote>
+          <p class="muted">Muted text, for dates and secondary details.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Components ───────────── -->
+    <section id="components" class="container sg-section">
+      <h2 class="sg-h">Components</h2>
+
+      <article class="sg-component">
+        <header><h3>Header</h3><p>Every page. Shown with "Work" as the current page.</p></header>
+        <div class="sg-frame flush"><Header current="/work" /></div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Hero</h3><p>Home, top of page. Label, headline, lede, two actions.</p></header>
+        <div class="sg-frame flush">
+          <Hero label="Label · Location" title="Headline text sample">
+            <p>Lede text. {lorem}</p>
+            <Fragment slot="actions">
+              <Button href="#components">Primary action</Button>
+              <Button href="#components" variant="secondary">Secondary action</Button>
+            </Fragment>
+          </Hero>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Proof strip</h3><p>Home, under the hero. A figure and short label each.</p></header>
+        <div class="sg-frame flush">
+          <ProofStrip
+            items={[
+              { figure: '00+', label: 'Label for the first figure' },
+              { figure: '00', label: 'Label for the second figure' },
+              { figure: '$0.0M', label: 'Label for the third figure' },
+              { figure: 'AAA', label: 'Label for the fourth item' },
+            ]}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Service block</h3><p>Home ("What I do") and Consulting (engagement types).</p></header>
+        <div class="sg-frame">
+          <div class="sg-grid-3">
+            <ServiceBlock title="Service title one"><p>{lorem}</p></ServiceBlock>
+            <ServiceBlock title="Service title two"><p>{lorem}</p></ServiceBlock>
+            <ServiceBlock title="Service title three" label="Label"><p>{lorem}</p></ServiceBlock>
+          </div>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Page header</h3><p>Top of every inner page.</p></header>
+        <div class="sg-frame">
+          <PageHeader label="Label" title="Page title sample"><p>Intro text. {lorem}</p></PageHeader>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Case study</h3><p>Work. Fixed format, with an optional translation line.</p></header>
+        <div class="sg-frame">
+          <CaseStudy
+            name="Client or project name"
+            meta="Organization · 0000–0000"
+            situation={`Situation text. ${lorem}`}
+            did={`What I did text. ${lorem}`}
+            result={`Result text with a number: 00 things. ${loremShort}`}
+            translation={`Translation line. ${loremShort}`}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Article list</h3><p>Writing index and Home (featured).</p></header>
+        <div class="sg-frame">
+          <ul class="sg-list">
+            <ArticleListItem title="Article title sample one" href="#components" date={new Date('2026-10-01')} description={loremShort} />
+            <ArticleListItem title="Article title sample two, a little longer than the first" href="#components" date={new Date('2026-09-01')} description={lorem} />
+          </ul>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Now block</h3><p>Home or About (undecided). Dated, 3–5 lines.</p></header>
+        <div class="sg-frame">
+          <NowBlock asOf="Month 0000" items={['Now item one. ' + loremShort, 'Now item two.', 'Now item three. ' + loremShort]} />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Process steps</h3><p>Consulting.</p></header>
+        <div class="sg-frame">
+          <ProcessSteps
+            steps={[
+              { title: 'Step one', text: loremShort },
+              { title: 'Step two', text: loremShort },
+              { title: 'Step three', text: loremShort },
+              { title: 'Step four', text: loremShort },
+            ]}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Callout</h3><p>Consulting (availability line).</p></header>
+        <div class="sg-frame">
+          <Callout label="Label"><p>Callout text. {loremShort}</p></Callout>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Buttons</h3><p>Hero and page-ending actions.</p></header>
+        <div class="sg-frame sg-row">
+          <Button href="#components">Primary action</Button>
+          <Button href="#components" variant="secondary">Secondary action</Button>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Portrait</h3><p>About. Empty frame, and the colored-pencil drawing for comparison.</p></header>
+        <div class="sg-frame sg-row">
+          <Portrait />
+          <Portrait src={drawing.src} alt="Colored-pencil portrait drawing" caption="Existing drawing" />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Contact list</h3><p>Contact.</p></header>
+        <div class="sg-frame">
+          <ContactList
+            items={[
+              { label: 'Email', value: 'name@example.com', href: 'mailto:name@example.com' },
+              { label: 'Profile', value: 'example.com/profile', href: '#components' },
+              { label: 'Location', value: 'City, State' },
+            ]}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Article footer</h3><p>End of every article.</p></header>
+        <div class="sg-frame">
+          <ArticleFooter><p>Author line one. {loremShort} Author line two. {loremShort}</p></ArticleFooter>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Footer</h3><p>Every page.</p></header>
+        <div class="sg-frame flush sg-footer"><Footer /></div>
+      </article>
+    </section>
+
+    <script>
+      const root = document.documentElement;
+      const buttons = document.querySelectorAll<HTMLButtonElement>('[data-option]');
+
+      function readValues() {
+        const styles = getComputedStyle(root);
+        document.querySelectorAll<HTMLElement>('[data-var]').forEach((el) => {
+          el.textContent = styles.getPropertyValue(el.dataset.var!).trim();
+        });
+      }
+
+      function apply(id: string) {
+        root.dataset.theme = id;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.option === id)));
+        document.querySelectorAll<HTMLElement>('[data-summary]').forEach((p) => {
+          p.hidden = p.dataset.summary !== id;
+        });
+        history.replaceState(null, '', `#${id}`);
+        readValues();
+      }
+
+      buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.option!)));
+
+      // Keep the sticky eye-test controls just below the toolbar, whatever its height.
+      const toolbar = document.querySelector<HTMLElement>('.sg-toolbar')!;
+      const setToolbarHeight = () => root.style.setProperty('--sg-toolbar-h', `${toolbar.offsetHeight}px`);
+      setToolbarHeight();
+      addEventListener('resize', setToolbarHeight);
+      new ResizeObserver(setToolbarHeight).observe(toolbar);
+      const fromHash = location.hash.slice(1);
+      apply([...buttons].some((b) => b.dataset.option === fromHash) ? fromHash : root.dataset.theme!);
+    </script>
+
+    <script>
+      // Eye test: king of the hill. The champion faces each challenger in turn;
+      // which side ("1" or "2") it appears on is random so position doesn't bias picks.
+      const section = document.getElementById('eye-test')!;
+      const names: Record<string, string> = JSON.parse(section.dataset.names!);
+      const lens = document.getElementById('exam-lens')!;
+      const progress = document.getElementById('exam-progress')!;
+      const result = document.getElementById('exam-result')!;
+      const winnerEl = document.getElementById('exam-winner')!;
+      const logEl = document.getElementById('exam-log')!;
+      const lensButtons = document.querySelectorAll<HTMLButtonElement>('[data-lens]');
+      const pickButtons = document.querySelectorAll<HTMLButtonElement>('[data-pick]');
+      const STORAGE_KEY = 'styleguide-eye-test';
+
+      // The round to run comes from src/styleguide/rounds.ts (the last entry).
+      const { start, challengers }: { start: string; challengers: string[] } = JSON.parse(section.dataset.round!);
+
+      let champion = start;
+      let round = 0;
+      let pair: [string, string] = [start, challengers[0]];
+      let showing = 0;
+      let log: string[] = [];
+
+      function show(i: number) {
+        showing = i;
+        lens.dataset.theme = pair[i];
+        lensButtons.forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.lens) === i)));
+      }
+
+      function setRound() {
+        const challenger = challengers[round];
+        pair = Math.random() < 0.5 ? [champion, challenger] : [challenger, champion];
+        progress.textContent = `Comparison ${round + 1} of ${challengers.length}`;
+        show(0);
+      }
+
+      function finish() {
+        progress.textContent = 'Done';
+        pickButtons.forEach((b) => (b.disabled = true));
+        winnerEl.textContent = `Winner: ${names[champion]}`;
+        logEl.replaceChildren(...log.map((line) => Object.assign(document.createElement('li'), { textContent: line })));
+        result.hidden = false;
+        lens.dataset.theme = champion;
+        lensButtons.forEach((b) => (b.disabled = true));
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ champion, log }));
+        } catch {}
+      }
+
+      function pick(i: number) {
+        const chosen = pair[i];
+        const other = pair[1 - i];
+        log.push(`${names[chosen]} over ${names[other]}`);
+        champion = chosen;
+        round += 1;
+        if (round >= challengers.length) finish();
+        else setRound();
+      }
+
+      function restart() {
+        champion = start;
+        round = 0;
+        log = [];
+        result.hidden = true;
+        pickButtons.forEach((b) => (b.disabled = false));
+        lensButtons.forEach((b) => (b.disabled = false));
+        setRound();
+      }
+
+      lensButtons.forEach((b) => b.addEventListener('click', () => show(Number(b.dataset.lens))));
+      pickButtons.forEach((b) => b.addEventListener('click', () => pick(Number(b.dataset.pick))));
+      document.getElementById('exam-restart')!.addEventListener('click', restart);
+      document.getElementById('exam-copy')!.addEventListener('click', () => {
+        const text = [`Eye test winner: ${names[champion]}`, ...log.map((l, i) => `${i + 1}. ${l}`)].join('\n');
+        navigator.clipboard?.writeText(text);
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.target instanceof HTMLInputElement || !result.hidden) return;
+        if (e.key === '1') show(0);
+        if (e.key === '2') show(1);
+      });
+
+      setRound();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Style guide chrome only. Deliberately plain and theme-independent. */
+  .sg-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #16191f;
+    color: #fff;
+    font-family: var(--family-sans);
+    font-size: 0.9rem;
+  }
+
+  .sg-toolbar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    padding-block: 0.6rem;
+  }
+
+  .sg-switch button {
+    min-width: 2.75rem;
+  }
+
+  .sg-switch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .sg-switch button {
+    font: inherit;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid #5c6573;
+    border-radius: 4px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .sg-switch button[aria-pressed='true'] {
+    background: #fff;
+    color: #16191f;
+    border-color: #fff;
+  }
+
+  .sg-intro {
+    padding-block: 1.5rem 0;
+    font-family: var(--family-sans);
+  }
+
+  .sg-summary {
+    font-size: 1.1rem;
+  }
+
+  .sg-note,
+  .sg-desc,
+  .sg-component > header p,
+  .sg-use,
+  .sg-val,
+  .sg-palette-name {
+    font-family: var(--family-sans);
+    font-size: 0.9rem;
+    color: #4a5261;
+  }
+
+  .sg-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-family: var(--family-sans);
+    font-size: 0.95rem;
+  }
+
+  .sg-section {
+    padding-block: 3rem;
+    border-top: 1px solid #d8dde4;
+    margin-top: 2rem;
+  }
+
+  .sg-h,
+  .sg-sub,
+  .sg-component > header h3 {
+    font-family: var(--family-sans);
+    letter-spacing: 0;
+    font-weight: 700;
+  }
+
+  .sg-h {
+    font-size: 1.6rem;
+  }
+
+  .sg-sub {
+    font-size: 1.05rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .sg-table-wrap {
+    overflow-x: auto;
+  }
+
+  .sg-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 36rem;
+    font-family: var(--family-sans);
+    font-size: 0.95rem;
+  }
+
+  .sg-table th,
+  .sg-table td {
+    text-align: left;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #d8dde4;
+    vertical-align: top;
+  }
+
+  .sg-table thead th {
+    border-bottom: 2px solid #16191f;
+  }
+
+  .sg-chip {
+    display: inline-block;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
+
+  .sg-chip.lg {
+    width: 100%;
+    height: 3rem;
+  }
+
+  .sg-roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 0.75rem 1.5rem;
+  }
+
+  .sg-role {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .sg-role code,
+  .sg-kv code,
+  .sg-swatch code,
+  .sg-scale code {
+    display: block;
+    font-family: var(--family-mono);
+    font-size: 0.8rem;
+  }
+
+  .sg-use,
+  .sg-val {
+    display: block;
+  }
+
+  .sg-val {
+    font-family: var(--family-mono);
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+  }
+
+  .sg-kv {
+    margin: 0;
+  }
+
+  .sg-kv > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 1rem;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid #d8dde4;
+  }
+
+  .sg-kv dd {
+    margin: 0;
+  }
+
+  .sg-palette {
+    margin-bottom: 1.25rem;
+  }
+
+  .sg-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+  }
+
+  .sg-scale-row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 0.4rem;
+    border-bottom: 1px solid #e9edf1;
+  }
+
+  .sg-scale-row .sg-val {
+    display: inline;
+    color: #8a93a1;
+  }
+
+  .sg-bar {
+    display: block;
+    height: 0.75rem;
+    background: var(--color-accent);
+  }
+
+  .sg-component {
+    margin-top: 2.5rem;
+  }
+
+  .sg-component > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .sg-component > header h3 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .sg-component > header p {
+    margin: 0;
+  }
+
+  .sg-frame {
+    padding: 1.5rem;
+    border: 1px dashed #b8c0cc;
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .sg-frame.flush {
+    padding: 0;
+  }
+
+  .sg-footer .site-footer,
+  .sg-page .site-footer {
+    margin-top: 0;
+  }
+
+  .sg-lens {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+  }
+
+  .sg-exam-bar {
+    position: sticky;
+    top: var(--sg-toolbar-h, 3rem);
+    z-index: 15;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    background: #fff;
+    border: 1px solid #d8dde4;
+    font-family: var(--family-sans);
+    font-size: 0.95rem;
+  }
+
+  .sg-exam-progress {
+    font-weight: 700;
+    min-width: 9rem;
+  }
+
+  .sg-exam-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .sg-exam-group button,
+  .sg-exam-result button {
+    font: inherit;
+    font-family: var(--family-sans);
+    padding: 0.4rem 0.9rem;
+    border: 1px solid #16191f;
+    border-radius: 4px;
+    background: #fff;
+    color: #16191f;
+    cursor: pointer;
+  }
+
+  [data-lens] {
+    min-width: 2.75rem;
+    font-weight: 700;
+  }
+
+  [data-lens][aria-pressed='true'] {
+    background: #16191f;
+    color: #fff;
+  }
+
+  .sg-exam-group button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .sg-exam-result {
+    margin-bottom: 1rem;
+    padding: 1rem 1.25rem;
+    background: #f4f6f8;
+    border: 1px solid #d8dde4;
+    font-family: var(--family-sans);
+    font-size: 1rem;
+    color: #16191f;
+  }
+
+  .sg-exam-winner {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .sg-prose {
+    max-width: 46rem;
+    font-size: 1rem;
+    color: #262b33;
+  }
+
+  .sg-contrast {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .sg-contrast > div {
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    font-family: var(--family-sans);
+  }
+
+  .sg-contrast strong {
+    font-size: 1.4rem;
+    margin-right: 0.5rem;
+  }
+
+  .sg-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .sg-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-6);
+  }
+
+  .sg-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (max-width: 30rem) {
+    .sg-frame {
+      padding: 1rem;
+    }
+
+    .sg-scale-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

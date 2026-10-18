@@ -1,0 +1,58 @@
+---
+// Contact methods as label/value rows. Items without an href render as plain text.
+interface Props {
+  items: { label: string; value: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<dl class="contact">
+  {items.map(({ label, value, href }) => (
+    <div>
+      <dt>{label}</dt>
+      <dd>{href ? <a href={href}>{value}</a> : value}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .contact {
+    max-width: var(--measure);
+    margin: 0;
+  }
+
+  .contact > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-bottom: var(--rule);
+  }
+
+  .contact > div:first-child {
+    border-top: var(--rule-strong);
+  }
+
+  dt {
+    font-family: var(--font-label);
+    font-size: var(--label-size);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--label-tracking);
+    text-transform: var(--label-case);
+    color: var(--color-text-muted);
+    padding-top: 0.2em;
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 30rem) {
+    .contact > div {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

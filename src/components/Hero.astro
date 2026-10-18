@@ -1,0 +1,41 @@
+---
+// Home page opening: label, headline, lede, actions. Full width, so a theme can
+// give it a background band. Slots: default (lede text), "actions" (Buttons).
+interface Props {
+  label?: string;
+  title: string;
+}
+
+const { label, title } = Astro.props;
+---
+
+<section class="hero">
+  <div class="container">
+    {label && <span class="label">{label}</span>}
+    <h1>{title}</h1>
+    <div class="lede measure"><slot /></div>
+    <div class="actions"><slot name="actions" /></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-section) var(--space-block);
+    background: var(--hero-bg);
+    color: var(--hero-text);
+  }
+
+  .label {
+    color: var(--hero-muted);
+  }
+
+  .lede {
+    margin-bottom: var(--space-5);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

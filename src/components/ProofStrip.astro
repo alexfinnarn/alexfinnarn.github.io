@@ -1,0 +1,67 @@
+---
+// A row of figures, each with a short label. Full width, so a theme can give it a
+// background band. Wraps to two columns on phones.
+interface Props {
+  items: { figure: string; label: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="proof-band" aria-label="Key figures">
+  <div class="container">
+    <dl class="proof">
+      {items.map(({ figure, label }) => (
+        <div class="item">
+          <dt class="figure">{figure}</dt>
+          <dd class="item-label">{label}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .proof-band {
+    background: var(--proof-bg);
+  }
+
+  .proof {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-4) var(--space-5);
+    margin: 0;
+    padding-block: var(--space-5);
+    border-top: var(--proof-top);
+    border-bottom: var(--proof-bottom);
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .figure {
+    font-family: var(--font-figure);
+    font-size: var(--figure-size);
+    font-weight: 700;
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.05;
+    color: var(--proof-figure);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .item-label {
+    margin: var(--space-1) 0 0;
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+    line-height: 1.4;
+    color: var(--proof-text);
+  }
+
+  @media (max-width: 30rem) {
+    .proof {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

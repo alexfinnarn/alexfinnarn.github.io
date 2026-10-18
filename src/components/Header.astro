@@ -1,0 +1,105 @@
+---
+import { nav, site } from '../site';
+
+interface Props {
+  /** Override the current path (used by the style guide). Defaults to the page URL. */
+  current?: string;
+}
+
+const path = (Astro.props.current ?? Astro.url.pathname).replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="wordmark" href="/" aria-current={path === '/' ? 'page' : undefined}>
+      <span class="name">{site.name}</span>
+      <span class="role">{site.role}</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {nav.map(({ href, label }) => (
+          <li>
+            <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-top: var(--header-top);
+    border-bottom: var(--header-bottom);
+    background: var(--header-bg);
+    color: var(--header-text);
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-4);
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    color: var(--header-text);
+    text-decoration: none;
+    line-height: 1.25;
+  }
+
+  .name {
+    font-family: var(--font-heading);
+    font-size: var(--size-lg);
+    font-weight: 700;
+  }
+
+  .role {
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+    color: var(--header-muted);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    display: inline-block;
+    padding-block: var(--space-1);
+    color: var(--header-text);
+    font-family: var(--font-label);
+    font-size: var(--size-md);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: var(--line-2) solid transparent;
+  }
+
+  nav a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  nav a[aria-current='page'] {
+    border-bottom-color: var(--header-current);
+  }
+
+  @media (max-width: 40rem) {
+    .bar {
+      padding-block: var(--space-3);
+    }
+
+    ul {
+      gap: var(--space-1) var(--space-4);
+    }
+  }
+</style>

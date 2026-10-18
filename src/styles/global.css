@@ -1,0 +1,151 @@
+/* Element defaults and shared helpers. Uses role tokens only (see tokens/themes.css). */
+@import './tokens/base.css';
+@import './tokens/themes.css';
+
+:root {
+  color-scheme: light;
+  --gutter: clamp(1rem, 4vw, 2rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-heading);
+  margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--h1-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--size-xl); }
+
+p,
+ul,
+ol {
+  margin: 0 0 var(--space-4);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Layout helpers */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.section + .section {
+  border-top: var(--rule);
+}
+
+/* Small uppercase (or not, per theme) label above a heading */
+.label {
+  display: block;
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: var(--weight-label);
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-case);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.lede {
+  font-size: clamp(var(--size-lg), 1.05rem + 0.45vw, var(--size-xl));
+  line-height: 1.5;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+/* Long-form text */
+.prose h2 {
+  margin-top: var(--space-6);
+}
+
+.prose li + li {
+  margin-top: var(--space-2);
+}
+
+.prose blockquote {
+  margin: var(--space-5) 0;
+  padding-left: var(--space-4);
+  border-left: var(--line-3) solid var(--color-accent);
+  color: var(--color-text-muted);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -3rem;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+  color: var(--color-on-accent);
+}

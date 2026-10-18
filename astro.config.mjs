@@ -1,21 +1,31 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import mdx from '@astrojs/mdx';
-import react from '@astrojs/react';
+/**
+ * Adds /styleguide while running `npm run dev`. It is never part of a production build.
+ * @type {import('astro').AstroIntegration}
+ */
+const styleguide = {
+  name: 'styleguide',
+  hooks: {
+    'astro:config:setup': ({ command, injectRoute }) => {
+      if (command === 'dev') {
+        injectRoute({ pattern: '/styleguide', entrypoint: './src/styleguide/Styleguide.astro' });
+      }
+    },
+  },
+};
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://alexfinnarn.github.io',
-  base: '/',
   output: 'static',
-  srcDir: './src',
-  publicDir: './public',
-  compressHTML: false,
-  scopedStyleStrategy: 'where',
-  integrations: [mdx(),
-    react({
-      experimentalReactChildren: true,
-    })
-  ],
+  integrations: [styleguide],
+  // Old URLs from the previous site, pointed at their closest replacement.
+  redirects: {
+    '/projects': '/work',
+    '/projects/shipping-container': '/work',
+    '/tags': '/writing',
+    '/fractal': '/',
+  },
 });
