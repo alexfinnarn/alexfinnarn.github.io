@@ -1,7 +1,7 @@
 # Notes for AI agents
 
 Alex Finnarn's personal site: a static Astro site deployed to GitHub Pages from the `astro`
-branch. Where it's going is in [docs/site-vision.md](docs/site-vision.md).
+branch. What each page is for is in [docs/ia/](docs/ia/).
 
 ## How Alex wants to work
 
@@ -33,9 +33,8 @@ branch. Where it's going is in [docs/site-vision.md](docs/site-vision.md).
 
 ## Docs
 
-- [docs/site-vision.md](docs/site-vision.md): goals, audience, voice, pages. Alex's document;
-  it wins on conflicts.
-- [docs/ia/](docs/ia/): information architecture, with one doc per page.
+- [docs/ia/](docs/ia/): information architecture, with one doc per page. Alex's decisions
+  there win on conflicts.
 - [docs/design/decisions.md](docs/design/decisions.md): how the visual direction was chosen.
 - [docs/design/eye-test.md](docs/design/eye-test.md): the "1 or 2?" comparison tool and how to
   run a new round.

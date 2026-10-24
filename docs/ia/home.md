@@ -5,24 +5,24 @@
 
 ## Purpose
 
-From site-vision.md §1 and §5: the page that has to pass the 30-second test. A manufacturing leader,
-staffing partner, or prospective client should be able to say who you are, why they might call you,
-and how to reach you, all without scrolling on a phone. Every other page backs up what this one claims.
+The first page most visitors see. Within a few seconds they should know who Alex is, why they might
+get in touch, and where to go next. Every other page backs up what this one claims.
 
-### Questions
+## Decisions
 
-1. The vision puts two actions in the hero: **Writing** and **Contact**. Should the first be **Work**
-   instead? Until articles are published, Writing has little behind it, while Work has your strongest
-   proof.
-2. On a phone, the hero, the proof strip, and a contact action all need to fit above the fold. Something
-   has to stay short. Which matters most to you if they don't all fit: the full positioning line, all
-   proof figures, or the "What I do" heading peeking into view?
-3. The proof strip in the vision has five items, and one of them ("Python, SQL, and integration work
-   throughout") is a skill list rather than a number. Keep it in the strip, or move it to "What I do"?
-4. Featured writing has three slots. What shows while fewer than three articles are published: hide the
-   section, show only what exists, or show the slots as "coming soon"? (The vision rules out placeholders,
-   which suggests hiding.)
-5. The "Now" block: does it belong on Home, or on About, with a link from Home?
+- The hero is interactive: an Ink-style story where the visitor picks from choice cards. Cards work
+  as tap targets on a phone.
+- Featured writing shows whatever is published; nothing is pinned (see [Writing](writing.md)).
+
+## Open questions
+
+1. Where does the hero story lead? Each run should end somewhere: a case study, an article, Contact.
+   Knowing the possible endings tells us which pages the story has to link to.
+2. On featured writing you said "all of them" and "why not rotate the design of sections?" Did you
+   mean the layout of the section changes on each visit, or that each section on Home uses a different
+   layout from the others?
+3. Is there a "What I do" section below the hero, or does the story cover that? If it stays, it
+   should probably be the same skills menu as [Consulting](consulting.md), in short form.
 
 ## Primary visitor and their question
 
@@ -34,27 +34,17 @@ and how to reach you, all without scrolling on a phone. Every other page backs u
 
 ## Sections
 
-Starting point from site-vision.md §5. Keep, reorder, or cut.
-
 1. **Hero**
-   - What it holds: Name, positioning line, location, two actions
-   - Component: Hero, Button
+   - What it holds: Name, location, and the story with choice cards
+   - Component: Hero, ChoiceCard
    - Notes:
-2. **Proof strip**
-   - What it holds: 4–5 figures with labels
-   - Component: ProofStrip
+2. **What I do** *(see open question 3)*
+   - What it holds: Short skills list linking to Consulting
+   - Component: SkillMenu
    - Notes:
-3. **What I do**
-   - What it holds: Three blocks, one short paragraph each
-   - Component: ServiceBlock ×3
-   - Notes:
-4. **Featured writing**
-   - What it holds: Up to three pinned articles
-   - Component: ArticleListItem ×3
-   - Notes:
-5. **Now**
-   - What it holds: Dated, 3–5 lines
-   - Component: NowBlock
+3. **Featured writing**
+   - What it holds: Recent articles
+   - Component: ArticleListItem ×n
    - Notes:
 - **Footer** (every page)
   - What it holds: Site-wide

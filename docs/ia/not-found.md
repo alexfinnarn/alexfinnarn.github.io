@@ -5,14 +5,17 @@
 
 ## Purpose
 
-From site-vision.md §5 and §6: catches broken and old links, including the 2025 post URLs that are not
-migrated. It should be plain, with no jokes, and get the visitor back on track.
+Catches broken and old links and gets the visitor back on track.
 
-### Questions
+## Decisions
 
-1. Which links should it offer: Home only, or the main navigation plus Contact?
-2. Should it mention that the site was rebuilt and older posts were retired? That explains why an old
-   link broke, but it draws attention to the old material.
+- Offer a way to report the broken link: file an issue or start a discussion on GitHub.
+- No explanation that the site was rebuilt or that old posts were retired.
+
+## Open questions
+
+1. Most non-developers don't have GitHub accounts. Should the page also show the main navigation
+   (or Home and Contact links) first, with "report this" as a smaller link after?
 
 ## Sections
 
@@ -20,9 +23,13 @@ migrated. It should be plain, with no jokes, and get the visitor back on track.
    - What it holds: Heading and one sentence
    - Component: PageHeader
    - Notes:
-2. **Links onward**
+2. **Links onward** *(see open question 1)*
    - What it holds: Home and Contact
    - Component: Button
+   - Notes:
+3. **Report it**
+   - What it holds: Link to a new GitHub issue or discussion
+   - Component: Link
    - Notes:
 
 ## Metadata

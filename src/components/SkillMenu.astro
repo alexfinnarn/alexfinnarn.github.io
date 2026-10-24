@@ -1,0 +1,64 @@
+---
+// The à la carte skills menu: each skill with a short description and links to the case
+// studies that show it. Consulting shows the full menu; Home can show a short one.
+interface Props {
+  items: {
+    title: string;
+    description: string;
+    work?: { title: string; href: string }[];
+  }[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="skills">
+  {items.map(({ title, description, work }) => (
+    <li class="skill">
+      <h3>{title}</h3>
+      <p>{description}</p>
+      {work && work.length > 0 && (
+        <p class="work">
+          <span class="label">See</span>
+          {work.map(({ title, href }, i) => (
+            <>{i > 0 && ' · '}<a href={href}>{title}</a></>
+          ))}
+        </p>
+      )}
+    </li>
+  ))}
+</ul>
+
+<style>
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skill {
+    padding-top: var(--space-4);
+    border-top: var(--rule-strong);
+  }
+
+  h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .work {
+    margin: var(--space-3) 0 0;
+    font-size: var(--size-sm);
+  }
+
+  .work .label {
+    display: inline;
+    margin-right: var(--space-2);
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+</style>

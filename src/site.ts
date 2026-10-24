@@ -1,11 +1,10 @@
 // Facts that appear on more than one page. Change them here, not in the pages.
-// Copy (taglines, bios, proof labels, "Now" lines) is not stored here until Alex writes it.
+// Copy (taglines, bios) is not stored here until Alex writes it.
 
 export const site = {
   name: 'Alex Finnarn',
   role: 'Senior Software Consultant',
   location: 'Troy, Ohio',
-  email: 'alex.finnarn@protonmail.com',
   linkedin: 'https://www.linkedin.com/in/alexfinnarn/',
   github: 'https://github.com/alexfinnarn',
 };

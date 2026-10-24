@@ -1,27 +1,28 @@
 # Work
 
-- **URL:** `/work`
+- **URL:** `/work` (index), `/work/<slug>` (each case study)
 - **Status:** draft
 
 ## Purpose
 
-From site-vision.md §5: the evidence page. It answers the plant-manager test, "has he done work like this,
-at stakes like mine?", through three or four case studies in one sober, repeating format: **Situation /
-What I did / Result**, with numbers, plus a closing line translating each one into a manufacturer's terms.
+The evidence page. Each case study shows a problem and how Alex solved it, so a visitor can judge
+whether he can handle theirs.
 
-### Questions
+## Decisions
 
-1. One long page with all case studies, or an index page with each case study on its own URL
-   (`/work/university-of-denver`)? Separate pages are easier to send to someone on their own; one page is
-   easier to scan.
-2. Can you name the clients? The vision names University of Denver, University of Colorado, and
-   CivicActions/VA/CMS. Check any contracts or NDAs before publishing names and dollar figures.
-3. Should each case study show dates or years? It helps credibility ("2023–2025"), but also dates the work.
-4. Is the "Translation" line visible to readers as a labeled part ("In plant terms: …"), or worked
-   into the Result paragraph?
-5. Order: by strength of evidence, by recency, or by closeness to manufacturing?
-6. Does the headless architecture proposal (case 4) belong here, or is it better as an article, since its
-   result is a document rather than a shipped system?
+- An index page, with each case study on its own page so it can be sent to someone on its own.
+- Format is **Problem → Solution → Result**, not Client → Implementation. The writing keys in on the
+  problem and what Alex did and learned. The client or project gets mentioned, but isn't the lead.
+- Case studies can be project-based rather than client-based. Placeholders are fine until the real
+  ones are written.
+- No dates on case studies for now.
+- Order doesn't matter yet; random is fine.
+- Proposal-style work (a written architecture proposal, for example) counts if it's told as a
+  problem and how it was solved.
+
+## Open questions
+
+None right now.
 
 ## Primary visitor and their question
 
@@ -33,27 +34,38 @@ What I did / Result**, with numbers, plus a closing line translating each one in
 
 ## Sections
 
+Index page:
+
 1. **Page header**
    - What it holds: Heading and a one- or two-sentence intro
    - Component: PageHeader
    - Notes:
-2. **Case studies**
-   - What it holds: 3–4 items, same format each
-   - Component: CaseStudy ×n
+2. **Case study list**
+   - What it holds: Title and problem line for each, linking to its page
+   - Component: CaseStudyListItem ×n
    - Notes:
 3. **Closing action**
    - What it holds: Lead to Consulting or Contact
    - Component: Button
    - Notes:
 
-Case studies listed in site-vision.md §5, as a starting point:
+Case study page:
 
-1. University of Denver: Drupal 9→10 migration of 20 sites; Playwright QA
-2. University of Colorado giving platform: $5.4M/year
-3. CivicActions (federal): VA/CMS backend engineering
-4. Headless architecture proposal (DU "Why" rebuild)
+1. **Header**
+   - What it holds: Title, project (optional), skills
+   - Component: PageHeader
+   - Notes:
+2. **Problem / Solution / Result**
+   - What it holds: The three parts, in that order
+   - Component: Prose
+   - Notes:
+3. **Closing action**
+   - What it holds: Lead to Contact or a related skill on Consulting
+   - Component: Button
+   - Notes:
 
 ## Metadata
 
-- **Title:** `Work | Alex Finnarn — Senior Software Consultant, Troy, Ohio`
+- **Title:** `Work | Alex Finnarn — Senior Software Consultant, Troy, Ohio`; case studies use
+  `<Case study title> | Alex Finnarn — …`
 - **Description:** *(Fill in)*

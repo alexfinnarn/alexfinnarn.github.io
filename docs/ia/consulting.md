@@ -5,30 +5,34 @@
 
 ## Purpose
 
-From site-vision.md §5: tells a prospective client what working with you looks like and how to start. It
-covers the kinds of engagement (advisory reviews, project work, contract engineering), a four-step process
-(listen and assess → written findings → build in small verified steps → hand over documented,
-maintainable systems), and a plain availability line. No published rates; "Contact to discuss scope."
+Tells anyone thinking of hiring Alex what he can do for them and how to start.
 
-### Questions
+## Decisions
 
-1. Is this page for direct clients only, or also for staffing partners placing you on contract? They're
-   reading for different things: scope and process versus availability and engagement type.
-2. Should each engagement type link to the matching case study on Work?
-3. How specific is the availability line? A month ("From January 2027"), a capacity ("One new engagement
-   this quarter"), or general? It has to stay accurate, so pick something you'll actually update.
-4. Do you want to state who you're **not** a fit for (for example, PLC programming or controls
-   engineering)? It's honest and fits the vision's credibility rule (§3), but it's a choice.
-5. Where does Ignition and industrial automation appear here: as an engagement type, or only on Home and
-   About as direction?
+- Every hirer is a client, whether a company or a staffing agency. The site markets Alex directly; it
+  isn't written for agencies to market him.
+- The page is an à la carte menu of skills, each linking to work that shows it. It will grow over time.
+- Build the structure with placeholder work examples now (an Ignition Maker Edition project, for
+  example) and fill the gaps before publishing.
+- Availability changes over time. Right now: open, outside the day job.
+- No "not a fit for" list. Alex is a generalist and would rather people get in touch.
+
+## Open questions
+
+1. Process: is there a "how working with me goes" section (steps from first conversation to handover),
+   or does the skills menu carry the page on its own?
 
 ## Primary visitor and their question
 
-*(Fill in)*
+1. "What can Alex do for me?"
+2. "What are his skills?" 
+3. "How is he different from the others?"
 
 ## Primary action
 
-*(Fill in)*
+An a la carte menu of my various skills that can link to work examples. 
+
+This will evolve over time as it is filled in.
 
 ## Sections
 
@@ -36,12 +40,12 @@ maintainable systems), and a plain availability line. No published rates; "Conta
    - What it holds: Heading and short intro
    - Component: PageHeader
    - Notes:
-2. **Engagement types**
-   - What it holds: Three types, short description each
-   - Component: ServiceBlock ×3
+2. **Skills menu**
+   - What it holds: Each skill with a short description and links to case studies that show it
+   - Component: SkillMenu
    - Notes:
-3. **Process**
-   - What it holds: Four steps
+3. **Process** *(see open question 1)*
+   - What it holds: Steps
    - Component: ProcessSteps
    - Notes:
 4. **Availability**
@@ -49,7 +53,7 @@ maintainable systems), and a plain availability line. No published rates; "Conta
    - Component: Callout
    - Notes:
 5. **Action**
-   - What it holds: Contact to discuss scope
+   - What it holds: Lead to Contact
    - Component: Button
    - Notes:
 

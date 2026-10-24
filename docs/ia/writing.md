@@ -5,22 +5,27 @@
 
 ## Purpose
 
-From site-vision.md §5 and §7: the list of finished, professional articles, newest first. It shows that
-you think and explain clearly, and gives staffing partners something they can forward to clients. Only
-pieces that pass the voice test (§4) appear. The 2018–2023 archive and the 2025 posts are not migrated.
+The list of articles, newest first. It shows that Alex thinks and explains clearly, and gives people
+something to forward.
 
-### Questions
+## Decisions
 
-1. What does this page show before anything is published? Options: hide Writing from the navigation
-   until the first article is out; launch the site only once one article is ready; or show a short line
-   saying articles are coming. (The vision's "no placeholders" rule argues against the third.)
-2. What does each list item show: title and date only, or title, date, and a one-line description?
-3. Should the three featured articles be marked or pinned at the top here too, or only on Home?
-4. Tags or topics: the old site had them. With a handful of articles they aren't needed. Leave them
-   out for now?
-5. Should Medium be linked as "older writing"? The vision keeps Medium up as an archive with a bio
-   pointing here, but doesn't say whether this site points back.
-6. An RSS feed? It's cheap to add and useful to the few people who use readers.
+- Before anything new is published, show placeholder article stubs, or copy over a few pieces Alex
+  likes from the current site.
+- Each list item shows title, date, description, and an image when the article has one.
+- No pinning.
+- Topics (tags) from the start. Alex likes the idea of building around user personas and user
+  stories, so topics may be organized that way.
+- An RSS feed.
+
+## Open questions
+
+1. Medium: Claude's suggestion is to list Medium pieces in this index like any other article, with
+   a small "on Medium" mark, linking straight to medium.com (the `externalUrl` field). That keeps one
+   list of everything Alex has written without copying posts here. Good?
+2. Topics as personas: should a topic name a kind of reader ("plant manager", "engineering lead"), or
+   a subject ("integration", "QA")? Personas fit the user-story idea; subjects are what readers
+   usually expect from tags.
 
 ## Primary visitor and their question
 
@@ -36,7 +41,11 @@ pieces that pass the voice test (§4) appear. The 2018–2023 archive and the 20
    - What it holds: Heading and short intro
    - Component: PageHeader
    - Notes:
-2. **Article list**
+2. **Topic filter**
+   - What it holds: Topics, linking to filtered views
+   - Component: TopicList
+   - Notes:
+3. **Article list**
    - What it holds: Newest first
    - Component: ArticleListItem ×n
    - Notes:

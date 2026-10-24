@@ -53,11 +53,13 @@ lighter orange, fewer orange places, or softer type.
 `<html data-theme>`. Adopted to live with while the pages are built, not final. To
 revisit, run another eye-test round (see [eye-test.md](eye-test.md)).
 
+The proof strip was removed from the site after the IA review (2026-10-24). R3-less differed
+from R3 only in the proof strip, so the two now render the same; the theme id stays `r3-less`.
+
 What R3-less is, in plain terms:
 - Warm off-white paper, ink-black text
 - Heavy, tightly spaced sans-serif headlines; sans-serif body
-- Browns orange `#FF3C00` as a bar across the top, the proof-strip numbers, and the
-  primary button (with dark text)
+- Browns orange `#FF3C00` as a bar across the top and the primary button (with dark text)
 - Small, extra-bold uppercase labels
 - Light warm-gray footer
 

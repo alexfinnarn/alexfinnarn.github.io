@@ -7,13 +7,11 @@ import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import Hero from '../components/Hero.astro';
 import PageHeader from '../components/PageHeader.astro';
-import ProofStrip from '../components/ProofStrip.astro';
-import ServiceBlock from '../components/ServiceBlock.astro';
+import SkillMenu from '../components/SkillMenu.astro';
 import CaseStudy from '../components/CaseStudy.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
-import NowBlock from '../components/NowBlock.astro';
 import Portrait from '../components/Portrait.astro';
-import ArticleFooter from '../components/ArticleFooter.astro';
+import CtaCard from '../components/CtaCard.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
 import Callout from '../components/Callout.astro';
 import ContactList from '../components/ContactList.astro';
@@ -96,7 +94,6 @@ const axes = [
   { axis: 'Body face', b: 'Sans-serif', b1: 'Sans-serif', b2: 'Sans-serif', b3: 'Serif' },
   { axis: 'Labels', b: 'Sentence case', b1: 'Uppercase, wide spacing', b2: 'Condensed uppercase', b3: 'Small, extra-bold uppercase' },
   { axis: 'Header', b: 'Paper, hairline below', b1: 'Orange bar above, thick ink rule below', b2: 'Solid brown band', b3: 'Paper, no rule' },
-  { axis: 'Proof strip', b: 'Hairlines', b1: 'Thick ink rule, big orange figures', b2: 'Continues the brown hero band, orange rule below', b3: 'Solid orange block, black figures' },
   { axis: 'Footer', b: 'Light warm gray', b1: 'Light warm gray', b2: 'Brown band', b3: 'Ink-black band' },
   { axis: 'Primary button', b: 'Rust, white text', b1: 'Ink black, paper text', b2: 'Orange, brown text', b3: 'Orange, black text' },
 ];
@@ -116,11 +113,10 @@ const roleColors = [
   ['--color-rule', 'Divider lines'],
   ['--color-accent', 'Links, buttons, figures'],
   ['--color-accent-hover', 'Hover state for accent'],
-  ['--color-accent-tint', 'Callout and translation backgrounds'],
+  ['--color-accent-tint', 'Callout background, secondary button hover'],
   ['--color-brand', 'Brand orange: bars, figures, fills (large things only)'],
   ['--header-bg', 'Header surface'],
   ['--hero-bg', 'Hero surface'],
-  ['--proof-bg', 'Proof strip surface'],
   ['--footer-bg', 'Footer surface'],
   ['--button-bg', 'Primary button'],
 ] as const;
@@ -146,6 +142,11 @@ const spaceScale = ['--space-1', '--space-2', '--space-3', '--space-4', '--space
 const lorem =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+const skillSamples = [
+  { title: 'Skill title one', description: lorem, work: [{ title: 'Case study one', href: '#components' }, { title: 'Case study two', href: '#components' }] },
+  { title: 'Skill title two', description: lorem, work: [{ title: 'Case study three', href: '#components' }] },
+  { title: 'Skill title three', description: lorem },
+];
 ---
 
 <!doctype html>
@@ -229,21 +230,9 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
             <Button href="#eye-test" variant="secondary">Secondary action</Button>
           </Fragment>
         </Hero>
-        <ProofStrip
-          items={[
-            { figure: '00+', label: 'Label for the first figure' },
-            { figure: '00', label: 'Label for the second figure' },
-            { figure: '$0.0M', label: 'Label for the third figure' },
-            { figure: 'AAA', label: 'Label for the fourth item' },
-          ]}
-        />
         <div class="container section">
           <h2>Section heading sample</h2>
-          <div class="sg-grid-3">
-            <ServiceBlock title="Service title one"><p>{loremShort}</p></ServiceBlock>
-            <ServiceBlock title="Service title two"><p>{loremShort}</p></ServiceBlock>
-            <ServiceBlock title="Service title three"><p>{loremShort}</p></ServiceBlock>
-          </div>
+          <SkillMenu items={skillSamples.map(({ title }) => ({ title, description: loremShort }))} />
         </div>
         <div class="container section">
           <h2>Second section heading</h2>
@@ -412,28 +401,11 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
         </div>
       </article>
 
-      <article class="sg-component">
-        <header><h3>Proof strip</h3><p>Home, under the hero. A figure and short label each.</p></header>
-        <div class="sg-frame flush">
-          <ProofStrip
-            items={[
-              { figure: '00+', label: 'Label for the first figure' },
-              { figure: '00', label: 'Label for the second figure' },
-              { figure: '$0.0M', label: 'Label for the third figure' },
-              { figure: 'AAA', label: 'Label for the fourth item' },
-            ]}
-          />
-        </div>
-      </article>
 
       <article class="sg-component">
-        <header><h3>Service block</h3><p>Home ("What I do") and Consulting (engagement types).</p></header>
+        <header><h3>Skills menu</h3><p>Consulting (full) and Home (short). Each skill links to case studies.</p></header>
         <div class="sg-frame">
-          <div class="sg-grid-3">
-            <ServiceBlock title="Service title one"><p>{lorem}</p></ServiceBlock>
-            <ServiceBlock title="Service title two"><p>{lorem}</p></ServiceBlock>
-            <ServiceBlock title="Service title three" label="Label"><p>{lorem}</p></ServiceBlock>
-          </div>
+          <SkillMenu items={skillSamples} />
         </div>
       </article>
 
@@ -445,15 +417,14 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       </article>
 
       <article class="sg-component">
-        <header><h3>Case study</h3><p>Work. Fixed format, with an optional translation line.</p></header>
+        <header><h3>Case study</h3><p>Work. Problem, Solution, Result; project name optional.</p></header>
         <div class="sg-frame">
           <CaseStudy
-            name="Client or project name"
-            meta="Organization · 0000–0000"
-            situation={`Situation text. ${lorem}`}
-            did={`What I did text. ${lorem}`}
-            result={`Result text with a number: 00 things. ${loremShort}`}
-            translation={`Translation line. ${loremShort}`}
+            title="Case study title sample"
+            project="Project name"
+            problem={`Problem text. ${lorem}`}
+            solution={`Solution text. ${lorem}`}
+            result={`Result text. ${loremShort}`}
           />
         </div>
       </article>
@@ -468,12 +439,6 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
         </div>
       </article>
 
-      <article class="sg-component">
-        <header><h3>Now block</h3><p>Home or About (undecided). Dated, 3–5 lines.</p></header>
-        <div class="sg-frame">
-          <NowBlock asOf="Month 0000" items={['Now item one. ' + loremShort, 'Now item two.', 'Now item three. ' + loremShort]} />
-        </div>
-      </article>
 
       <article class="sg-component">
         <header><h3>Process steps</h3><p>Consulting.</p></header>
@@ -517,7 +482,6 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
         <div class="sg-frame">
           <ContactList
             items={[
-              { label: 'Email', value: 'name@example.com', href: 'mailto:name@example.com' },
               { label: 'Profile', value: 'example.com/profile', href: '#components' },
               { label: 'Location', value: 'City, State' },
             ]}
@@ -526,9 +490,9 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       </article>
 
       <article class="sg-component">
-        <header><h3>Article footer</h3><p>End of every article.</p></header>
+        <header><h3>CTA card</h3><p>End of each article. Every article supplies its own.</p></header>
         <div class="sg-frame">
-          <ArticleFooter><p>Author line one. {loremShort} Author line two. {loremShort}</p></ArticleFooter>
+          <CtaCard heading="CTA heading sample" href="#components" action="Action label"><p>CTA text. {lorem}</p></CtaCard>
         </div>
       </article>
 
@@ -1016,11 +980,6 @@ const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     align-items: flex-start;
   }
 
-  .sg-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: var(--space-6);
-  }
 
   .sg-list {
     margin: 0;
