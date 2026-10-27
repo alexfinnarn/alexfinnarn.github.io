@@ -17,6 +17,9 @@ someone arriving cold should learn who wrote it and have somewhere to go next wi
   on every article. CTAs may be written with an AI agent and A/B tested.
 - Figures (image plus caption) when an article calls for one.
 - Code blocks use default rendering for now; no syntax highlighting until articles actually use code.
+- Under the title, also the author's name, so someone arriving cold knows who wrote it **(default)**.
+- Topics link to their topic pages, below the body **(default)**.
+- An article without a `cta` ends without a card, rather than with a generic one **(default)**.
 
 ## Open questions
 
@@ -24,8 +27,8 @@ someone arriving cold should learn who wrote it and have somewhere to go next wi
    you mean DPO as in direct preference optimization, where a reader picks the better of two options?
    Either way, collecting it needs something outside the static site to store the answers. Which
    service is a decision to make on purpose.
-2. Scroll tracking: measuring how far people read needs an analytics service. Any preference
-   (Plausible, Fathom, GoatCounter, Google Analytics), or decide later?
+2. Scroll tracking: measuring how far people read needs an analytics service. None for now
+   **(default)**; GoatCounter is the suggestion when you want it.
 
 ## Primary visitor and their question
 

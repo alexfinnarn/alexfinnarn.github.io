@@ -13,6 +13,10 @@ get in touch, and where to go next. Every other page backs up what this one clai
 - The hero is interactive: an Ink-style story where the visitor picks from choice cards. Cards work
   as tap targets on a phone.
 - Featured writing shows whatever is published; nothing is pinned (see [Writing](writing.md)).
+- Until the story is designed, the hero is static: name, role, location, a Fill in slot, and buttons
+  to Work and Contact **(default)**.
+- Featured writing shows the three newest articles **(default)**.
+- "What I do" stays, as the short form of the Consulting skills menu **(default)**.
 
 ## Open questions
 
@@ -21,8 +25,6 @@ get in touch, and where to go next. Every other page backs up what this one clai
 2. On featured writing you said "all of them" and "why not rotate the design of sections?" Did you
    mean the layout of the section changes on each visit, or that each section on Home uses a different
    layout from the others?
-3. Is there a "What I do" section below the hero, or does the story cover that? If it stays, it
-   should probably be the same skills menu as [Consulting](consulting.md), in short form.
 
 ## Primary visitor and their question
 
@@ -38,7 +40,7 @@ get in touch, and where to go next. Every other page backs up what this one clai
    - What it holds: Name, location, and the story with choice cards
    - Component: Hero, ChoiceCard
    - Notes:
-2. **What I do** *(see open question 3)*
+2. **What I do**
    - What it holds: Short skills list linking to Consulting
    - Component: SkillMenu
    - Notes:

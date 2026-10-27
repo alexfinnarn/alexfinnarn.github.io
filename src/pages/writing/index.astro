@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import FillIn from '../../components/FillIn.astro';
+import TopicList from '../../components/TopicList.astro';
+import ArticleListItem from '../../components/ArticleListItem.astro';
+import { getArticles, getTopics, articleHref } from '../../lib/content';
+
+const articles = await getArticles();
+const topics = getTopics(articles);
+---
+
+<Base title="Writing">
+  <div class="container">
+    <PageHeader title="Writing">
+      <FillIn what="Short intro to the Writing page." />
+    </PageHeader>
+    <TopicList topics={topics} />
+    <ul class="list">
+      {articles.map((article) => (
+        <ArticleListItem
+          title={article.data.title}
+          href={articleHref(article)}
+          date={article.data.publishedDate}
+          description={article.data.description}
+          image={article.data.image}
+          imageAlt={article.data.imageAlt}
+          external={article.data.externalUrl ? 'Medium' : undefined}
+        />
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .list {
+    margin: 0 0 var(--space-section);
+    padding: 0;
+  }
+</style>

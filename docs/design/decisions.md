@@ -1,8 +1,8 @@
 # Design decisions
 
 How the visual direction was chosen, round by round. The tool used from round 2 on is
-described in [eye-test.md](eye-test.md). Options live in
-`src/styles/tokens/themes.css` and can be compared in the dev-only `/styleguide`.
+described in [eye-test.md](eye-test.md). The options compared here were removed once one was
+chosen; see "Current choice" below.
 
 ## Round 1: three directions (2026-10-17)
 
@@ -49,12 +49,15 @@ lighter orange, fewer orange places, or softer type.
 
 ## Current choice
 
-**R3-less**, set in `src/site.ts` (`theme`) and applied to every page through
-`<html data-theme>`. Adopted to live with while the pages are built, not final. To
-revisit, run another eye-test round (see [eye-test.md](eye-test.md)).
+**R3-less**. Adopted to live with while the pages are built, not final.
 
 The proof strip was removed from the site after the IA review (2026-10-24). R3-less differed
-from R3 only in the proof strip, so the two now render the same; the theme id stays `r3-less`.
+from R3 only in the proof strip, so the two now render the same.
+
+On 2026-10-27 the other options and the eye test were removed. `src/styles/tokens/themes.css`
+now holds only this look, as one set of role tokens; there's no `data-theme` switch anymore.
+To revisit, recover the options from git (commit `457c6ce`) and run another round (see
+[eye-test.md](eye-test.md)).
 
 What R3-less is, in plain terms:
 - Warm off-white paper, ink-black text

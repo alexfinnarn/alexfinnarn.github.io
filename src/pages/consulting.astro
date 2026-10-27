@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FillIn from '../components/FillIn.astro';
+import SkillMenu from '../components/SkillMenu.astro';
+import Callout from '../components/Callout.astro';
+import Button from '../components/Button.astro';
+import { skills } from '../data/skills';
+---
+
+<Base title="Consulting">
+  <div class="container">
+    <PageHeader title="Consulting">
+      <FillIn what="Short intro to the Consulting page." />
+    </PageHeader>
+    <section class="section">
+      {skills.length > 0 ? <SkillMenu items={skills} /> : <FillIn what="Skills menu, in src/data/skills.ts." />}
+    </section>
+    <Callout label="Availability">
+      <FillIn what="One dated line on availability." />
+    </Callout>
+    <div class="actions">
+      <Button href="/contact/">Contact</Button>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .actions {
+    padding-block: var(--space-6) var(--space-section);
+  }
+</style>

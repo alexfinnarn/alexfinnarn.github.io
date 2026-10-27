@@ -15,26 +15,27 @@ branch. What each page is for is in [docs/ia/](docs/ia/).
   (`*(Fill in)*`, TODO). Dummy text in the style guide must be obviously dummy.
 - **Ask before large multi-step changes.** Propose the plan and confirm scope first.
 - **For design choices, show options and ask "which is better?"** Don't ask him to rate
-  design primitives. See the eye test in [docs/design/eye-test.md](docs/design/eye-test.md).
+  design primitives. The method is in [docs/design/eye-test.md](docs/design/eye-test.md).
+  Keep comparisons out of the style guide, and remove the losing options once he picks.
 
 ## Project facts
 
 - Node comes from mise (`~/Sites/personal/.tool-versions` → `node 22`). Astro 7.4 needs
   Node ≥ 22.22. Run commands with `mise exec --` if the shell has an older Node.
-- `npm run dev` starts the site. `/styleguide` (tokens, components and the eye test) exists
-  only in dev, added by an integration in `astro.config.mjs`.
+- `npm run dev` starts the site. `/styleguide` (tokens and components) exists only in dev,
+  added by an integration in `astro.config.mjs`.
 - **Styling:** components use only role tokens (`src/styles/tokens/themes.css`), never base
-  tokens (`base.css`) or hard-coded values. The site's chosen option is `theme` in
-  `src/site.ts`, applied as `<html data-theme>`.
+  tokens (`base.css`) or hard-coded values. `themes.css` holds the one chosen look; there is
+  no theme switch.
 - **Contrast:** Browns orange `#FF3C00` is 3.4:1 on the paper background. Use it only for large
   text, bars and fills. Links use `#C72E00`. Don't put orange text on dark backgrounds.
 - `archive/` holds the retired old site. It isn't built and is excluded from type checks.
-  Don't import from it, except the style guide's portrait sample.
+  Don't import from it.
 
 ## Docs
 
 - [docs/ia/](docs/ia/): information architecture, with one doc per page. Alex's decisions
   there win on conflicts.
 - [docs/design/decisions.md](docs/design/decisions.md): how the visual direction was chosen.
-- [docs/design/eye-test.md](docs/design/eye-test.md): the "1 or 2?" comparison tool and how to
-  run a new round.
+- [docs/design/eye-test.md](docs/design/eye-test.md): the "1 or 2?" comparison method. The tool
+  itself was removed from this site; the standalone version is in `~/Sites/personal/eye-test`.

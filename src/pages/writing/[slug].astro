@@ -1,0 +1,58 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ArticleHeader from '../../components/ArticleHeader.astro';
+import TopicList from '../../components/TopicList.astro';
+import CtaCard from '../../components/CtaCard.astro';
+import { getArticles, readingMinutes, topicSlug, type Article } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  // Medium pieces have no page here; their list items link out.
+  return articles
+    .filter((article) => !article.data.externalUrl)
+    .map((article) => ({ params: { slug: article.id }, props: { article } }));
+}
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const { title, description, publishedDate, updatedDate, topics, cta } = article.data;
+const { Content } = await render(article);
+---
+
+<Base title={title} description={description}>
+  <article class="container">
+    <ArticleHeader
+      title={title}
+      description={description}
+      publishedDate={publishedDate}
+      updatedDate={updatedDate}
+      minutes={readingMinutes(article.body)}
+    />
+    <div class="prose measure body">
+      <Content />
+    </div>
+    <div class="measure">
+      <TopicList topics={topics.map((name) => ({ name, slug: topicSlug(name) }))} />
+    </div>
+    {cta && (
+      <CtaCard heading={cta.heading} href={cta.href} action={cta.action}>
+        <p>{cta.text}</p>
+      </CtaCard>
+    )}
+    <div class="end"></div>
+  </article>
+</Base>
+
+<style>
+  .body {
+    padding-top: var(--space-block);
+  }
+
+  .end {
+    padding-bottom: var(--space-section);
+  }
+</style>

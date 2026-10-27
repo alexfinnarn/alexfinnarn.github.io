@@ -25,6 +25,12 @@ Status at the top of each doc: `draft` (questions open) → `agreed` (ready to b
 Pages may be built with placeholder content before the real work exists. Gaps get filled before
 publishing.
 
+Decisions marked **(default)** were picked by Claude so the site could be built. Change any of them
+by editing the line; Claude updates the code to match.
+
+Unwritten text on the built pages shows as a dashed **Fill in** box (the `FillIn` component), so
+`grep -rn FillIn src/pages` lists every gap.
+
 ## Through-lines
 
 Decisions that show up on more than one page:
@@ -67,8 +73,10 @@ Page docs:
 
 - Lowercase, hyphenated, no trailing file extensions.
 - Articles live at `/writing/<slug>`, where the slug is the file name without the number prefix.
-  *(Open question: should the slug include a date? Dates in URLs make an article look old sooner.)*
+  No date in the URL **(default)**.
 - Case studies live at `/work/<slug>`.
+- Topic pages live at `/writing/topics/<topic>`.
+- The RSS feed is at `/rss.xml`.
 
 Redirects from the old site, set in `astro.config.mjs`:
 
@@ -76,12 +84,12 @@ Redirects from the old site, set in `astro.config.mjs`:
 - `/projects/shipping-container` → `/work`: Experiment retired
 - `/tags` → `/writing`: Old tags not carried over
 - `/fractal` → `/`: Experiment retired
+- `/writing/<number>-<slug>` for the 2025 posts **(default)**: the ones copied over go to their new
+  address; the rest go to `/writing`
 
-Old URLs with no redirect (they will 404):
+Old URLs with no redirect (they get the 404 page):
 
-- `/tags/<tag>`: old tag pages. *(Open question: send these to `/writing` too?)*
-- `/writing/<slug>` for the 2025 posts, which are not migrated. *(Open question: let these 404, or
-  redirect each to `/writing`? A redirect is friendlier if anyone linked to them.)*
+- `/tags/<tag>`: old tag pages **(default)**. Topics are new and don't map one-to-one.
 
 `/work` and `/writing` existed on the old site and keep their addresses.
 
@@ -90,8 +98,7 @@ Old URLs with no redirect (they will 404):
 **Header** (every page): name and role on the left, linking home. Main navigation on the right:
 Work · Writing · Consulting · About · Contact. The current page is marked.
 
-*(Open question: is that the right order? A common pattern puts the evidence pages first and Contact
-last, sometimes as a button styled differently from the other links.)*
+Order stays as listed: evidence first, Contact last, all styled alike **(default)**.
 
 **Footer** (every page): name, role, location; LinkedIn, GitHub; © line. No email address (see
 [Contact](contact.md)).
@@ -107,9 +114,12 @@ last, sometimes as a button styled differently from the other links.)*
 - Title pattern: `<Page> | Alex Finnarn — Senior Software Consultant, Troy, Ohio`.
   Home uses the bare suffix with no page name in front.
 - Every page has its own description (one or two sentences, written by Alex, listed in each page doc).
-- Open Graph tags mirror the title and description. *(Open question: a share image? It's what shows when
-  a link is pasted into LinkedIn or Slack. Could be a plain type-only card generated per page, or the
-  article's image where there is one.)*
+- Open Graph tags mirror the title and description. No share image for now **(default)**; revisit
+  once articles have images.
+- Pages without a written description leave the description tag out rather than shipping a
+  placeholder.
+- No analytics yet **(default)**. Pick one together with the article feedback idea (see
+  [Article](article.md)); GoatCounter is the light, privacy-friendly option.
 
 ## Content types
 
@@ -129,6 +139,9 @@ into the page.
 - **cta**, required: no. The article's own closing call to action (see [Article](article.md))
 - **draft**, required: yes. `true` keeps it out of production
 
+Stored in `src/content/writing/`. A few 2025 posts are copied in as the starting set **(default)**:
+CMS First Principles, Intent over Implementation, Content Over Complexity, Prompts are Tickets.
+
 ### Case study
 - **title**, required: yes
 - **problem**, required: yes
@@ -136,3 +149,13 @@ into the page.
 - **result**, required: yes
 - **project**, required: no. Client or project name, mentioned in passing rather than leading
 - **skills**, required: no. Links the case study to the skills on [Consulting](consulting.md)
+- **draft**, required: yes. `true` keeps it out of production
+
+Stored in `src/content/work/`. The placeholders there are drafts, so they show only in dev.
+
+### Skill
+- **title**, required: yes
+- **description**, required: yes
+- **work**, required: no. Case studies that show it
+
+Stored in `src/data/skills.ts`. Empty until Alex writes them; the pages show a Fill in box meanwhile.

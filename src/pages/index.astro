@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Button from '../components/Button.astro';
+import FillIn from '../components/FillIn.astro';
+import SkillMenu from '../components/SkillMenu.astro';
+import ArticleListItem from '../components/ArticleListItem.astro';
+import { Image } from 'astro:assets';
+import heroImage from '../assets/hero.jpg';
+import { getArticles, articleHref } from '../lib/content';
+import { skills } from '../data/skills';
+import { site } from '../site';
+
+const featured = (await getArticles()).slice(0, 3);
+---
+
+<Base>
+  <Hero label={`${site.role} · ${site.location}`} title={site.name} backdropRatio={heroImage.width / heroImage.height}>
+    <FillIn what="Positioning line. (The interactive story hero replaces this section later.)" />
+    <Image
+      slot="backdrop"
+      src={heroImage}
+      alt={`Colored-pencil drawing of ${site.name} resting on a boulder in a pine forest, with a backpack and trekking poles`}
+      widths={[800, 1400, heroImage.width]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <Fragment slot="actions">
+      <Button href="/work/">Work</Button>
+      <Button href="/contact/" variant="secondary">Contact</Button>
+    </Fragment>
+  </Hero>
+
+  <section class="container section">
+    <h2>What I do</h2>
+    {skills.length > 0 ? (
+      <SkillMenu items={skills.map(({ title, description }) => ({ title, description }))} />
+    ) : (
+      <FillIn what="Skills, in src/data/skills.ts (shared with Consulting)." />
+    )}
+    <p class="more"><a href="/consulting/">Consulting</a></p>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="container section">
+      <h2>Writing</h2>
+      <ul class="list">
+        {featured.map((article) => (
+          <ArticleListItem
+            title={article.data.title}
+            href={articleHref(article)}
+            date={article.data.publishedDate}
+            description={article.data.description}
+            external={article.data.externalUrl ? 'Medium' : undefined}
+          />
+        ))}
+      </ul>
+      <p class="more"><a href="/writing/">All writing</a></p>
+    </section>
+  )}
+</Base>
+
+<style>
+  .list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .more {
+    margin: var(--space-5) 0 0;
+    font-weight: 600;
+  }
+</style>

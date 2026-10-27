@@ -1,0 +1,56 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CaseStudy from '../../components/CaseStudy.astro';
+import Button from '../../components/Button.astro';
+import { getCaseStudies, type CaseStudyEntry } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCaseStudies();
+  return caseStudies.map((study) => ({ params: { slug: study.id }, props: { study } }));
+}
+
+interface Props {
+  study: CaseStudyEntry;
+}
+
+const { study } = Astro.props;
+const { title, project, problem, solution, result, skills } = study.data;
+const { Content } = await render(study);
+---
+
+<Base title={title} description={problem}>
+  <article class="container">
+    <p class="crumb label"><a href="/work/">Work</a></p>
+    <CaseStudy title={title} project={project} problem={problem} solution={solution} result={result} />
+    {study.body?.trim() && (
+      <div class="prose measure">
+        <Content />
+      </div>
+    )}
+    {skills.length > 0 && <p class="muted skills">{skills.join(' · ')}</p>}
+    <div class="actions">
+      <Button href="/contact/">Contact</Button>
+      <Button href="/consulting/" variant="secondary">Consulting</Button>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .crumb {
+    padding-top: var(--space-section);
+    margin-bottom: var(--space-4);
+  }
+
+  .skills {
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-block: var(--space-6) var(--space-section);
+  }
+</style>

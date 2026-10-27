@@ -1,0 +1,56 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import TopicList from '../../../components/TopicList.astro';
+import ArticleListItem from '../../../components/ArticleListItem.astro';
+import { getArticles, getTopics, articleHref, type Article } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  const topics = getTopics(articles);
+  return topics.map((topic) => ({
+    params: { topic: topic.slug },
+    props: { topic, topics, articles: articles.filter((a) => a.data.topics.includes(topic.name)) },
+  }));
+}
+
+interface Props {
+  topic: { name: string; slug: string };
+  topics: { name: string; slug: string }[];
+  articles: Article[];
+}
+
+const { topic, topics, articles } = Astro.props;
+---
+
+<Base title={`${topic.name} · Writing`}>
+  <div class="container">
+    <PageHeader label="Writing" title={topic.name} />
+    <TopicList topics={topics} current={topic.slug} />
+    <ul class="list">
+      {articles.map((article) => (
+        <ArticleListItem
+          title={article.data.title}
+          href={articleHref(article)}
+          date={article.data.publishedDate}
+          description={article.data.description}
+          image={article.data.image}
+          imageAlt={article.data.imageAlt}
+          external={article.data.externalUrl ? 'Medium' : undefined}
+        />
+      ))}
+    </ul>
+    <p class="back"><a href="/writing/">All writing</a></p>
+  </div>
+</Base>
+
+<style>
+  .list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .back {
+    margin-block: var(--space-6) var(--space-section);
+  }
+</style>

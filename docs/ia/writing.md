@@ -16,16 +16,15 @@ something to forward.
 - No pinning.
 - Topics (tags) from the start. Alex likes the idea of building around user personas and user
   stories, so topics may be organized that way.
-- An RSS feed.
+- An RSS feed, at `/rss.xml`.
+- Medium pieces are listed here like any other article, marked "on Medium" and linking straight to
+  medium.com (the `externalUrl` field) **(default)**.
+- Topics are subjects ("CMS", "AI") for now **(default)**. Personas can come later as their own field.
+- Each topic gets a page at `/writing/topics/<topic>`.
 
 ## Open questions
 
-1. Medium: Claude's suggestion is to list Medium pieces in this index like any other article, with
-   a small "on Medium" mark, linking straight to medium.com (the `externalUrl` field). That keeps one
-   list of everything Alex has written without copying posts here. Good?
-2. Topics as personas: should a topic name a kind of reader ("plant manager", "engineering lead"), or
-   a subject ("integration", "QA")? Personas fit the user-story idea; subjects are what readers
-   usually expect from tags.
+None right now.
 
 ## Primary visitor and their question
 

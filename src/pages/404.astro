@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FillIn from '../components/FillIn.astro';
+import Button from '../components/Button.astro';
+
+const newIssue = 'https://github.com/alexfinnarn/alexfinnarn.github.io/issues/new';
+---
+
+<Base title="Page not found">
+  <div class="container">
+    <PageHeader title="Page not found">
+      <FillIn what="One sentence for the 404 page." />
+    </PageHeader>
+    <div class="actions">
+      <Button href="/">Home</Button>
+      <Button href="/contact/" variant="secondary">Contact</Button>
+    </div>
+    <p class="report"><a id="report" href={newIssue}>Report a broken link</a></p>
+  </div>
+</Base>
+
+<script define:vars={{ newIssue }}>
+  // Fill the broken address into the new GitHub issue.
+  const params = new URLSearchParams({ title: `Broken link: ${location.pathname}` });
+  document.getElementById('report').href = `${newIssue}?${params}`;
+</script>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-top: var(--space-6);
+  }
+
+  .report {
+    padding-block: var(--space-5) var(--space-section);
+    font-size: var(--size-sm);
+  }
+</style>

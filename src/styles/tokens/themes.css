@@ -1,63 +1,53 @@
 /*
- * Role tokens: what each value is FOR. Components only use these.
- * Each option is a different set of answers to the same roles.
- * Switch with <html data-theme="b|b1|b2|b3">. B is the default.
+ * Role tokens: what each value is FOR. Components only use these, never base tokens.
  *
- * "Surface" roles (header, hero, footer) let an option turn those areas
- * into solid bands of color without the components knowing about it.
+ * The site's look ("R3-less" in docs/design/decisions.md): heavy, tightly spaced sans
+ * headlines over a sans body, Browns orange as a bar across the top and on buttons,
+ * deeper orange for links, light footer, square corners.
+ *
+ * "Surface" roles (header, hero, footer, button) say how those areas look, so a
+ * component never needs to know about colors directly.
  */
-
-/* ── B · Editorial (reference) ──────────────────────────────────────
- * Warm paper, serif headings over a sans body, muted industrial orange,
- * square corners, a long reading measure. The starting point.
- */
-/* Applied to every [data-theme] element (not just "b") so tokens derived from other
-   tokens, like --rule-strong, recompute inside a themed wrapper. Options below
-   override only what they change. */
-:root,
-[data-theme] {
+:root {
   --color-bg: var(--warm-0);
   --color-bg-alt: var(--warm-50);
-  --color-text: var(--warm-900);
+  --color-text: var(--ink-black);
   --color-text-muted: var(--warm-600);
   --color-rule: var(--warm-200);
-  --color-accent: var(--orange-600);
-  --color-accent-hover: var(--orange-700);
+  --color-accent: var(--orange-text);
+  --color-accent-hover: var(--orange-text-hover);
   --color-accent-tint: var(--orange-50);
   --color-on-accent: var(--gray-0);
-  --color-brand: var(--orange-600);
-  --color-on-brand: var(--gray-0);
-
+  --color-brand: var(--browns-orange);
+  --color-on-brand: var(--ink-black);
   --font-body: var(--family-sans);
-  --font-heading: var(--family-serif);
+  --font-heading: var(--family-sans);
   --font-label: var(--family-sans);
-  --font-figure: var(--family-serif);
-  --weight-heading: 600;
-  --tracking-heading: 0;
-  --leading-heading: 1.2;
-  --h1-size: clamp(var(--size-3xl), 1.4rem + 2.6vw, var(--size-4xl));
-  --h2-size: clamp(var(--size-xl), 1.2rem + 0.9vw, var(--size-2xl));
-  --label-case: none;
-  --label-tracking: 0.01em;
-  --label-size: var(--size-md);
-  --weight-label: 600;
-  --figure-size: var(--size-2xl);
-
+  --font-figure: var(--family-sans);
+  --weight-heading: 800;
+  --tracking-heading: -0.035em;
+  --leading-heading: 1.02;
+  --h1-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
+  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
+  --label-case: uppercase;
+  --label-tracking: 0.1em;
+  --label-size: 0.8rem;
+  --weight-label: 800;
+  --figure-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
   --text-body: var(--size-lg);
   --leading-body: 1.65;
 
   --radius: var(--radius-0);
   --rule: var(--line-1) solid var(--color-rule);
-  --rule-strong: var(--line-1) solid var(--color-text);
+  --rule-strong: var(--line-2) solid var(--color-text);
   --panel-bg: var(--color-bg-alt);
 
   --header-bg: var(--color-bg);
   --header-text: var(--color-text);
   --header-muted: var(--color-text-muted);
-  --header-top: 0 solid transparent;
-  --header-bottom: var(--rule);
-  --header-current: var(--color-accent);
-
+  --header-top: 6px solid var(--color-brand);
+  --header-bottom: 0 solid transparent;
+  --header-current: var(--color-brand);
   --hero-bg: transparent;
   --hero-text: var(--color-text);
   --hero-muted: var(--color-text-muted);
@@ -67,286 +57,13 @@
   --footer-muted: var(--color-text-muted);
   --footer-link: var(--color-accent);
 
-  --button-bg: var(--color-accent);
-  --button-text: var(--color-on-accent);
-  --button-hover-bg: var(--color-accent-hover);
-  --button-alt-border: var(--color-accent);
-  --button-alt-text: var(--color-accent);
-
+  --button-bg: var(--color-brand);
+  --button-text: var(--ink-black);
+  --button-hover-bg: var(--browns-orange-hover);
+  --button-alt-border: var(--ink-black);
+  --button-alt-text: var(--ink-black);
   --space-section: var(--space-9);
   --space-block: var(--space-6);
   --measure: 44rem;
   --container: 64rem;
-}
-
-/* ── B1 · Broadsheet ────────────────────────────────────────────────
- * A newspaper front page. Very large, heavy serif headlines; thick ink rules;
- * a Browns-orange bar across the top of every page; black buttons.
- * Bold through TYPE and LINES. Orange is used sparingly but at full strength.
- */
-[data-theme="b1"] {
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--ink-black);
-  --color-text: var(--ink-black);
-
-  --weight-heading: 700;
-  --tracking-heading: -0.02em;
-  --leading-heading: 1.05;
-  --h1-size: clamp(2.6rem, 1.6rem + 4.5vw, 4.75rem);
-  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-  --label-case: uppercase;
-  --label-tracking: 0.08em;
-  --label-size: var(--size-sm);
-  --weight-label: 700;
-  --figure-size: clamp(2rem, 1.6rem + 1.6vw, 3rem);
-
-  --rule-strong: var(--line-3) solid var(--color-text);
-
-  --header-top: 6px solid var(--color-brand);
-  --header-bottom: var(--line-3) solid var(--color-text);
-  --header-current: var(--color-brand);
-
-  --button-bg: var(--ink-black);
-  --button-text: var(--warm-0);
-  --button-hover-bg: var(--brown-700);
-  --button-alt-border: var(--ink-black);
-  --button-alt-text: var(--ink-black);
-}
-
-/* ── B2 · Workshop ──────────────────────────────────────────────────
- * Browns colors: deep brown bands for the header, hero and footer,
- * with Browns orange on top. Warmer paper in between. Condensed uppercase labels.
- * Bold through CONTRAST. Heritage, machine shop, Saturday in Cleveland.
- */
-[data-theme="b2"] {
-  --color-bg: var(--warm-25);
-  --color-bg-alt: var(--warm-50);
-  --color-text: var(--warm-900);
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--brown-900);
-
-  --weight-heading: 700;
-  --tracking-heading: -0.01em;
-  --leading-heading: 1.1;
-  --h1-size: clamp(2.4rem, 1.5rem + 3.8vw, 4.25rem);
-  --font-label: var(--family-condensed);
-  --label-case: uppercase;
-  --label-tracking: 0.06em;
-  --label-size: 0.95rem;
-  --weight-label: 700;
-  --figure-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
-
-  --rule-strong: var(--line-3) solid var(--brown-900);
-
-  --header-bg: var(--brown-900);
-  --header-text: var(--warm-0);
-  --header-muted: var(--tan-300);
-  --header-bottom: 0 solid transparent;
-  --header-current: var(--color-brand);
-
-  --hero-bg: var(--brown-900);
-  --hero-text: var(--warm-0);
-  --hero-muted: var(--tan-300);
-
-  --footer-bg: var(--brown-900);
-  --footer-text: var(--warm-0);
-  --footer-muted: var(--tan-300);
-  --footer-link: var(--color-brand);
-
-  --button-bg: var(--color-brand);
-  --button-text: var(--brown-900);
-  --button-hover-bg: var(--browns-orange-hover);
-  --button-alt-border: currentColor;
-  --button-alt-text: currentColor;
-}
-
-/* ── B3 · Modern editorial ──────────────────────────────────────────
- * Heavy, tightly spaced sans-serif headlines over a serif body: the reverse of B.
- * Solid Browns-orange blocks. Light footer (was ink-black;
- * changed after Alex preferred B1's footer).
- * Bold through COLOR BLOCKS and WEIGHT. The most contemporary of the three.
- */
-[data-theme="b3"] {
-  --color-text: var(--ink-black);
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--ink-black);
-
-  --font-body: var(--family-serif);
-  --font-heading: var(--family-sans);
-  --font-label: var(--family-sans);
-  --font-figure: var(--family-sans);
-  --weight-heading: 800;
-  --tracking-heading: -0.035em;
-  --leading-heading: 1.02;
-  --h1-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
-  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-  --label-case: uppercase;
-  --label-tracking: 0.1em;
-  --label-size: 0.8rem;
-  --weight-label: 800;
-  --figure-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
-
-  --text-body: 1.2rem;
-  --rule-strong: var(--line-2) solid var(--color-text);
-
-  --header-current: var(--color-brand);
-  --header-bottom: 0 solid transparent;
-
-  --button-bg: var(--color-brand);
-  --button-text: var(--ink-black);
-  --button-hover-bg: var(--browns-orange-hover);
-  --button-alt-border: var(--ink-black);
-  --button-alt-text: var(--ink-black);
-}
-
-/* ── Round 2: blends of B1 and B3 ───────────────────────────────── */
-
-/* R1 · Broadsheet type, modern blocks
- * B1's big serif headlines, orange top bar and thick rules, with B3's solid
- * orange blocks. Light footer. Black buttons.
- */
-[data-theme="r1"] {
-  --color-text: var(--ink-black);
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--ink-black);
-
-  --weight-heading: 700;
-  --tracking-heading: -0.02em;
-  --leading-heading: 1.05;
-  --h1-size: clamp(2.6rem, 1.6rem + 4.5vw, 4.75rem);
-  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-  --label-case: uppercase;
-  --label-tracking: 0.08em;
-  --label-size: var(--size-sm);
-  --weight-label: 700;
-  --figure-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
-
-  --rule-strong: var(--line-3) solid var(--color-text);
-
-  --header-top: 6px solid var(--color-brand);
-  --header-bottom: var(--line-3) solid var(--color-text);
-  --header-current: var(--color-brand);
-
-  --button-bg: var(--ink-black);
-  --button-text: var(--warm-0);
-  --button-hover-bg: var(--brown-700);
-  --button-alt-border: var(--ink-black);
-  --button-alt-text: var(--ink-black);
-}
-
-/* R2 · Modern type, broadsheet structure
- * B3's heavy sans headlines over a serif body, inside B1's frame: orange top
- * bar, thick ink rules, big orange figures on paper. Light footer, black buttons.
- */
-[data-theme="r2"] {
-  --color-text: var(--ink-black);
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--ink-black);
-
-  --font-body: var(--family-serif);
-  --font-heading: var(--family-sans);
-  --font-label: var(--family-sans);
-  --font-figure: var(--family-sans);
-  --weight-heading: 800;
-  --tracking-heading: -0.035em;
-  --leading-heading: 1.02;
-  --h1-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
-  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-  --label-case: uppercase;
-  --label-tracking: 0.1em;
-  --label-size: 0.8rem;
-  --weight-label: 800;
-  --figure-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
-
-  --text-body: 1.2rem;
-  --rule-strong: var(--line-3) solid var(--color-text);
-
-  --header-top: 6px solid var(--color-brand);
-  --header-bottom: var(--line-3) solid var(--color-text);
-  --header-current: var(--color-brand);
-
-  --button-bg: var(--ink-black);
-  --button-text: var(--warm-0);
-  --button-hover-bg: var(--brown-700);
-  --button-alt-border: var(--ink-black);
-  --button-alt-text: var(--ink-black);
-}
-
-/* R3 · All sans, orange forward
- * Heavy sans headlines over a sans body (no serif at all), orange top bar,
- * orange buttons, light footer. The plainest blend.
- */
-/* |= matches "r3" and every "r3-*" variant, so round-3 variants inherit R3
-   and override only their one change. */
-[data-theme|="r3"] {
-  --color-text: var(--ink-black);
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--ink-black);
-
-  --font-heading: var(--family-sans);
-  --font-label: var(--family-sans);
-  --font-figure: var(--family-sans);
-  --weight-heading: 800;
-  --tracking-heading: -0.035em;
-  --leading-heading: 1.02;
-  --h1-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
-  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-  --label-case: uppercase;
-  --label-tracking: 0.1em;
-  --label-size: 0.8rem;
-  --weight-label: 800;
-  --figure-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
-
-  --rule-strong: var(--line-2) solid var(--color-text);
-
-  --header-top: 6px solid var(--color-brand);
-  --header-bottom: 0 solid transparent;
-  --header-current: var(--color-brand);
-
-  --button-bg: var(--color-brand);
-  --button-text: var(--ink-black);
-  --button-hover-bg: var(--browns-orange-hover);
-  --button-alt-border: var(--ink-black);
-  --button-alt-text: var(--ink-black);
-}
-
-/* ── Round 3: one change each from R3 ──────────────────────────────
- * R3 won round 2. Alex finds the orange "a bit jarring sometimes", so most
- * variants dial the orange; one dials the headline weight.
- */
-
-/* R3-less · Less orange area. Its only change was putting the proof strip back on
- * paper; the proof strip has since been removed, so R3-less now renders as R3. */
-
-/* R3-light · Lighter orange (#FF6B33) for the bar, block and buttons. Links unchanged. */
-[data-theme="r3-light"] {
-  --color-brand: var(--browns-orange-hover);
-  --button-hover-bg: var(--browns-orange);
-}
-
-/* R3-one · Less orange: no top bar, black buttons. */
-[data-theme="r3-one"] {
-  --header-top: 0 solid transparent;
-  --button-bg: var(--ink-black);
-  --button-text: var(--warm-0);
-  --button-hover-bg: var(--brown-700);
-}
-
-/* R3-soft · Softer headlines: bold instead of extra-bold, less tightly spaced. */
-[data-theme="r3-soft"] {
-  --weight-heading: 700;
-  --tracking-heading: -0.02em;
-  --leading-heading: 1.08;
 }

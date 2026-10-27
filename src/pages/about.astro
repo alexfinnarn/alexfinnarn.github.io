@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Portrait from '../components/Portrait.astro';
+import FillIn from '../components/FillIn.astro';
+import Button from '../components/Button.astro';
+import portrait from '../assets/portrait.jpeg';
+import { site } from '../site';
+---
+
+<Base title="About">
+  <div class="container">
+    <PageHeader title="About">
+      <FillIn what="The provocative opening question." />
+    </PageHeader>
+    <div class="intro section">
+      <Portrait src={portrait.src} alt={`Colored-pencil drawing of ${site.name}`} />
+      <div class="prose measure">
+        <FillIn what="Bio (one version)." />
+      </div>
+    </div>
+    <section class="section">
+      <h2>Principles</h2>
+      <FillIn what="Principles, each with a sentence of explanation." />
+    </section>
+    <div class="actions">
+      <Button href="/contact/">Contact</Button>
+      <Button href="/work/" variant="secondary">Work</Button>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(10rem, 18rem) 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-block: var(--space-6) var(--space-section);
+  }
+
+  @media (max-width: 40rem) {
+    .intro {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

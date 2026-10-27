@@ -1,18 +1,22 @@
-import {expect, test} from "@playwright/test";
+import { expect, test } from '@playwright/test';
 
-test('writing page - content is visible', async ({ page }) => {
-    // Navigate to the writing page
-    await page.goto('/writing');
+test('writing index - lists articles that open', async ({ page }) => {
+  await page.goto('/writing/');
 
-    // Verify the page title
-    await expect(page).toHaveTitle(/Writing/);
+  await expect(page).toHaveTitle(/^Writing \|/);
+  await expect(page.getByRole('heading', { level: 1, name: 'Writing' })).toBeVisible();
 
-    // Verify the heading is visible
-    await expect(page.getByRole('heading', { name: 'Writing' })).toBeVisible();
+  const first = page.locator('main li h3 a').first();
+  const title = await first.textContent();
+  await first.click();
 
-    // Verify the welcome paragraph is visible
-    await expect(page.getByText('Welcome to my writing space')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(title!.trim());
+  await expect(page.getByText(/min read/)).toBeVisible();
+});
 
-    // Verify the writing list container is present
-    await expect(page.locator('.writing-list')).toBeVisible();
+test('topic page - shows only that topic', async ({ page }) => {
+  await page.goto('/writing/topics/cms/');
+
+  await expect(page.getByRole('heading', { level: 1, name: 'CMS' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'CMS' })).toHaveAttribute('aria-current', 'page');
 });

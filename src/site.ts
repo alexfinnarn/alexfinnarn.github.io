@@ -18,7 +18,3 @@ export const nav = [
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
-
-// The design option the site uses: a data-theme value from src/styles/tokens/themes.css.
-// Chosen with the eye test in /styleguide; see docs/design/decisions.md.
-export const theme = 'r3-less';

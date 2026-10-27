@@ -1,18 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('homepage - menu links are visible', async ({ page }) => {
-    // Navigate to the homepage
-    await page.goto('/');
+test('homepage - title and main navigation', async ({ page }) => {
+  await page.goto('/');
 
-    // Verify the page title
-    await expect(page).toHaveTitle("Finn's Big Web | My Career Story");
+  await expect(page).toHaveTitle('Alex Finnarn — Senior Software Consultant, Troy, Ohio');
+  await expect(page.getByRole('heading', { level: 1, name: 'Alex Finnarn' })).toBeVisible();
 
-    // Verify the site logo/title is visible
-    await expect(page.locator('h1 a')).toBeVisible();
-
-    // Verify the Projects link is visible
-    await expect(page.getByRole('link', { name: 'Projects' })).toBeVisible();
-
-    // Verify the Writing link is visible
-    await expect(page.getByRole('link', { name: 'Writing' })).toBeVisible();
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  for (const name of ['Work', 'Writing', 'Consulting', 'About', 'Contact']) {
+    await expect(nav.getByRole('link', { name })).toBeVisible();
+  }
 });

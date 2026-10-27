@@ -16,14 +16,16 @@ How to reach Alex, and a chance to book time with him.
 - A way to book a call. Google Calendar's appointment schedules (a booking page tied to Alex's
   free/busy time) may do this without Calendly. Check what Alex's account includes.
 - LinkedIn stays in the footer as a way in that doesn't need the gate.
+- Until the gate and form are built, the page lists LinkedIn and location, with Fill in slots for the
+  form and booking link **(default)**.
+- Form delivery: Formspree when the form is built **(default)**. It works from a static site, has a
+  free tier, and keeps the address off the page.
 
 ## Open questions
 
 1. What does the visitor do before the form appears? Something short, ideally the same "make a
    choice" pattern as Home and About.
-2. The form needs a service to deliver messages from a static site (Formspree, Basin, a Google Form,
-   or similar). Any preference?
-3. GitHub Discussions: you mentioned it could send people here. Is that a link from Discussions to
+2. GitHub Discussions: you mentioned it could send people here. Is that a link from Discussions to
    this page, or a second way to get in touch listed on this page?
 
 ## Primary visitor and their question

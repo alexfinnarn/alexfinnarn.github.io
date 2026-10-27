@@ -16,11 +16,12 @@ Tells anyone thinking of hiring Alex what he can do for them and how to start.
   example) and fill the gaps before publishing.
 - Availability changes over time. Right now: open, outside the day job.
 - No "not a fit for" list. Alex is a generalist and would rather people get in touch.
+- No process section for now **(default)**. The skills menu carries the page. `ProcessSteps` stays in
+  the style guide in case you want it later.
 
 ## Open questions
 
-1. Process: is there a "how working with me goes" section (steps from first conversation to handover),
-   or does the skills menu carry the page on its own?
+None right now.
 
 ## Primary visitor and their question
 
@@ -44,15 +45,11 @@ This will evolve over time as it is filled in.
    - What it holds: Each skill with a short description and links to case studies that show it
    - Component: SkillMenu
    - Notes:
-3. **Process** *(see open question 1)*
-   - What it holds: Steps
-   - Component: ProcessSteps
-   - Notes:
-4. **Availability**
+3. **Availability**
    - What it holds: One line, dated
    - Component: Callout
    - Notes:
-5. **Action**
+4. **Action**
    - What it holds: Lead to Contact
    - Component: Button
    - Notes:
