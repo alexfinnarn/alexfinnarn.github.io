@@ -6,9 +6,15 @@ Alex corrects it. Every draft in [the copy plan](../plans/active/copy-plan.md) f
 - **Status:** draft, waiting for Alex's corrections
 - **Read:** all 14 posts in `archive/writing/` (2025), the IA docs' Primary visitor, Primary
   action and Notes sections, `publishing` (`boring-site/ethics.md` and the three plans), the 10
-  Medium posts in the RSS feed (2019–2023), three posts from `blog` (2019), the `alexfinnarn`
-  README, project READMEs, and the start of the component library talk deck
-- **Not read:** `blurg`, `ds-presentation`, `talks-behat-intro`, older Medium posts
+  Medium posts in the RSS feed (2019–2023), all 45 posts in `blog` and `blurg` (2018–2021; three
+  in full, the rest by opening and closing), the `alexfinnarn` README, project READMEs, and the
+  start of the component library talk deck
+- **Also read:** his 784 drupal.org comments (2013–2026), by sampling the longest from each year
+- **Also read:** the Medium export: 42 published posts (2018–2023) and 6 drafts. The ones not
+  already read elsewhere by opening and closing; the drafts in full
+- **Not read yet:** LinkedIn, X, talk recordings, the old mr.alexfinnarn.com site (the Internet
+  Archive was offline)
+- **Facts** about his history are in [facts.md](facts.md), not here
 
 ## The short version
 
@@ -138,18 +144,59 @@ From the IA answers, about this site:
 - Backs claims with his own history and, when he has them, numbers (the Drupal download sizes,
   the 67% token cut).
 
-## 2019–2023 vs 2025
+## In issue queues
 
-- **2019–2023** (Medium, `blog`)
-  - Warmer and more personal: van life, job hunting, meetup recaps, his parents' weekly calls
-  - More rambling, more emoji and dad jokes, more "I'm figuring this out" reflection
-  - Community-minded: organizing groups, conference write-ups, helping others contribute
-  - Measured opinions
+From his drupal.org comments (2013–2026). This is the voice other developers know.
+
+- Friendly first, then exact: "Hey @darshi, thanks for the patch! I did review your patch and it
+  does work, but I did notice a couple of things I'd like changed," followed by a numbered list.
+- Small jokes, even here: "Thanks for reporting this error, and also nice avatar! Carl is way
+  cool...", "I'm using ddev inside Docker, d'oh!", "kind of got carried away, but this is what
+  happens."
+- Pointed when a process has failed: an issue "postponed for four years without comments while
+  six minor releases of Drupal were published is proof" that something is wrong.
+- Explains the why and the context before the fix: why a module is stuck in dev, what team size
+  does to architecture choices.
+
+## How the voice changed
+
+- **2018–2019** (`blog`, mostly also on Medium)
+  - Mostly tutorials written as he learns: Vue, Docker, Vim, Behat, Drupal dev environments
+  - Thinks in series. "I like to write blog posts in series." Many posts end with "in the next
+    post…", and some series stop there
+  - Confessional humor about bad habits: "I try to write tests, I really do. I utter that phrase
+    every time I enter the confessional booth." "Like most people, I hate testing. I also hate
+    (most) vegetables."
+  - Owns his shortcuts: "my eccentric, bad practice way of Frankenstein-ing different solutions
+    together when they work cause that's how I roll," and "a 'work smart, not hard' type of
+    person so I only learn enough of what I need."
+  - Sees himself as a regular developer among peers, and likes communities where leaders act
+    that way: Taylor Otwell "just seemed like a regular ole' developer…like myself." Wants to go
+    "from an outsider to an regular ole' insider."
+  - Sly parentheticals: "my working framework of choice (necessity)"
+  - Likes underdogs ("Liking underdogs and initially hating the look of JSX (like everyone with
+    working eyeballs)")
+  - Lots of emoji (😱 🙏 🙀 🤷‍♂), "Lolz," "OMG, double yass!!"
+  - The personal pieces (van life, careers, when to move on) are more reflective and literary:
+    "While we're not moving, we dream of moving, and in transit, we dream of rest."
+- **2020–2023** (Medium, `blurg`)
+  - Conference and meetup recaps, job-hunt essays, contribution stories
+  - Warmer and measured. Dad jokes, his parents' weekly calls, helping others contribute
+  - His unpublished Medium drafts (2022–2025) show the shift to the 2025 edge starting early:
+    a Drupal Starshot piece that pushes back on Dries's moonshot comparison ("It might not even
+    be in this solar system 😉"), and an opener that turns a cliché sideways: "There comes a
+    day in every young developer's life when they ask the most senior dev the most important
+    question of them all: 'where do bugs come from?'"
+  - Already anti-platform: "Let's bring back flavor and personality to the web" ("Bye World")
 - **2025** (this site)
   - Sharper and more opinionated. Contrarian on purpose
   - Stronger claims, made with more confidence and less hedging
   - More swearing in places
   - Sometimes punches at people rather than ideas: "incredibly dumb," "some dumb developer"
+- **2026** (project READMEs): plain and functional, with the humor only in the names (Time
+  Burglar, Obshittian, "Be like Mick not Michael"). Not a voice source for prose.
+- **What stays the same throughout:** learning in public, distrust of hype and complexity,
+  owning your own content, jokes at his own expense.
 - **For the site, Claude suggests:** the 2025 confidence and point of view, with the older
   warmth and self-deprecation. Sharp about ideas, not about people. Site copy is short, so it
   will mostly use his punchy one-liner register, not the long rambles. Alex to decide.

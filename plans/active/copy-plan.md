@@ -3,7 +3,8 @@
 How the empty "Fill in" slots on the built pages get filled. Claude drafts, Alex edits. Nothing a
 visitor reads ships without Alex's pass.
 
-- **Status:** Step 1 drafted. [docs/voice.md](../../docs/voice.md) is waiting for Alex's corrections
+- **Status:** Step 1 drafted. [docs/voice.md](../../docs/voice.md), [docs/facts.md](../../docs/facts.md) and
+  [docs/interview.md](../../docs/interview.md) are waiting for Alex
 - **Gaps on the pages:** `grep -rn FillIn src/pages` lists every one
 
 ## How drafting works
@@ -129,30 +130,21 @@ Done when: `grep -rn FillIn src/pages` and `grep -rn "<Draft" src` both come bac
 
 ## Inputs needed from Alex
 
-Rough answers are fine. Edit the line; Claude folds the answer in and deletes the question.
-
-- **Voice:** the four "Corrections wanted" questions at the end of
-  [docs/voice.md](../../docs/voice.md). Needed before any page copy.
-- **Home:** who the page is mainly for and the one thing they should do next. Both are open in
-  [docs/ia/home.md](../../docs/ia/home.md).
-- **About, the move into a new industry:** which industry? The bio frames the move as a strength,
-  so it has to name where you're headed. (Your repos suggest manufacturing and industrial
-  automation, from the Ignition Maker project and Main Street Twin, but that's a guess.)
-- **About, history:** what your writing already gives Claude is about 12 years on Drupal, starting
-  around 2013 with junior work and ending up running whole applications; consulting work in
-  Cincinnati; federal contract work until you quit in late 2024; a talk on Cypress at DrupalCamp
-  NJ 2023; reviving ReactJS Columbus in 2020; community organizing in Tremont, Cleveland. What's
-  missing or wrong? In particular:
-  - Other talks: event, year, topic
-  - Other groups you organized or helped run
-  - Which employers or clients, if any, the bio should name
-- **About, "best developer anywhere I've worked":** what's the evidence a visitor would believe?
-  A promotion, a role, a system you were the one person able to fix, something someone said?
-- **Skills:** the list, in your words, even rough.
-- **Work:** which three or four problems to write up. The candidates so far: a 20-site Drupal
-  migration with Playwright QA, a giving platform, federal backend work, the DU "Why" headless
-  proposal, an Ignition Maker project (not done yet).
-- **Medium:** links to older posts, if any matter.
+- **Voice:** the "Corrections wanted" questions at the end of [docs/voice.md](../../docs/voice.md).
+  Needed before any page copy.
+- **Facts:** anything wrong in [docs/facts.md](../../docs/facts.md), especially the lines marked
+  **(check)**.
+- **Interview:** [docs/interview.md](../../docs/interview.md). Covers the bio, the new industry,
+  Home's visitor and action, skills and case studies.
+- **Sources to unlock**, so the voice study can go deeper. Exports and private writing go in
+  `~/Sites/personal/sources/`, never in this public repo, and that folder gets added to the session:
+  - Medium export: done (read 2026-10-27)
+  - LinkedIn export: Settings → Data privacy → Get a copy of your data (full archive)
+  - X archive: Settings → Your account → Download an archive of your data
+  - Links to talk recordings
+  - Private writing you're OK sharing: old resumes, cover letters, proposals, talk abstracts
+  - Nothing needed for mr.alexfinnarn.com: Claude reads it from the Wayback Machine once the
+    Internet Archive is back online
 - **Contact:** the booking page link, once the Google Calendar appointment schedule exists.
 
 ## Not in this plan
