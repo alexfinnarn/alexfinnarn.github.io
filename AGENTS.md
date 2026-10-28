@@ -10,9 +10,11 @@ branch. What each page is for is in [docs/ia/](docs/ia/).
   hand. Use nested bullet lists instead: one item per row, and one sub-bullet per column,
   as `Label: value`. Tables are fine in output he only views, such as rendered pages or the
   style guide.
-- **Don't write site copy.** Alex writes every word visitors read: page text, bios, case
-  studies, articles, descriptions, taglines. Build structure and leave clearly marked slots
-  (`*(Fill in)*`, TODO). Dummy text in the style guide must be obviously dummy.
+- **Site copy is Alex's.** Every word visitors read is his: page text, bios, case studies,
+  articles, descriptions, taglines. Claude may draft copy only as part of
+  [plans/active/copy-plan.md](plans/active/copy-plan.md): in his voice ([docs/voice.md](docs/voice.md)), marked
+  as a draft until he edits it, with no invented facts. Otherwise build structure and leave
+  `FillIn` slots. Dummy text in the style guide must be obviously dummy.
 - **Ask before large multi-step changes.** Propose the plan and confirm scope first.
 - **For design choices, show options and ask "which is better?"** Don't ask him to rate
   design primitives. The method is in [docs/design/eye-test.md](docs/design/eye-test.md).
@@ -34,6 +36,8 @@ branch. What each page is for is in [docs/ia/](docs/ia/).
 
 ## Docs
 
+- [plans/](plans/): work plans. Current ones in `plans/active/`; move a plan to
+  `plans/archive/` when it's done.
 - [docs/ia/](docs/ia/): information architecture, with one doc per page. Alex's decisions
   there win on conflicts.
 - [docs/design/decisions.md](docs/design/decisions.md): how the visual direction was chosen.
