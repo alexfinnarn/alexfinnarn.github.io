@@ -25,6 +25,8 @@ const writing = defineCollection({
           text: z.string(),
           href: z.string(),
           action: z.string(),
+          // Drafted by Claude (plans/active/copy-plan.md): shows in dev only. Delete when it's Alex's.
+          draft: z.boolean().default(false),
         })
         .optional(),
       draft: z.boolean(),

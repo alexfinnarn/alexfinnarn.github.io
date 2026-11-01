@@ -1,75 +1,43 @@
 ---
-// Home page opening: label, headline, lede, actions. Full width, so a theme can
-// give it a background band. Slots: default (lede text), "actions" (Buttons),
-// "backdrop" (a wide image behind the whole hero, subject on the right, text over its
-// quiet left side; on phones it becomes a band below the text, cropped to the subject).
+// Home page opening: label, headline, lede and actions on a tilted paper patch, with a
+// drawing beside it. Slots: default (lede text), "actions" (Buttons), "art" (an image; it
+// fades into the page at ragged edges). On phones the drawing sits above the text.
 interface Props {
   label?: string;
   title: string;
-  /** Width / height of the backdrop image, so the hero keeps its proportions. */
-  backdropRatio?: number;
 }
 
-const { label, title, backdropRatio = 21 / 9 } = Astro.props;
-const hasBackdrop = Astro.slots.has('backdrop');
+const { label, title } = Astro.props;
+const hasArt = Astro.slots.has('art');
 ---
 
-<section class:list={['hero', { 'has-backdrop': hasBackdrop }]} style={hasBackdrop ? `--backdrop-ratio: ${backdropRatio}` : undefined}>
-  {hasBackdrop && <div class="backdrop"><slot name="backdrop" /></div>}
-  <div class="container">
-    <div class="text">
-      {label && <span class="label">{label}</span>}
-      <h1>{title}</h1>
-      <div class="lede measure"><slot /></div>
-      <div class="actions"><slot name="actions" /></div>
-    </div>
+<section class:list={['hero', 'container', { 'has-art': hasArt }]}>
+  <div class="text patch tilt">
+    {label && <span class="label">{label}</span>}
+    <h1>{title}</h1>
+    <div class="lede measure"><slot /></div>
+    <div class="actions"><slot name="actions" /></div>
   </div>
+  {hasArt && <div class="art"><slot name="art" /></div>}
 </section>
 
 <style>
   .hero {
-    padding-block: var(--space-section) var(--space-block);
+    max-width: 76rem;
+    padding-block: var(--space-7);
     background: var(--hero-bg);
     color: var(--hero-text);
   }
 
-  .has-backdrop {
-    position: relative;
-    isolation: isolate;
-    display: flex;
+  .has-art {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
     align-items: center;
-    /* As tall as the image is at full width, so it shows whole; never shorter than the text. */
-    min-height: max(26rem, calc(100vw / var(--backdrop-ratio)));
+    gap: var(--space-4);
   }
 
-  .has-backdrop .text {
-    max-width: 30rem;
-  }
-
-  .backdrop {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-  }
-
-  /* Fades the image's left side toward the page so the text stays readable. */
-  .backdrop::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to right,
-      var(--color-bg) 0%,
-      color-mix(in srgb, var(--color-bg) 75%, transparent) 28%,
-      transparent 50%
-    );
-  }
-
-  .backdrop :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: right center;
+  .text {
+    padding: var(--space-8) clamp(var(--space-5), 5vw, var(--space-8));
   }
 
   .label {
@@ -86,27 +54,21 @@ const hasBackdrop = Astro.slots.has('backdrop');
     gap: var(--space-3);
   }
 
-  @media (max-width: 40rem) {
-    .has-backdrop {
-      flex-direction: column;
-      align-items: stretch;
-      min-height: 0;
-      padding-bottom: 0;
+  .art :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 48rem) {
+    .has-art {
+      grid-template-columns: 1fr;
     }
 
-    .backdrop {
-      position: static;
-      order: 2;
-      height: 18rem;
-      margin-top: var(--space-6);
-    }
-
-    .backdrop::after {
-      display: none;
-    }
-
-    .backdrop :global(img) {
-      object-position: 88% center;
+    .art {
+      order: -1;
+      width: min(100%, 24rem);
+      margin-inline: auto;
     }
   }
 </style>

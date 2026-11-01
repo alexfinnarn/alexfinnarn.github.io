@@ -29,8 +29,11 @@ branch. What each page is for is in [docs/ia/](docs/ia/).
 - **Styling:** components use only role tokens (`src/styles/tokens/themes.css`), never base
   tokens (`base.css`) or hard-coded values. `themes.css` holds the one chosen look; there is
   no theme switch.
-- **Contrast:** Browns orange `#FF3C00` is 3.4:1 on the paper background. Use it only for large
-  text, bars and fills. Links use `#C72E00`. Don't put orange text on dark backgrounds.
+- **Look:** "Erased" (see [docs/design/decisions.md](docs/design/decisions.md)). Content sits on
+  paper patches over colored-pencil hatching: put `.patch` on a block (add `.tilt` only if it's
+  short) and `.art` on a drawing. Text outside a patch lands on the hatching and is hard to read.
+- **Contrast:** the bright pencil colors (yellow, red, pink, green, blue) are under 4.5:1 on the
+  cream paper. Use them only for hatching and fills. Text is graphite; links are deep blue.
 - `archive/` holds the retired old site. It isn't built and is excluded from type checks.
   Don't import from it.
 

@@ -2,17 +2,21 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import FillIn from '../../components/FillIn.astro';
+import Draft from '../../components/Draft.astro';
 import ArticleListItem from '../../components/ArticleListItem.astro';
 import Button from '../../components/Button.astro';
 import { getCaseStudies } from '../../lib/content';
+import { draft } from '../../lib/draft';
 
 const caseStudies = await getCaseStudies();
 ---
 
-<Base title="Work">
-  <div class="container">
+<Base title="Work" description={draft('Case studies from Alex Finnarn: the problem, what he did, and how it turned out.')}>
+  <div class="container patch page">
     <PageHeader title="Work">
-      <FillIn what="One- or two-sentence intro to the Work page." />
+      <Draft what="One- or two-sentence intro to the Work page.">
+        <p>Each case study starts with a problem and how I solved it. The client gets a mention, not the headline.</p>
+      </Draft>
     </PageHeader>
     {caseStudies.length > 0 ? (
       <ul class="list">

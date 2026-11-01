@@ -4,50 +4,26 @@
  * which point at these.
  */
 :root {
-  /* Neutrals: cool gray */
-  --gray-0: #ffffff;
-  --gray-50: #f4f6f8;
-  --gray-100: #e9edf1;
-  --gray-200: #d8dde4;
-  --gray-400: #8a93a1;
-  --gray-600: #4a5261;
-  --gray-800: #262b33;
-  --gray-900: #16191f;
+  /* Paper: the cream the colored-pencil drawings are drawn on */
+  --paper-0: #f6edda;
+  --paper-50: #efe3c9;
+  --paper-200: #d9c9a8;
+  --white: #ffffff;
 
-  /* Neutrals: warm (paper and ink) */
-  --warm-0: #fbfaf7;
-  --warm-50: #f3f0ea;
-  --warm-200: #ddd7cc;
-  --warm-600: #5a544b;
-  --warm-900: #1f1d1a;
+  /* Graphite: text. Both pass 4.5:1 on all the paper tones. */
+  --graphite-900: #24222b; /* 13.5:1 on paper */
+  --graphite-600: #5c5245; /* 6.6:1 on paper */
 
-  /* Steel blue */
-  --blue-50: #e8eff6;
-  --blue-600: #1d4f7a;
-  --blue-700: #143a5b;
-
-  /* Navy / graphite blue */
-  --navy-50: #e9ecf3;
-  --navy-600: #24386b;
-  --navy-800: #16223f;
-
-  /* Muted industrial orange */
-  --orange-50: #f8ece4;
-  --orange-500: #c8622b;
-  --orange-600: #a4471f;
-  --orange-700: #833816;
-
-  /* Browns orange and brown. Brand orange is 3.4:1 on paper: large text, rules and
-     fills only. Use --orange-text for links and small text (5.3:1 on paper). */
-  --browns-orange: #ff3c00;
-  --browns-orange-hover: #ff6b33; /* lighter, so dark text on it stays above 5.5:1 */
-  --orange-text: #c72e00;
-  --orange-text-hover: #a82700;
-  --brown-900: #311d00;
-  --brown-700: #4a2f0d;
-  --tan-300: #d9c8b0;
-  --warm-25: #f4efe6;
-  --ink-black: #14110d;
+  /* Pencil colors, picked from the drawings. Yellow, red, pink, green and blue are under 4.5:1
+     on paper: hatching and fills only. Text uses the deep ones. */
+  --pencil-yellow: #f2bf2a;
+  --pencil-red: #e2532b;
+  --pencil-pink: #e07a8a;
+  --pencil-green: #3b8a4a;
+  --pencil-blue: #2f6db5;
+  --pencil-violet: #6a4fa3;
+  --pencil-blue-deep: #1f4f8f; /* 7.0:1 on paper */
+  --pencil-violet-deep: #5a3f8f; /* 7.1:1 on paper */
 
   /* Type families (system stacks only: nothing to download) */
   --family-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

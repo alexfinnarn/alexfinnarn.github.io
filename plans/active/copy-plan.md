@@ -3,8 +3,9 @@
 How the empty "Fill in" slots on the built pages get filled. Claude drafts, Alex edits. Nothing a
 visitor reads ships without Alex's pass.
 
-- **Status:** Step 1 drafted. [docs/voice.md](../../docs/voice.md), [docs/facts.md](../../docs/facts.md) and
-  [docs/interview.md](../../docs/interview.md) are waiting for Alex
+- **Status:** first drafts are on every page with a slot (2026-10-27), waiting for Alex's edits.
+  Still Fill in: case studies, the booking link, the contact form, and the part of the bio about
+  the new industry (needs [docs/interview.md](../../docs/interview.md))
 - **Gaps on the pages:** `grep -rn FillIn src/pages` lists every one
 
 ## How drafting works
@@ -12,9 +13,15 @@ visitor reads ships without Alex's pass.
 - **Voice first.** Before any page copy, Claude reads Alex's existing writing and writes
   [docs/voice.md](../../docs/voice.md): how he actually writes, with short quoted examples. Alex corrects it.
   Every draft after that follows it.
-- **Drafts go in the page, marked.** Each drafted line replaces its `FillIn` slot, wrapped in a
-  `Draft` marker that's highlighted in dev and invisible in production. Alex edits in place and
-  removes the marker when a line is his. `grep -rn "<Draft" src` lists what's still unapproved.
+- **Drafts go in the page, marked.** Each drafted line replaces its `FillIn` slot, wrapped in
+  the `Draft` component. Dev shows it highlighted; a production build shows the Fill in box
+  instead, so nothing unapproved goes live. Alex edits in place and removes the wrapper when a
+  line is his. The other kinds of draft:
+  - Meta descriptions: `draft('…')` from `src/lib/draft.ts`. Production leaves them out.
+    Replace with the plain string to approve.
+  - Skills: `draft: true` in `src/data/skills.ts`. Delete the flag to approve.
+  - Article CTAs: `draft: true` inside the article's `cta`. Delete the flag to approve.
+  - To list what's left: `grep -rn "<Draft\|draft('\|draft: true" src`
 - **Two options for key lines.** For the lines that set the tone (Home positioning line, About
   opening question, the bio's first sentence), Claude drafts two and Alex picks or rewrites.
 - **No invented facts.** Drafts use only what's in Alex's writing, the IA docs, or his answers.

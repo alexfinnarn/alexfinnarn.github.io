@@ -3,39 +3,54 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Button from '../components/Button.astro';
 import FillIn from '../components/FillIn.astro';
+import Draft from '../components/Draft.astro';
 import SkillMenu from '../components/SkillMenu.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import { Image } from 'astro:assets';
-import heroImage from '../assets/hero.jpg';
+import portraitImage from '../assets/portrait-extended.png';
 import { getArticles, articleHref } from '../lib/content';
-import { skills } from '../data/skills';
+import { shownSkills } from '../data/skills';
+import { draft } from '../lib/draft';
 import { site } from '../site';
 
 const featured = (await getArticles()).slice(0, 3);
 ---
 
-<Base>
-  <Hero label={`${site.role} · ${site.location}`} title={site.name} backdropRatio={heroImage.width / heroImage.height}>
-    <FillIn what="Positioning line. (The interactive story hero replaces this section later.)" />
-    <Image
-      slot="backdrop"
-      src={heroImage}
-      alt={`Colored-pencil drawing of ${site.name} resting on a boulder in a pine forest, with a backpack and trekking poles`}
-      widths={[800, 1400, heroImage.width]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-    />
+<Base
+  description={draft(
+    'Alex Finnarn is a software consultant in Troy, Ohio, with twelve years of building and running Drupal platforms and a growing pile of AI-assisted workflows.',
+  )}
+>
+  <Hero label={`${site.role} · ${site.location}`} title={site.name}>
+    <Draft what="Positioning line. (The interactive story hero replaces this section later.)">
+      <p>Option 1: I build web systems simple enough to explain, so they keep working when the shiny parts fail.</p>
+      <p>Option 2: Twelve years keeping big Drupal platforms alive. Now I'm working out which parts of that job AI should do.</p>
+    </Draft>
     <Fragment slot="actions">
       <Button href="/work/">Work</Button>
       <Button href="/contact/" variant="secondary">Contact</Button>
     </Fragment>
+    <Image
+      slot="art"
+      src={portraitImage}
+      alt={`Colored-pencil portrait of ${site.name}`}
+      widths={[500, 900, portraitImage.width]}
+      sizes="(max-width: 48rem) 24rem, 30rem"
+      loading="eager"
+      fetchpriority="high"
+    />
   </Hero>
 
-  <section class="container section">
+  <section class="container section patch tilt">
     <h2>What I do</h2>
-    {skills.length > 0 ? (
-      <SkillMenu items={skills.map(({ title, description }) => ({ title, description }))} />
+    {shownSkills.length > 0 ? (
+      shownSkills.some((skill) => skill.draft) ? (
+        <Draft what="Skills, in src/data/skills.ts (shared with Consulting).">
+          <SkillMenu items={shownSkills.map(({ title, description }) => ({ title, description }))} />
+        </Draft>
+      ) : (
+        <SkillMenu items={shownSkills.map(({ title, description }) => ({ title, description }))} />
+      )
     ) : (
       <FillIn what="Skills, in src/data/skills.ts (shared with Consulting)." />
     )}
@@ -43,7 +58,7 @@ const featured = (await getArticles()).slice(0, 3);
   </section>
 
   {featured.length > 0 && (
-    <section class="container section">
+    <section class="container section patch tilt">
       <h2>Writing</h2>
       <ul class="list">
         {featured.map((article) => (
@@ -62,6 +77,13 @@ const featured = (await getArticles()).slice(0, 3);
 </Base>
 
 <style>
+  .section {
+    max-width: calc(var(--container) + 6rem);
+    padding-inline: clamp(var(--space-5), 8vw, var(--space-9));
+    /* Neighbouring patches overlap a little. */
+    margin-block: calc(-1 * var(--space-5));
+  }
+
   .list {
     margin: 0;
     padding: 0;

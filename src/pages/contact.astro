@@ -2,14 +2,18 @@
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import FillIn from '../components/FillIn.astro';
+import Draft from '../components/Draft.astro';
 import ContactList from '../components/ContactList.astro';
+import { draft } from '../lib/draft';
 import { site } from '../site';
 ---
 
-<Base title="Contact">
-  <div class="container">
+<Base title="Contact" description={draft('How to get in touch with Alex Finnarn about a project.')}>
+  <div class="container patch page">
     <PageHeader title="Contact">
-      <FillIn what="One sentence on what to get in touch about." />
+      <Draft what="One sentence on what to get in touch about.">
+        <p>Got a problem with a website, a Drupal platform or an AI workflow? Tell me about it, even if you're not sure it's a fit.</p>
+      </Draft>
     </PageHeader>
     <section class="section stack">
       <FillIn what="The gate and contact form (to build, once the gate is decided)." />

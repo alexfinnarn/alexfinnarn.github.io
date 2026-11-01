@@ -4,6 +4,12 @@ description: "Complex codebases kill simplicity. When CMSes abandon documentatio
 publishedDate: 2025-06-25
 draft: false
 topics: ["AI", "CMS"]
+cta:
+  heading: "Codebase growing faster than your team?"
+  text: "I've spent twelve years in big Drupal codebases. Let's figure out what you can cut."
+  href: "/consulting/"
+  action: "See what I do"
+  draft: true
 ---
 
 It can be hard to limit complexity in any system that involves many minds. Human nature craves

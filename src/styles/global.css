@@ -18,9 +18,15 @@ html {
   text-size-adjust: 100%;
 }
 
+/* Patches reach past their content; don't let them widen the page. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   margin: 0;
-  background: var(--color-bg);
+  background: var(--page-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: var(--text-body);
@@ -87,6 +93,48 @@ img {
 
 .section + .section {
   border-top: var(--rule);
+}
+
+/* A patch of paper rubbed out of the hatching behind it. The ragged edge is a layer behind
+   the content that reaches past it, so it never cuts into text. Add .tilt for short blocks;
+   long ones stay straight so their ends don't swing off the text.
+   No isolation here on purpose: every patch's paper sits in the page's bottom layer, under
+   all text, so a patch reaching up over the header never covers the header's links. */
+.patch {
+  position: relative;
+}
+
+.patch::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--patch-reach-block)) calc(-1 * var(--patch-reach-inline));
+  z-index: -1;
+  background: var(--patch-bg);
+  mask: var(--patch-mask);
+}
+
+.patch.tilt::before {
+  rotate: var(--patch-tilt);
+}
+
+.patch.tilt:nth-child(even)::before {
+  rotate: var(--patch-tilt-alt);
+}
+
+/* Patches already separate sections; a rule between them would cross the hatching. */
+.patch + .patch {
+  border-top: 0;
+}
+
+/* The body of an inner page: one straight patch from the title to the last line, with
+   room below the last line for the ragged edge. */
+.page {
+  padding-bottom: var(--space-7);
+}
+
+/* A drawing that fades into the paper at ragged edges. */
+.art {
+  mask: var(--art-mask);
 }
 
 /* Small uppercase (or not, per theme) label above a heading */

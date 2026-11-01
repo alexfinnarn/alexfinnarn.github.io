@@ -1,31 +1,32 @@
 /*
  * Role tokens: what each value is FOR. Components only use these, never base tokens.
  *
- * The site's look ("R3-less" in docs/design/decisions.md): heavy, tightly spaced sans
- * headlines over a sans body, Browns orange as a bar across the top and on buttons,
- * deeper orange for links, light footer, square corners.
+ * The site's look ("Erased" in docs/design/decisions.md): the page is loose colored-pencil
+ * hatching that scrolls with the content, warm at the top and cool at the bottom. Content
+ * sits on patches of cream paper that look rubbed out of it with an eraser, a little tilted.
+ * Heavy, tightly spaced sans headlines in graphite, sans body, plain buttons.
  *
  * "Surface" roles (header, hero, footer, button) say how those areas look, so a
  * component never needs to know about colors directly.
  */
 :root {
-  --color-bg: var(--warm-0);
-  --color-bg-alt: var(--warm-50);
-  --color-text: var(--ink-black);
-  --color-text-muted: var(--warm-600);
-  --color-rule: var(--warm-200);
-  --color-accent: var(--orange-text);
-  --color-accent-hover: var(--orange-text-hover);
-  --color-accent-tint: var(--orange-50);
-  --color-on-accent: var(--gray-0);
-  --color-brand: var(--browns-orange);
-  --color-on-brand: var(--ink-black);
+  --color-bg: var(--paper-0);
+  --color-bg-alt: var(--paper-50);
+  --color-text: var(--graphite-900);
+  --color-text-muted: var(--graphite-600);
+  --color-rule: var(--paper-200);
+  --color-accent: var(--pencil-blue-deep);
+  --color-accent-hover: var(--pencil-violet-deep);
+  --color-accent-tint: var(--paper-50);
+  --color-on-accent: var(--white);
+  --color-brand: var(--pencil-blue-deep); /* also the focus outline, so it must stand out */
+  --color-on-brand: var(--white);
   --font-body: var(--family-sans);
   --font-heading: var(--family-sans);
   --font-label: var(--family-sans);
   --font-figure: var(--family-sans);
-  --weight-heading: 800;
-  --tracking-heading: -0.035em;
+  --weight-heading: 700;
+  --tracking-heading: -0.02em;
   --leading-heading: 1.02;
   --h1-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
   --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
@@ -42,26 +43,45 @@
   --rule-strong: var(--line-2) solid var(--color-text);
   --panel-bg: var(--color-bg-alt);
 
-  --header-bg: var(--color-bg);
+  /* The page behind everything: paper grain over pencil hatching over paper. The hatching
+     is stretched to the page's height, so its colors run warm to cool as you scroll. */
+  --page-bg:
+    url('../textures/grain.svg'),
+    url('../textures/hatch.svg') center top / max(100%, 1600px) 100% no-repeat,
+    var(--paper-0);
+
+  /* Patches: paper rubbed out of the hatching (the .patch helper in global.css). Each
+     reaches past its content so the ragged edge never touches the text. */
+  --patch-bg: var(--color-bg);
+  --patch-mask: url('../textures/patch.svg') center / 100% 100% no-repeat;
+  --patch-reach-block: 7rem;
+  --patch-reach-inline: 8rem;
+  --patch-tilt: -2.5deg;
+  --patch-tilt-alt: 2deg;
+
+  /* Drawings fade into the paper at ragged edges instead of ending in a hard rectangle. */
+  --art-mask: url('../textures/art-edge.svg') center / 100% 100% no-repeat;
+
+  --header-bg: transparent;
   --header-text: var(--color-text);
   --header-muted: var(--color-text-muted);
-  --header-top: 6px solid var(--color-brand);
+  --header-top: 0 solid transparent;
   --header-bottom: 0 solid transparent;
-  --header-current: var(--color-brand);
+  --header-current: var(--pencil-yellow);
   --hero-bg: transparent;
   --hero-text: var(--color-text);
   --hero-muted: var(--color-text-muted);
 
-  --footer-bg: var(--color-bg-alt);
+  --footer-bg: transparent;
   --footer-text: var(--color-text);
   --footer-muted: var(--color-text-muted);
   --footer-link: var(--color-accent);
 
-  --button-bg: var(--color-brand);
-  --button-text: var(--ink-black);
-  --button-hover-bg: var(--browns-orange-hover);
-  --button-alt-border: var(--ink-black);
-  --button-alt-text: var(--ink-black);
+  --button-bg: var(--graphite-900);
+  --button-text: var(--white);
+  --button-hover-bg: var(--pencil-violet-deep);
+  --button-alt-border: var(--graphite-900);
+  --button-alt-text: var(--graphite-900);
   --space-section: var(--space-9);
   --space-block: var(--space-6);
   --measure: 44rem;

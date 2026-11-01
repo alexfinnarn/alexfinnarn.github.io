@@ -4,6 +4,12 @@ description: "Every CMS forces content creators to manipulate layout builders wi
 publishedDate: 2025-06-18
 draft: false
 topics: ["AI", "CMS"]
+cta:
+  heading: "Stuck in a layout builder?"
+  text: "Tell me what your site is supposed to say, and we'll work out how it should look from there."
+  href: "/contact/"
+  action: "Get in touch"
+  draft: true
 ---
 
 Intent. It's something we hope is behind every move we make in life, yet often times we act 

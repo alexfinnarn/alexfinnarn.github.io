@@ -19,10 +19,10 @@ import drawing from '../assets/portrait.jpeg';
 
 
 const baseColors = [
-  ['Browns', ['--browns-orange', '--browns-orange-hover', '--orange-text', '--orange-text-hover', '--brown-900', '--brown-700', '--tan-300', '--ink-black']],
-  ['Cool gray', ['--gray-0', '--gray-50', '--gray-100', '--gray-200', '--gray-400', '--gray-600', '--gray-800', '--gray-900']],
-  ['Warm', ['--warm-0', '--warm-25', '--warm-50', '--warm-200', '--warm-600', '--warm-900']],
-  ['Orange', ['--orange-50', '--orange-500', '--orange-600', '--orange-700']],
+  ['Paper', ['--paper-0', '--paper-50', '--paper-200', '--white']],
+  ['Graphite', ['--graphite-900', '--graphite-600']],
+  ['Pencil', ['--pencil-yellow', '--pencil-red', '--pencil-pink', '--pencil-green', '--pencil-blue', '--pencil-violet']],
+  ['Pencil, deep (text)', ['--pencil-blue-deep', '--pencil-violet-deep']],
 ] as const;
 
 const roleColors = [
@@ -34,7 +34,7 @@ const roleColors = [
   ['--color-accent', 'Links, buttons, figures'],
   ['--color-accent-hover', 'Hover state for accent'],
   ['--color-accent-tint', 'Callout background, secondary button hover'],
-  ['--color-brand', 'Brand orange: bars, figures, fills (large things only)'],
+  ['--color-brand', 'Focus outline, figures'],
   ['--header-bg', 'Header surface'],
   ['--hero-bg', 'Hero surface'],
   ['--footer-bg', 'Footer surface'],
@@ -51,6 +51,9 @@ const roleOther = [
   ['--label-case', 'Label capitalization'],
   ['--text-body', 'Body text size'],
   ['--radius', 'Corner radius'],
+  ['--patch-reach-block', 'How far a paper patch reaches above and below its content'],
+  ['--patch-reach-inline', 'How far a paper patch reaches left and right of its content'],
+  ['--patch-tilt', 'Tilt of a short patch'],
   ['--rule-strong', 'Strong rule (top of blocks)'],
   ['--space-section', 'Space between sections'],
   ['--measure', 'Reading width'],
@@ -90,7 +93,7 @@ const skillSamples = [
         All text below is dummy text. Components use only role tokens, so the site's look lives in <code>src/styles/tokens/themes.css</code>. How it was chosen is in <code>docs/design/decisions.md</code>.
       </p>
       <nav class="sg-toc" aria-label="Sections">
-        <a href="#orange">About the orange</a>
+        <a href="#paper">Paper and pencil</a>
         <a href="#tokens">Tokens</a>
         <a href="#type">Typography</a>
         <a href="#components">Components</a>
@@ -98,23 +101,27 @@ const skillSamples = [
     </div>
 
 
-    <!-- ───────────── Orange ───────────── -->
-    <section id="orange" class="container sg-section">
-      <h2 class="sg-h">About the orange</h2>
+    <!-- ───────────── Paper and pencil ───────────── -->
+    <section id="paper" class="container sg-section">
+      <h2 class="sg-h">Paper and pencil</h2>
       <div class="sg-desc sg-prose">
         <p>
-          Browns orange (<code>#FF3C00</code>) is bright, and bright colors don't contrast much with a light
-          background. Accessibility guidelines (WCAG AA) ask for a contrast ratio of at least <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for large text, icons and lines.
+          The page is loose colored-pencil hatching that scrolls with the content, warm at the top and
+          cool at the bottom. Content sits on <strong>patches</strong> of cream paper rubbed out of it:
+          add <code>.patch</code> to a block (and <code>.tilt</code> if it's short). Drawings get
+          <code>.art</code> for a ragged edge. The textures are in <code>src/styles/textures/</code>.
+        </p>
+        <p>
+          The bright pencil colors are too light for text (WCAG AA asks for <strong>4.5:1</strong> for
+          normal text and <strong>3:1</strong> for large text). Text is graphite, and links use the deep blue.
         </p>
         <div class="sg-contrast">
-          <div style="background: var(--warm-0); color: var(--browns-orange)"><strong>Aa</strong> #FF3C00 on paper · 3.4:1 · large text, rules and fills only</div>
-          <div style="background: var(--warm-0); color: var(--orange-text)"><strong>Aa</strong> #C72E00 on paper · 5.3:1 · safe for links and small text</div>
-          <div style="background: var(--browns-orange); color: var(--ink-black)"><strong>Aa</strong> Ink black on #FF3C00 · 5.3:1 · safe</div>
+          <div style="background: var(--color-bg); color: var(--color-text)"><strong>Aa</strong> Graphite on paper · 13.5:1 · text</div>
+          <div style="background: var(--color-bg); color: var(--color-text-muted)"><strong>Aa</strong> Soft graphite on paper · 6.6:1 · dates, labels</div>
+          <div style="background: var(--color-bg); color: var(--color-accent)"><strong>Aa</strong> Deep blue on paper · 7.0:1 · links</div>
+          <div style="background: var(--color-bg); color: var(--pencil-blue)"><strong>Aa</strong> Pencil blue on paper · 4.5:1 · borderline; hatching only</div>
+          <div style="background: var(--color-bg); color: var(--pencil-red)"><strong>Aa</strong> Pencil red on paper · 3.3:1 · hatching and fills only</div>
         </div>
-        <p>
-          So the site uses two oranges: true Browns orange for big, graphic things (the top bar, buttons
-          with dark text), and a slightly deeper orange for links and small text.
-        </p>
       </div>
     </section>
 
@@ -220,7 +227,7 @@ const skillSamples = [
       </article>
 
       <article class="sg-component">
-        <header><h3>Hero</h3><p>Home, top of page. Label, headline, lede, two actions.</p></header>
+        <header><h3>Hero</h3><p>Home, top of page. Label, headline, lede and two actions on a tilted patch, with a drawing beside it.</p></header>
         <div class="sg-frame flush">
           <Hero label="Label · Location" title="Headline text sample">
             <p>Lede text. {lorem}</p>
@@ -228,6 +235,7 @@ const skillSamples = [
               <Button href="#components">Primary action</Button>
               <Button href="#components" variant="secondary">Secondary action</Button>
             </Fragment>
+            <img slot="art" src={drawing.src} alt="Colored-pencil portrait drawing" width={drawing.width} height={drawing.height} />
           </Hero>
         </div>
       </article>
@@ -352,6 +360,11 @@ const skillSamples = [
 
 <style is:global>
   /* Style guide chrome only. Deliberately plain and theme-independent. */
+  /* Plain paper, so the guide's own notes don't sit on the hatching. */
+  body {
+    background: var(--color-bg);
+  }
+
   .sg-toolbar {
     position: sticky;
     top: 0;
@@ -540,6 +553,10 @@ const skillSamples = [
 
   .sg-frame.flush {
     padding: 0;
+    /* Full-width components show the real page behind them. Isolation keeps their patches'
+       paper inside the frame, above its background. */
+    isolation: isolate;
+    background: var(--page-bg);
   }
 
   .sg-footer .site-footer {

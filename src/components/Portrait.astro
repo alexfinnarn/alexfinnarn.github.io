@@ -33,6 +33,10 @@ const { src, alt = '', caption } = Astro.props;
     border-radius: var(--radius);
   }
 
+  img {
+    mask: var(--art-mask);
+  }
+
   .empty {
     display: grid;
     place-items: center;

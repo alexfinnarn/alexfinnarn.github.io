@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 3600" preserveAspectRatio="none">
+  <!-- Loose diagonal colored-pencil hatching, like the backgrounds of the drawings, laid out
+       down a tall page: yellow and red at the top, pink and green in the middle, violet and
+       blue at the bottom. Stretched to the page's height, so it scrolls with the content. -->
+  <defs>
+    <filter id="streak" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011 0.16" numOctaves="2" seed="2" result="t" />
+      <feColorMatrix in="t" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  4.5 0 0 0 -2.3" result="a" />
+      <feComposite in="SourceGraphic" in2="a" operator="in" />
+    </filter>
+    <filter id="streak2" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.013 0.13" numOctaves="2" seed="9" result="t" />
+      <feColorMatrix in="t" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  4.5 0 0 0 -2.3" result="a" />
+      <feComposite in="SourceGraphic" in2="a" operator="in" />
+    </filter>
+    <radialGradient id="g"><stop offset="0" stop-color="#fff" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></radialGradient>
+    <mask id="mYellow"><ellipse cx="300" cy="400" rx="1100" ry="900" fill="url(#g)" /></mask>
+    <mask id="mRed"><ellipse cx="1350" cy="350" rx="800" ry="700" fill="url(#g)" /></mask>
+    <mask id="mPink"><ellipse cx="1300" cy="1500" rx="800" ry="800" fill="url(#g)" /></mask>
+    <mask id="mGreen"><ellipse cx="250" cy="1800" rx="1000" ry="900" fill="url(#g)" /></mask>
+    <mask id="mViolet"><ellipse cx="400" cy="3100" rx="1000" ry="900" fill="url(#g)" /></mask>
+    <mask id="mBlue"><ellipse cx="1300" cy="2900" rx="1100" ry="1100" fill="url(#g)" /></mask>
+  </defs>
+
+  <g mask="url(#mYellow)">
+    <g transform="rotate(-58 800 1800)"><rect x="-1800" y="-1200" width="5200" height="6000" fill="#f2bf2a" filter="url(#streak)" /></g>
+  </g>
+  <g mask="url(#mRed)" opacity="0.75">
+    <g transform="rotate(-64 800 1800)"><rect x="-1800" y="-1200" width="5200" height="6000" fill="#e2532b" filter="url(#streak2)" /></g>
+  </g>
+  <g mask="url(#mPink)" opacity="0.8">
+    <g transform="rotate(-55 800 1800)"><rect x="-1800" y="-1200" width="5200" height="6000" fill="#e07a8a" filter="url(#streak)" /></g>
+  </g>
+  <g mask="url(#mGreen)" opacity="0.85">
+    <g transform="rotate(-52 800 1800)"><rect x="-1800" y="-1200" width="5200" height="6000" fill="#3b8a4a" filter="url(#streak2)" /></g>
+  </g>
+  <g mask="url(#mViolet)" opacity="0.8">
+    <g transform="rotate(-50 800 1800)"><rect x="-1800" y="-1200" width="5200" height="6000" fill="#6a4fa3" filter="url(#streak)" /></g>
+  </g>
+  <g mask="url(#mBlue)">
+    <g transform="rotate(-62 800 1800)"><rect x="-1800" y="-1200" width="5200" height="6000" fill="#2f6db5" filter="url(#streak2)" /></g>
+  </g>
+</svg>

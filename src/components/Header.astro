@@ -11,7 +11,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 ---
 
 <header class="site-header">
-  <div class="container bar">
+  <div class="container bar patch tilt">
     <a class="wordmark" href="/" aria-current={path === '/' ? 'page' : undefined}>
       <span class="name">{site.name}</span>
       <span class="role">{site.role}</span>
@@ -42,7 +42,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2) var(--space-5);
-    padding-block: var(--space-4);
+    padding-block: var(--space-5);
   }
 
   .wordmark {
