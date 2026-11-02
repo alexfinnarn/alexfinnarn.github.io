@@ -7,7 +7,7 @@ or to rate design decisions like line weight or type size. They only react to wh
 It ran in this site's dev-only style guide until the theme was chosen. It was removed on
 2026-10-27 to keep the style guide to the site's actual tokens and components. Rounds 4 to 6
 (2026-10-30) used the standalone version below, on dev-only `/lab/` pages that were removed once
-Erased was adopted. The last version
+Erased was adopted. Round 7 (2026-11-01, Home's "What I do") ran the same way. The last version
 is in git at commit `457c6ce` (`src/styleguide/`, `src/styles/tokens/themes.css`); the standalone
 version (below) is where it continues.
 

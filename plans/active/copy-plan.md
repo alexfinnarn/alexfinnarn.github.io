@@ -3,9 +3,10 @@
 How the empty "Fill in" slots on the built pages get filled. Claude drafts, Alex edits. Nothing a
 visitor reads ships without Alex's pass.
 
-- **Status:** first drafts are on every page with a slot (2026-10-27), waiting for Alex's edits.
-  Still Fill in: case studies, the booking link, the contact form, and the part of the bio about
-  the new industry (needs [docs/interview.md](../../docs/interview.md))
+- **Status:** first drafts went on every page with a slot (2026-10-27). On 2026-11-01 Alex edited
+  some and kept the rest for launch, and the draft markers were removed: everything on the pages
+  now goes live. Still Fill in: case studies, the booking link, the contact form, and the part of
+  the bio about the new industry (needs [docs/interview.md](../../docs/interview.md))
 - **Gaps on the pages:** `grep -rn FillIn src/pages` lists every one
 
 ## How drafting works
@@ -13,15 +14,10 @@ visitor reads ships without Alex's pass.
 - **Voice first.** Before any page copy, Claude reads Alex's existing writing and writes
   [docs/voice.md](../../docs/voice.md): how he actually writes, with short quoted examples. Alex corrects it.
   Every draft after that follows it.
-- **Drafts go in the page, marked.** Each drafted line replaces its `FillIn` slot, wrapped in
-  the `Draft` component. Dev shows it highlighted; a production build shows the Fill in box
-  instead, so nothing unapproved goes live. Alex edits in place and removes the wrapper when a
-  line is his. The other kinds of draft:
-  - Meta descriptions: `draft('…')` from `src/lib/draft.ts`. Production leaves them out.
-    Replace with the plain string to approve.
-  - Skills: `draft: true` in `src/data/skills.ts`. Delete the flag to approve.
-  - Article CTAs: `draft: true` inside the article's `cta`. Delete the flag to approve.
-  - To list what's left: `grep -rn "<Draft\|draft('\|draft: true" src`
+- **Drafts go in the page, marked.** Each drafted line replaces its `FillIn` slot, marked so a
+  production build shows the Fill in box instead. The markers (a `Draft` component, a `draft()`
+  helper for meta descriptions, and `draft: true` flags on skills and article CTAs) were removed
+  at launch on 2026-11-01. To draft that way again, restore them from git (commit `fd37788`).
 - **Two options for key lines.** For the lines that set the tone (Home positioning line, About
   opening question, the bio's first sentence), Claude drafts two and Alex picks or rewrites.
 - **No invented facts.** Drafts use only what's in Alex's writing, the IA docs, or his answers.
@@ -92,9 +88,11 @@ The pages that set the tone. Both need answers from Alex first (see "Inputs need
   - Positioning line (two options). Temporary until the story hero exists
   - Meta description
 
-Done when: both pages read as Alex's, with no `Draft` markers left.
+Done when: both pages read as Alex's.
 
-## Step 3: Consulting, skills and Work
+## Step 3: Skills and Work
+
+Consulting merged into Work on 2026-11-01; its intro and availability line moved there.
 
 - **Skills** (`src/data/skills.ts`, shared by Home and Consulting)
   - The list of skills: Alex names them; Claude drafts the one-line descriptions
@@ -129,11 +127,13 @@ Done when: at least three real case studies are published and each skill links t
   - The one sentence
 - **Labels Claude wrote while building**, for Alex to keep or rewrite:
   - Buttons: Work, Contact, Consulting, Home
-  - Links: All writing, Report a broken link
+  - Links: All writing, All work, Report a broken link
+  - Work example links: Read the case study, Read the article, See the project, Watch the talk,
+    More <skill>
   - Section headings: What I do, Principles
   - RSS feed description: "Articles by Alex Finnarn, Senior Software Consultant."
 
-Done when: `grep -rn FillIn src/pages` and `grep -rn "<Draft" src` both come back empty.
+Done when: `grep -rn FillIn src/pages` comes back empty.
 
 ## Inputs needed from Alex
 

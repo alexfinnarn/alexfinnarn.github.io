@@ -48,11 +48,11 @@ Decisions that show up on more than one page:
 
 ```
 /                     Home
-├── /work             Work (index)
-│   └── /work/<slug>      Case study
+├── /work             Work (index; also covers consulting)
+│   ├── /work/<slug>          Case study
+│   └── /work/skills/<skill>  Work filtered by skill
 ├── /writing          Writing (index)
 │   └── /writing/<slug>   Article
-├── /consulting       Consulting
 ├── /about            About
 ├── /contact          Contact
 └── (404)             Not found
@@ -61,10 +61,10 @@ Decisions that show up on more than one page:
 Page docs:
 
 - [Home](home.md)
-- [Work](work.md) (index and case study)
+- [Work](work.md) (index, skill pages and case study)
 - [Writing index](writing.md)
 - [Article](article.md)
-- [Consulting](consulting.md)
+- [Consulting](consulting.md): merged into Work on 2026-11-01
 - [About](about.md)
 - [Contact](contact.md)
 - [Not found (404)](not-found.md)
@@ -75,6 +75,7 @@ Page docs:
 - Articles live at `/writing/<slug>`, where the slug is the file name without the number prefix.
   No date in the URL **(default)**.
 - Case studies live at `/work/<slug>`.
+- Skill pages live at `/work/skills/<skill>`.
 - Topic pages live at `/writing/topics/<topic>`.
 - The RSS feed is at `/rss.xml`.
 
@@ -84,6 +85,7 @@ Redirects from the old site, set in `astro.config.mjs`:
 - `/projects/shipping-container` → `/work`: Experiment retired
 - `/tags` → `/writing`: Old tags not carried over
 - `/fractal` → `/`: Experiment retired
+- `/consulting` → `/work`: Consulting merged into Work (2026-11-01)
 - `/writing/<number>-<slug>` for the 2025 posts **(default)**: the ones copied over go to their new
   address; the rest go to `/writing`
 
@@ -96,7 +98,7 @@ Old URLs with no redirect (they get the 404 page):
 ## Navigation
 
 **Header** (every page): name and role on the left, linking home. Main navigation on the right:
-Work · Writing · Consulting · About · Contact. The current page is marked.
+Work · Writing · About · Contact. The current page is marked.
 
 Order stays as listed: evidence first, Contact last, all styled alike **(default)**.
 
@@ -142,20 +144,28 @@ into the page.
 Stored in `src/content/writing/`. A few 2025 posts are copied in as the starting set **(default)**:
 CMS First Principles, Intent over Implementation, Content Over Complexity, Prompts are Tickets.
 
-### Case study
-- **title**, required: yes
-- **problem**, required: yes
-- **solution**, required: yes. What Alex did and why
-- **result**, required: yes
-- **project**, required: no. Client or project name, mentioned in passing rather than leading
-- **skills**, required: no. Links the case study to the skills on [Consulting](consulting.md)
+### Work example
+Anything that shows Alex's work: a case study, an article, a project or a talk.
+
+- **kind**, required: no. `case study` (the default), `article`, `project` or `talk`
+- **title**, required: yes, except for an article example (it uses the article's title)
+- **summary**, required: yes, except for an article example (it uses the article's description).
+  One paragraph, shown in lists and on Home's "What I do"
+- **image**, required: no. Shown on Home's "What I do"; a placeholder stands in until there is one
+- **skills**, required: no. Skill titles from `src/data/skills.ts`. They drive the Work filters
+  and Home's "What I do"; a typo fails the build
+- **article**, for an article example: the article's slug. Links to it
+- **href**, for a project or talk: where it links (GitHub, a recording)
+- **problem**, **solution**, **result**, for a case study: the three parts of its page
+- **project**, for a case study, required: no. Client or project name, mentioned in passing
 - **draft**, required: yes. `true` keeps it out of production
 
-Stored in `src/content/work/`. The placeholders there are drafts, so they show only in dev.
+Stored in `src/content/work/`. Case studies get their own page; the other kinds link to theirs.
+The placeholder case studies there are drafts, so they show only in dev.
 
 ### Skill
-- **title**, required: yes
-- **description**, required: yes
-- **work**, required: no. Case studies that show it
+- **title**, required: yes. Work examples are tagged with it
+- **description**, required: yes. Heads the skill's page on Work
 
-Stored in `src/data/skills.ts`. Empty until Alex writes them; the pages show a Fill in box meanwhile.
+Stored in `src/data/skills.ts`, in the order the filters and Home's "What I do" show them. A skill with no
+work example tagged with it doesn't show anywhere.

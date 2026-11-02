@@ -16,7 +16,10 @@ get in touch, and where to go next. Every other page backs up what this one clai
 - Until the story is designed, the hero is static: name, role, location, a Fill in slot, and buttons
   to Work and Contact **(default)**.
 - Featured writing shows the three newest articles **(default)**.
-- "What I do" stays, as the short form of the Consulting skills menu **(default)**.
+- "What I do" is an accordion across the full content width (round 7 eye test, 2026-11-01). One
+  row per skill; the open row shows a work example tagged with that skill: image, kind, title,
+  summary, and links to it and to the skill's page on Work. The first row starts open, and only
+  one is open at a time. A skill shows only once something is tagged with it.
 
 ## Open questions
 
@@ -41,8 +44,8 @@ get in touch, and where to go next. Every other page backs up what this one clai
    - Component: Hero, ChoiceCard
    - Notes:
 2. **What I do**
-   - What it holds: Short skills list linking to Consulting
-   - Component: SkillMenu
+   - What it holds: A row per skill, each opening to one work example, and a link to Work
+   - Component: SkillAccordion
    - Notes:
 3. **Featured writing**
    - What it holds: Recent articles

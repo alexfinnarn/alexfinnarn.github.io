@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import Draft from '../components/Draft.astro';
 import Button from '../components/Button.astro';
 
 const newIssue = 'https://github.com/alexfinnarn/alexfinnarn.github.io/issues/new';
@@ -10,9 +9,7 @@ const newIssue = 'https://github.com/alexfinnarn/alexfinnarn.github.io/issues/ne
 <Base title="Page not found">
   <div class="container patch page">
     <PageHeader title="Page not found">
-      <Draft what="One sentence for the 404 page.">
-        <p>Whatever was here isn't anymore. One of these should get you back on track.</p>
-      </Draft>
+      <p>Whatever was here isn't anymore. One of these should get you back on track.</p>
     </PageHeader>
     <div class="actions">
       <Button href="/">Home</Button>

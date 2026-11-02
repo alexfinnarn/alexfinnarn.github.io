@@ -1,0 +1,138 @@
+---
+// Home's "What I do": one row per skill, across the full content width. The open row shows a
+// work example tagged with that skill: image, kind, title, summary, and links to it and to the
+// skill's page on Work. The first row starts open; opening another closes it (`<details name>`),
+// so it needs no script. Chosen in eye-test round 7 (docs/design/decisions.md).
+import { Image } from 'astro:assets';
+import { placeholderImage, workLinkText, type WorkExample } from '../lib/content';
+
+interface Props {
+  slides: { skill: string; href: string; example: WorkExample }[];
+  /** Groups the rows so only one is open. Unique per page. */
+  name?: string;
+}
+
+const { slides, name = 'what-i-do' } = Astro.props;
+---
+
+<div class="accordion">
+  {slides.map(({ skill, href, example }, i) => (
+    <details name={name} open={i === 0}>
+      <summary>{skill}</summary>
+      <div class="body">
+        <div class="thumb art">
+          {example.image ? (
+            <Image src={example.image} alt={example.imageAlt ?? ''} widths={[480, 800]} sizes="(max-width: 40rem) 100vw, 24rem" />
+          ) : (
+            <img src={placeholderImage(800, 500)} alt="" width="800" height="500" loading="lazy" />
+          )}
+        </div>
+        <div class="text">
+          <span class="label">{example.kind}</span>
+          <h3><a href={example.href}>{example.title}</a></h3>
+          <p class="summary">{example.summary}</p>
+          <p class="links">
+            <a href={example.href}>{workLinkText[example.kind]}</a>
+            <a href={href}>More {skill}</a>
+          </p>
+        </div>
+      </div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .accordion {
+    border-top: var(--rule-strong);
+  }
+
+  details {
+    border-bottom: var(--rule);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    font-family: var(--font-heading);
+    font-weight: var(--weight-heading);
+    font-size: var(--size-2xl);
+    letter-spacing: var(--tracking-heading);
+    line-height: var(--leading-heading);
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: '+';
+    color: var(--color-text-muted);
+  }
+
+  details[open] summary::after {
+    content: '−';
+  }
+
+  summary:hover {
+    color: var(--color-accent);
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-6);
+    align-items: center;
+    padding-bottom: var(--space-6);
+  }
+
+  .thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 5;
+    object-fit: cover;
+  }
+
+  h3 {
+    margin-block: var(--space-1) var(--space-2);
+  }
+
+  h3 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .summary {
+    max-width: var(--measure);
+    color: var(--color-text-muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    font-weight: 600;
+  }
+
+  @media (max-width: 40rem) {
+    summary {
+      font-size: var(--size-xl);
+    }
+
+    .body {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>

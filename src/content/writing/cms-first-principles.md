@@ -9,7 +9,6 @@ cta:
   text: "If your content is stuck in a system that decided everything for you, I'd like to hear about it."
   href: "/contact/"
   action: "Get in touch"
-  draft: true
 ---
 
 For the past 12 years or so I could say I worked on "content management systems" primarily using 

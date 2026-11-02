@@ -1,13 +1,15 @@
 ---
-// Topic links, used on the Writing index and below each article.
+// Tag links: writing topics (on the Writing index and below each article) and work skills
+// (on Work). `base` is where each tag's page lives.
 interface Props {
   topics: { name: string; slug: string }[];
   /** Slug of the topic being viewed, marked as current. */
   current?: string;
   label?: string;
+  base?: string;
 }
 
-const { topics, current, label = 'Topics' } = Astro.props;
+const { topics, current, label = 'Topics', base = '/writing/topics/' } = Astro.props;
 ---
 
 {topics.length > 0 && (
@@ -16,7 +18,7 @@ const { topics, current, label = 'Topics' } = Astro.props;
     <ul>
       {topics.map(({ name, slug }) => (
         <li>
-          <a href={`/writing/topics/${slug}/`} aria-current={slug === current ? 'page' : undefined}>{name}</a>
+          <a href={`${base}${slug}/`} aria-current={slug === current ? 'page' : undefined}>{name}</a>
         </li>
       ))}
     </ul>

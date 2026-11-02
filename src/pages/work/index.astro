@@ -2,52 +2,61 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import FillIn from '../../components/FillIn.astro';
-import Draft from '../../components/Draft.astro';
+import TopicList from '../../components/TopicList.astro';
 import ArticleListItem from '../../components/ArticleListItem.astro';
+import Callout from '../../components/Callout.astro';
 import Button from '../../components/Button.astro';
-import { getCaseStudies } from '../../lib/content';
-import { draft } from '../../lib/draft';
+import { getWorkExamples, getSkillsWithWork } from '../../lib/content';
 
-const caseStudies = await getCaseStudies();
+const examples = await getWorkExamples();
+const skills = getSkillsWithWork(examples);
 ---
 
-<Base title="Work" description={draft('Case studies from Alex Finnarn: the problem, what he did, and how it turned out.')}>
+<Base title="Work" description="Case studies from Alex Finnarn: the problem, what he did, and how it turned out.">
   <div class="container patch page">
     <PageHeader title="Work">
-      <Draft what="One- or two-sentence intro to the Work page.">
-        <p>Each case study starts with a problem and how I solved it. The client gets a mention, not the headline.</p>
-      </Draft>
+      <p>
+          Each case study starts with a problem and how I solved it. I stand by my problem solving abilities, not name-dropping clients.
+      </p>
+      <p>I'm a generalist. Pick what you need from the menu below, and if your problem isn't on it, get in touch anyway.</p>
     </PageHeader>
-    {caseStudies.length > 0 ? (
+    <TopicList topics={skills} label="Skills" base="/work/skills/" />
+    {examples.length > 0 ? (
       <ul class="list">
-        {caseStudies.map((study) => (
-          <ArticleListItem title={study.data.title} href={`/work/${study.id}/`} description={study.data.problem} />
+        {examples.map((example) => (
+          <ArticleListItem
+            title={example.title}
+            href={example.href}
+            label={example.kind}
+            description={example.summary}
+            image={example.image}
+            imageAlt={example.imageAlt}
+          />
         ))}
       </ul>
     ) : (
-      <div class="empty"><FillIn what="Case studies (src/content/work/)." /></div>
+      <div class="empty"><FillIn what="Work examples (src/content/work/)." /></div>
     )}
+    <Callout label="Availability">
+      <p>October 2026: open to projects outside my day job.</p>
+    </Callout>
     <div class="actions">
-      <Button href="/consulting/">Consulting</Button>
-      <Button href="/contact/" variant="secondary">Contact</Button>
+      <Button href="/contact/">Contact</Button>
     </div>
   </div>
 </Base>
 
 <style>
   .list {
-    margin: 0;
+    margin: 0 0 var(--space-block);
     padding: 0;
   }
 
   .empty {
-    padding-top: var(--space-block);
+    padding-block: var(--space-block);
   }
 
   .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
     padding-block: var(--space-6) var(--space-section);
   }
 </style>

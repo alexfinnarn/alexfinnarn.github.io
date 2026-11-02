@@ -2,60 +2,46 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Button from '../components/Button.astro';
-import FillIn from '../components/FillIn.astro';
-import Draft from '../components/Draft.astro';
-import SkillMenu from '../components/SkillMenu.astro';
+import SkillAccordion from '../components/SkillAccordion.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import { Image } from 'astro:assets';
-import portraitImage from '../assets/portrait-extended.png';
-import { getArticles, articleHref } from '../lib/content';
-import { shownSkills } from '../data/skills';
-import { draft } from '../lib/draft';
+import forestImage from '../assets/me-on-rock-and-forest.png';
+import { getArticles, articleHref, getWorkExamples, getSkillSlides } from '../lib/content';
 import { site } from '../site';
 
 const featured = (await getArticles()).slice(0, 3);
+const slides = getSkillSlides(await getWorkExamples());
 ---
 
 <Base
-  description={draft(
-    'Alex Finnarn is a software consultant in Troy, Ohio, with twelve years of building and running Drupal platforms and a growing pile of AI-assisted workflows.',
-  )}
+  description="Alex Finnarn is a software consultant in Troy, Ohio, with twelve years of building and running everything on the web and a growing interest in industrial automation."
 >
   <Hero label={`${site.role} · ${site.location}`} title={site.name}>
-    <Draft what="Positioning line. (The interactive story hero replaces this section later.)">
-      <p>Option 1: I build web systems simple enough to explain, so they keep working when the shiny parts fail.</p>
-      <p>Option 2: Twelve years keeping big Drupal platforms alive. Now I'm working out which parts of that job AI should do.</p>
-    </Draft>
+    <p>
+        After 12 years of working on the web, I am back to exploring the wilderness of opportunity and innovation within the intersction of software development and local manufacturing.
+    </p>
     <Fragment slot="actions">
       <Button href="/work/">Work</Button>
       <Button href="/contact/" variant="secondary">Contact</Button>
     </Fragment>
     <Image
       slot="art"
-      src={portraitImage}
-      alt={`Colored-pencil portrait of ${site.name}`}
-      widths={[500, 900, portraitImage.width]}
-      sizes="(max-width: 48rem) 24rem, 30rem"
+      src={forestImage}
+      alt={`Colored-pencil drawing of ${site.name} sitting on a rock in a pine forest`}
+      widths={[800, 1280, forestImage.width]}
+      sizes="100vw"
       loading="eager"
       fetchpriority="high"
     />
   </Hero>
 
-  <section class="container section patch tilt">
-    <h2>What I do</h2>
-    {shownSkills.length > 0 ? (
-      shownSkills.some((skill) => skill.draft) ? (
-        <Draft what="Skills, in src/data/skills.ts (shared with Consulting).">
-          <SkillMenu items={shownSkills.map(({ title, description }) => ({ title, description }))} />
-        </Draft>
-      ) : (
-        <SkillMenu items={shownSkills.map(({ title, description }) => ({ title, description }))} />
-      )
-    ) : (
-      <FillIn what="Skills, in src/data/skills.ts (shared with Consulting)." />
-    )}
-    <p class="more"><a href="/consulting/">Consulting</a></p>
-  </section>
+  {slides.length > 0 && (
+    <section class="container section patch">
+      <h2>What I do</h2>
+      <SkillAccordion slides={slides} />
+      <p class="more"><a href="/work/">All work</a></p>
+    </section>
+  )}
 
   {featured.length > 0 && (
     <section class="container section patch tilt">

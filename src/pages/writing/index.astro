@@ -1,22 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import Draft from '../../components/Draft.astro';
 import TopicList from '../../components/TopicList.astro';
 import ArticleListItem from '../../components/ArticleListItem.astro';
 import { getArticles, getTopics, articleHref } from '../../lib/content';
-import { draft } from '../../lib/draft';
 
 const articles = await getArticles();
 const topics = getTopics(articles);
 ---
 
-<Base title="Writing" description={draft('Articles by Alex Finnarn on content management, AI and keeping software simple.')}>
+<Base title="Writing" description="Articles by Alex Finnarn on content management, AI and keeping software simple.">
   <div class="container patch page">
     <PageHeader title="Writing">
-      <Draft what="Short intro to the Writing page.">
-        <p>Notes from building things, mostly about content management, AI, and why software gets more complicated than it needs to be.</p>
-      </Draft>
+      <p>Notes from building things, mostly about content management, AI, and why software gets more complicated than it needs to be.</p>
     </PageHeader>
     <TopicList topics={topics} />
     <ul class="list">

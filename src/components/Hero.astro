@@ -1,7 +1,8 @@
 ---
-// Home page opening: label, headline, lede and actions on a tilted paper patch, with a
-// drawing beside it. Slots: default (lede text), "actions" (Buttons), "art" (an image; it
-// fades into the page at ragged edges). On phones the drawing sits above the text.
+// Home page opening: label, headline, lede and actions on a tilted paper patch. Slots: default
+// (lede text), "actions" (Buttons), "art" (a wide drawing). The drawing runs edge to edge and
+// fades out on the left; the text's patch is paper rubbed out of it. On phones the
+// drawing sits above the text and fades out at the bottom.
 interface Props {
   label?: string;
   title: string;
@@ -11,19 +12,19 @@ const { label, title } = Astro.props;
 const hasArt = Astro.slots.has('art');
 ---
 
-<section class:list={['hero', 'container', { 'has-art': hasArt }]}>
+<section class:list={['hero', { container: !hasArt, 'has-art': hasArt }]}>
+  {/* The drawing comes first so the patch's paper paints over it. */}
+  {hasArt && <div class="art"><slot name="art" /></div>}
   <div class="text patch tilt">
     {label && <span class="label">{label}</span>}
     <h1>{title}</h1>
     <div class="lede measure"><slot /></div>
     <div class="actions"><slot name="actions" /></div>
   </div>
-  {hasArt && <div class="art"><slot name="art" /></div>}
 </section>
 
 <style>
   .hero {
-    max-width: 76rem;
     padding-block: var(--space-7);
     background: var(--hero-bg);
     color: var(--hero-text);
@@ -31,13 +32,30 @@ const hasArt = Astro.slots.has('art');
 
   .has-art {
     display: grid;
-    grid-template-columns: 1.3fr 1fr;
     align-items: center;
-    gap: var(--space-4);
+    padding-block: 0;
+  }
+
+  .has-art > * {
+    grid-area: 1 / 1;
+  }
+
+  .has-art .text {
+    /* Lines up with the container's left edge. */
+    margin-left: max(var(--gutter), (100% - var(--container)) / 2 + var(--gutter));
+    width: min(36rem, 46%);
   }
 
   .text {
-    padding: var(--space-8) clamp(var(--space-5), 5vw, var(--space-8));
+    padding: var(--space-8) clamp(var(--space-5), 4vw, var(--space-7));
+  }
+
+  .art {
+    /* Under the patch paper, which sits at -1 too but comes later. */
+    position: relative;
+    z-index: -1;
+    mask: var(--art-fade-inline), var(--art-mask-bleed);
+    mask-composite: intersect;
   }
 
   .label {
@@ -61,14 +79,25 @@ const hasArt = Astro.slots.has('art');
   }
 
   @media (max-width: 48rem) {
-    .has-art {
-      grid-template-columns: 1fr;
+    .has-art .text {
+      grid-area: 2 / 1;
+      width: auto;
+      margin-inline: var(--gutter);
+      /* Pulls the patch's empty top padding up under the drawing's faded bottom. */
+      margin-top: calc(-1 * var(--space-7));
     }
 
+    /* Stacked, the patch's paper would cover the drawing, so the drawing goes on top. */
     .art {
-      order: -1;
-      width: min(100%, 24rem);
-      margin-inline: auto;
+      z-index: 0;
+      mask: var(--art-fade-block), var(--art-mask-bleed);
+      mask-composite: intersect;
+    }
+
+    .art :global(img) {
+      height: 20rem;
+      object-fit: cover;
+      object-position: 68% center;
     }
   }
 </style>

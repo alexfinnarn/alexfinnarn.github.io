@@ -3,93 +3,84 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Portrait from '../components/Portrait.astro';
 import FillIn from '../components/FillIn.astro';
-import Draft from '../components/Draft.astro';
 import Button from '../components/Button.astro';
-import portrait from '../assets/portrait.jpeg';
-import { draft } from '../lib/draft';
+import portrait from '../assets/portrait-extended.png';
 import { site } from '../site';
 ---
 
 <Base
   title="About"
-  description={draft(
-    'Who Alex Finnarn is: twelve years of Drupal platforms, testing and community organizing, and the principles he works by.',
-  )}
+  description="Who Alex Finnarn is: twelve years of Drupal platforms, testing and community organizing, and the principles he works by."
 >
   <div class="container patch page">
     <PageHeader title="About">
-      <Draft what="The provocative opening question.">
-        <p>Option 1: When the old gatekeepers stop vouching for people, how do you decide who to trust?</p>
-        <p>Option 2: Why would you trust a guy with a website?</p>
-      </Draft>
+      <p>
+          When the old gatekeepers stop vouching for people, how do you decide who to trust?
+      </p>
     </PageHeader>
     <div class="intro section">
-      <Portrait src={portrait.src} alt={`Colored-pencil drawing of ${site.name}`} />
+      <Portrait src={portrait} alt={`Colored-pencil drawing of ${site.name}`} />
       <div class="prose measure">
-        <Draft what="Bio (one version).">
-          <p>
-            I've been building websites since about 2013. The first one was my own Drupal 7 blog, and I
-            spent way too much time rounding the corners of its header.
-          </p>
-          <p>
-            For the next twelve years or so, Drupal was the job. I started out fixing bugs and making
-            small feature updates, and worked my way up to running whole applications, including being
-            the one who brought the service back up when it went down. One of them was a Drupal service
-            running more than 800 sites for thousands of content editors.
-          </p>
-          <p>
-            Along the way I picked up the jobs nobody else wanted. As a junior dev I took over my team's
-            test suite, mostly because no one else wanted to eat their vegetables, and cut the Behat run
-            time by about 60%. I've given talks on testing, including one on Cypress at DrupalCamp NJ in
-            2023, and left hundreds of comments in Drupal's issue queues.
-          </p>
-          <p>
-            I also like getting people in a room. I revived the ReactJS Columbus meetup in 2020 and helped
-            organize community conferences. Judging by the number of groups I've seen die, I'm better at
-            the talking than the organizing.
-          </p>
-          <p>
-            In late 2024 I quit federal contract work. These days I build AI-assisted workflows on a
-            $20-a-month plan, because I think regular people should get to use them too.
-          </p>
-        </Draft>
+        <p>
+          I've been building websites since about 2013. The first one was my own Drupal 7 blog, and I
+          spent way too much time rounding the corners of its header.
+        </p>
+        <p>
+          For the next twelve years or so, Drupal was the job. I started out fixing bugs and making
+          small feature updates, and worked my way up to running whole applications, including being
+          the one who brought the service back up when it went down. One of them was a Drupal service
+          running more than 800 sites for thousands of content editors.
+        </p>
+        <p>
+          Along the way I picked up the jobs nobody else wanted. As a junior dev I took over my team's
+          test suite, mostly because no one else wanted to eat their vegetables, and cut the Behat run
+          time by about 60%. I've given talks on testing, including one on Cypress at DrupalCamp NJ in
+          2023, and left hundreds of comments in Drupal's issue queues.
+        </p>
+        <p>
+          I also like getting people in a room. I revived the ReactJS Columbus meetup in 2020 and helped
+          organize community conferences. Judging by the number of groups I've seen die, I'm better at
+          the talking than the organizing.
+        </p>
+        <p>
+          In late 2024 I quit federal contract work. These days I build AI-assisted workflows on a
+          $20-a-month plan, because I think regular people should get to use them too.
+        </p>
         <FillIn what="Bio: the move into a new industry, framed as a strength (docs/interview.md, questions 11–13)." />
       </div>
     </div>
     <section class="section">
       <h2>Principles</h2>
-      <Draft what="Principles, each with a sentence of explanation.">
-        <ul class="principles">
-          <li>
-            <h3>Pursue the truth</h3>
-            <p>I'd rather tell you what something really costs than sell you on "free."</p>
-          </li>
-          <li>
-            <h3>Mix it up</h3>
-            <p>The useful connections usually come from a field I wasn't supposed to be looking at.</p>
-          </li>
-          <li>
-            <h3>Build ritual</h3>
-            <p>Good work comes from daily habits more than bursts of inspiration.</p>
-          </li>
-          <li>
-            <h3>Start from first principles</h3>
-            <p>Before anyone writes code, I want to know what the thing is actually for.</p>
-          </li>
-          <li>
-            <h3>Keep it explainable</h3>
-            <p>If you can't explain a workflow in plain language, it's too complex to build.</p>
-          </li>
-          <li>
-            <h3>Intent over implementation</h3>
-            <p>Decide what a page should achieve before arguing about how it looks.</p>
-          </li>
-          <li>
-            <h3>Own your content</h3>
-            <p>Your words, and how you manage them, should outlive whatever tool publishes them.</p>
-          </li>
-        </ul>
-      </Draft>
+      <ul class="principles">
+        <li>
+          <h3>Pursue the truth</h3>
+          <p>I'd rather tell you what something really costs than sell you on "free."</p>
+        </li>
+        <li>
+          <h3>Mix it up</h3>
+          <p>The useful connections usually come from a field I wasn't supposed to be looking at.</p>
+        </li>
+        <li>
+          <h3>Build ritual</h3>
+          <p>Good work comes from daily habits more than bursts of inspiration.</p>
+        </li>
+        <li>
+          <h3>Start from first principles</h3>
+          <p>Before anyone writes code, I want to know what the thing is actually for.</p>
+        </li>
+        <li>
+          <h3>Keep it explainable</h3>
+          <p>If you can't explain a workflow in plain language, it's too complex to build.</p>
+        </li>
+        <li>
+          <h3>Intent over implementation</h3>
+          <p>Decide what a page should achieve before arguing about how it looks.</p>
+        </li>
+        <li>
+          <h3>Own your content</h3>
+          <p>Your words, and how you manage them, should outlive whatever tool publishes them.</p>
+        </li>
+      </ul>
     </section>
     <div class="actions">
       <Button href="/contact/">Contact</Button>
@@ -101,7 +92,7 @@ import { site } from '../site';
 <style>
   .intro {
     display: grid;
-    grid-template-columns: minmax(10rem, 18rem) 1fr;
+    grid-template-columns: minmax(14rem, 26rem) 1fr;
     gap: var(--space-6);
     align-items: start;
   }

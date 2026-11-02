@@ -24,6 +24,8 @@ export default defineConfig({
   // Old URLs from the previous site, pointed at their closest replacement.
   redirects: {
     '/projects': '/work',
+    // Consulting merged into Work (2026-11-01).
+    '/consulting': '/work',
     '/projects/shipping-container': '/work',
     '/tags': '/writing',
     '/fractal': '/',

@@ -14,7 +14,6 @@ export const titleSuffix = `${site.name} — ${site.role}, ${site.location}`;
 export const nav = [
   { href: '/work', label: 'Work' },
   { href: '/writing', label: 'Writing' },
-  { href: '/consulting', label: 'Consulting' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];

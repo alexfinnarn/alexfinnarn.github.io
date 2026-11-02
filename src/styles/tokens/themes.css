@@ -61,6 +61,12 @@
 
   /* Drawings fade into the paper at ragged edges instead of ending in a hard rectangle. */
   --art-mask: url('../textures/art-edge.svg') center / 100% 100% no-repeat;
+  /* A wide drawing behind text (the home hero) also fades out toward the text. Layered with
+     --art-mask using mask-composite: intersect. */
+  --art-fade-inline: linear-gradient(to right, transparent, #000 45%);
+  --art-fade-block: linear-gradient(to bottom, #000 60%, transparent 98%);
+  /* Ragged top and bottom only, for a drawing that runs edge to edge. */
+  --art-mask-bleed: url('../textures/art-edge.svg') center / 130% 100% no-repeat;
 
   --header-bg: transparent;
   --header-text: var(--color-text);
@@ -85,5 +91,8 @@
   --space-section: var(--space-9);
   --space-block: var(--space-6);
   --measure: 44rem;
-  --container: 64rem;
+  --container: 72rem;
+  /* Everything is sized in rem, so this scales the whole site: 16px up to a 1280px screen,
+     growing to 20px by about 2100px. */
+  --root-size: clamp(1rem, 0.625rem + 0.47vw, 1.25rem);
 }

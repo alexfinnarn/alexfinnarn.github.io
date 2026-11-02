@@ -4,7 +4,6 @@ import Base from '../../layouts/Base.astro';
 import ArticleHeader from '../../components/ArticleHeader.astro';
 import TopicList from '../../components/TopicList.astro';
 import CtaCard from '../../components/CtaCard.astro';
-import Draft from '../../components/Draft.astro';
 import { getArticles, readingMinutes, topicSlug, type Article } from '../../lib/content';
 
 export async function getStaticPaths() {
@@ -22,7 +21,6 @@ interface Props {
 const { article } = Astro.props;
 const { title, description, publishedDate, updatedDate, topics, cta } = article.data;
 const { Content } = await render(article);
-const card = cta && (import.meta.env.DEV || !cta.draft) ? cta : undefined;
 ---
 
 <Base title={title} description={description}>
@@ -40,18 +38,11 @@ const card = cta && (import.meta.env.DEV || !cta.draft) ? cta : undefined;
     <div class="measure">
       <TopicList topics={topics.map((name) => ({ name, slug: topicSlug(name) }))} />
     </div>
-    {card &&
-      (card.draft ? (
-        <Draft what="This article's CTA.">
-          <CtaCard heading={card.heading} href={card.href} action={card.action}>
-            <p>{card.text}</p>
-          </CtaCard>
-        </Draft>
-      ) : (
-        <CtaCard heading={card.heading} href={card.href} action={card.action}>
-          <p>{card.text}</p>
-        </CtaCard>
-      ))}
+    {cta && (
+      <CtaCard heading={cta.heading} href={cta.href} action={cta.action}>
+        <p>{cta.text}</p>
+      </CtaCard>
+    )}
     <div class="end"></div>
   </article>
 </Base>

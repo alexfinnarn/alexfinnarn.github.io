@@ -24,7 +24,7 @@ const { topic, topics, articles } = Astro.props;
 ---
 
 <Base title={`${topic.name} · Writing`}>
-  <div class="container">
+  <div class="container patch page">
     <PageHeader label="Writing" title={topic.name} />
     <TopicList topics={topics} current={topic.slug} />
     <ul class="list">

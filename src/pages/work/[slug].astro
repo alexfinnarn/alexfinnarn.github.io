@@ -3,7 +3,8 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import CaseStudy from '../../components/CaseStudy.astro';
 import Button from '../../components/Button.astro';
-import { getCaseStudies, type CaseStudyEntry } from '../../lib/content';
+import TopicList from '../../components/TopicList.astro';
+import { getCaseStudies, topicSlug, type CaseStudyEntry } from '../../lib/content';
 
 export async function getStaticPaths() {
   const caseStudies = await getCaseStudies();
@@ -15,12 +16,17 @@ interface Props {
 }
 
 const { study } = Astro.props;
-const { title, project, problem, solution, result, skills } = study.data;
+const { project, skills } = study.data;
+// Case studies always have these; the schema leaves them optional for the other kinds.
+const title = study.data.title ?? study.id;
+const problem = study.data.problem ?? '';
+const solution = study.data.solution ?? '';
+const result = study.data.result ?? '';
 const { Content } = await render(study);
 ---
 
 <Base title={title} description={problem}>
-  <article class="container">
+  <article class="container patch page">
     <p class="crumb label"><a href="/work/">Work</a></p>
     <CaseStudy title={title} project={project} problem={problem} solution={solution} result={result} />
     {study.body?.trim() && (
@@ -28,10 +34,10 @@ const { Content } = await render(study);
         <Content />
       </div>
     )}
-    {skills.length > 0 && <p class="muted skills">{skills.join(' · ')}</p>}
+    <TopicList topics={skills.map((name) => ({ name, slug: topicSlug(name) }))} label="Skills" base="/work/skills/" />
     <div class="actions">
       <Button href="/contact/">Contact</Button>
-      <Button href="/consulting/" variant="secondary">Consulting</Button>
+      <Button href="/work/" variant="secondary">All work</Button>
     </div>
   </article>
 </Base>
@@ -40,11 +46,6 @@ const { Content } = await render(study);
   .crumb {
     padding-top: var(--space-section);
     margin-bottom: var(--space-4);
-  }
-
-  .skills {
-    font-family: var(--font-label);
-    font-size: var(--size-sm);
   }
 
   .actions {

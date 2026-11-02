@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import Hero from '../components/Hero.astro';
 import PageHeader from '../components/PageHeader.astro';
-import SkillMenu from '../components/SkillMenu.astro';
+import SkillAccordion from '../components/SkillAccordion.astro';
 import CaseStudy from '../components/CaseStudy.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import Portrait from '../components/Portrait.astro';
@@ -15,7 +15,9 @@ import CtaCard from '../components/CtaCard.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
 import Callout from '../components/Callout.astro';
 import ContactList from '../components/ContactList.astro';
-import drawing from '../assets/portrait.jpeg';
+import drawing from '../assets/portrait-extended.png';
+import forest from '../assets/me-on-rock-and-forest.png';
+import { Image } from 'astro:assets';
 
 
 const baseColors = [
@@ -65,10 +67,18 @@ const spaceScale = ['--space-1', '--space-2', '--space-3', '--space-4', '--space
 const lorem =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-const skillSamples = [
-  { title: 'Skill title one', description: lorem, work: [{ title: 'Case study one', href: '#components' }, { title: 'Case study two', href: '#components' }] },
-  { title: 'Skill title two', description: lorem, work: [{ title: 'Case study three', href: '#components' }] },
-  { title: 'Skill title three', description: lorem },
+const sampleExample = (n: string, kind: 'case study' | 'article' | 'project' | 'talk') => ({
+  id: `sample-${n}`,
+  kind,
+  title: `Work example title ${n}`,
+  summary: lorem,
+  href: '#components',
+  skills: [],
+});
+const slideSamples = [
+  { skill: 'Skill title one', href: '#components', example: sampleExample('one', 'case study') },
+  { skill: 'Skill title two', href: '#components', example: sampleExample('two', 'article') },
+  { skill: 'Skill title three', href: '#components', example: sampleExample('three', 'project') },
 ];
 ---
 
@@ -227,7 +237,7 @@ const skillSamples = [
       </article>
 
       <article class="sg-component">
-        <header><h3>Hero</h3><p>Home, top of page. Label, headline, lede and two actions on a tilted patch, with a drawing beside it.</p></header>
+        <header><h3>Hero</h3><p>Home, top of page. Label, headline, lede and two actions on a tilted patch, with a wide drawing fading in behind it.</p></header>
         <div class="sg-frame flush">
           <Hero label="Label · Location" title="Headline text sample">
             <p>Lede text. {lorem}</p>
@@ -235,7 +245,7 @@ const skillSamples = [
               <Button href="#components">Primary action</Button>
               <Button href="#components" variant="secondary">Secondary action</Button>
             </Fragment>
-            <img slot="art" src={drawing.src} alt="Colored-pencil portrait drawing" width={drawing.width} height={drawing.height} />
+            <Image slot="art" src={forest} alt="Colored-pencil forest drawing" widths={[700, 1200]} sizes="52rem" />
           </Hero>
         </div>
       </article>
@@ -243,9 +253,9 @@ const skillSamples = [
 
 
       <article class="sg-component">
-        <header><h3>Skills menu</h3><p>Consulting (full) and Home (short). Each skill links to case studies.</p></header>
+        <header><h3>Skill accordion</h3><p>Home, "What I do". One row per skill; the open row shows a work example tagged with that skill. Placeholder image until the example has its own.</p></header>
         <div class="sg-frame">
-          <SkillMenu items={skillSamples} />
+          <SkillAccordion slides={slideSamples} name="sample-skills" />
         </div>
       </article>
 
@@ -281,7 +291,7 @@ const skillSamples = [
 
 
       <article class="sg-component">
-        <header><h3>Process steps</h3><p>Consulting.</p></header>
+        <header><h3>Process steps</h3><p>Not used on a page yet.</p></header>
         <div class="sg-frame">
           <ProcessSteps
             steps={[
@@ -295,7 +305,7 @@ const skillSamples = [
       </article>
 
       <article class="sg-component">
-        <header><h3>Callout</h3><p>Consulting (availability line).</p></header>
+        <header><h3>Callout</h3><p>Work (availability line).</p></header>
         <div class="sg-frame">
           <Callout label="Label"><p>Callout text. {loremShort}</p></Callout>
         </div>
@@ -310,10 +320,10 @@ const skillSamples = [
       </article>
 
       <article class="sg-component">
-        <header><h3>Portrait</h3><p>About. Empty frame, and the colored-pencil drawing for comparison.</p></header>
+        <header><h3>Portrait</h3><p>About. Empty frame, and the drawing with a caption.</p></header>
         <div class="sg-frame sg-row">
           <Portrait />
-          <Portrait src={drawing.src} alt="Colored-pencil portrait drawing" caption="Existing drawing" />
+          <Portrait src={drawing} alt="Colored-pencil portrait drawing" caption="Caption text" />
         </div>
       </article>
 

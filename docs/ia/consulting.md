@@ -1,7 +1,8 @@
 # Consulting
 
 - **URL:** `/consulting`
-- **Status:** draft
+- **Status:** merged into [Work](work.md) on 2026-11-01. `/consulting` redirects to `/work`; the
+  decisions below that still apply are copied there. Kept for the record.
 
 ## Purpose
 

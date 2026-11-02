@@ -1,5 +1,5 @@
 ---
-// One entry in an article or case study list. Wrap several in a <ul>.
+// One entry in an article or work list. Wrap several in a <ul>.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import { formatDate } from '../lib/content';
@@ -13,16 +13,19 @@ interface Props {
   imageAlt?: string;
   /** Links off the site, e.g. to Medium. Shown as a small mark after the date. */
   external?: string;
+  /** A short tag before the title, e.g. a work example's kind. */
+  label?: string;
 }
 
-const { title, href, date, description, image, imageAlt = '', external } = Astro.props;
+const { title, href, date, description, image, imageAlt = '', external, label } = Astro.props;
 ---
 
 <li class:list={['article', { 'has-image': image }]}>
   {image && <Image class="thumb" src={image} alt={imageAlt} width={240} />}
   <div>
-    {(date || external) && (
+    {(date || external || label) && (
       <p class="meta">
+        {label && <span class="kind">{label}</span>}
         {date && <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>}
         {external && <span>On {external}</span>}
       </p>
@@ -59,6 +62,10 @@ const { title, href, date, description, image, imageAlt = '', external } = Astro
     font-size: var(--size-sm);
     color: var(--color-text-muted);
     margin-bottom: var(--space-1);
+  }
+
+  .kind {
+    text-transform: capitalize;
   }
 
   h3 {

@@ -9,7 +9,6 @@ cta:
   text: "Tell me what your site is supposed to say, and we'll work out how it should look from there."
   href: "/contact/"
   action: "Get in touch"
-  draft: true
 ---
 
 Intent. It's something we hope is behind every move we make in life, yet often times we act 

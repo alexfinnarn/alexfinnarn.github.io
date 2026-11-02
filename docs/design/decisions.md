@@ -136,6 +136,27 @@ So the winner changed two things at once, and the comment points at the scrollin
 shift. Both are kept. Also kept: graphite headings and plain buttons (each lost), and the even
 looser patches (beat the base, and give the extra padding).
 
+## Round 7: "What I do" on Home (2026-11-01)
+
+Not the theme this time: one section of Home. The first build (skill titles as tabs on the left,
+a large image with the text under it on the right) looked "discombobulated and too spread out".
+Alex wanted something more compact, and wondered about the swipe pattern with cards running off
+the page. Four whole directions, each the full home page with only this section swapped:
+- Compact tabs: titles as tabs; a small image beside the text, about as tall as the list.
+- Swipe cards: no tabs; a sideways row of cards, one per skill, the next one cut off at the edge.
+- Tags plus swipe: skill tags above the same cards; a tag scrolls to its card.
+- Accordion list: titles as rows; the open one expands with a thumbnail, summary and links.
+
+Eye-test result:
+1. Compact tabs over Swipe cards
+2. Compact tabs over Tags plus swipe
+3. Accordion list over Compact tabs
+
+**Winner: Accordion list.** Comment: he hadn't thought of the "classic FAQ pattern", but it might
+work, "especially if it takes the whole content area". So the built version runs the full content
+width (the lab one was held to reading width), with bigger row titles and a larger image.
+Both swipe options lost to compact tabs, so the sideways pattern didn't win here.
+
 ## Current choice
 
 **Erased**, adopted 2026-10-30 after round 6. `src/styles/tokens/themes.css` holds it as one set
@@ -157,6 +178,10 @@ Applied to the whole site, not just the home page:
 - `.patch` (in `global.css`) makes a block a paper patch. The header bar, the footer, the home
   hero and home sections are tilted patches; each inner page's body is one straight patch, so a
   long article doesn't swing off its text.
+- On Home, the forest drawing runs edge to edge and the hero's patch is rubbed out of it
+  (2026-11-01). On phones the drawing sits above the text instead.
+- Everything scales up on wide screens (`--root-size`, 2026-11-01): 16px up to a 1280px screen,
+  about 19px at 1920px. The container is 72rem.
 - The patch shape (`patch.svg`) is drawn in pixels, so its edge is the same size on a short card
   and a long article. The lab version stretched to fit, which would have eaten into long pages.
 
