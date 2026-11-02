@@ -19,7 +19,9 @@ get in touch, and where to go next. Every other page backs up what this one clai
 - "What I do" is an accordion across the full content width (round 7 eye test, 2026-11-01). One
   row per skill; the open row shows a work example tagged with that skill: image, kind, title,
   summary, and links to it and to the skill's page on Work. The first row starts open, and only
-  one is open at a time. A skill shows only once something is tagged with it.
+  one is open at a time. A skill shows only once something is tagged with it. Each row has a
+  pencil color, scribbled under its title; the open row's title is underlined in that color
+  and the row is colored in with it (rounds 8 and 9, 2026-11-01).
 
 ## Open questions
 

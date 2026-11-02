@@ -41,6 +41,12 @@ const roleColors = [
   ['--hero-bg', 'Hero surface'],
   ['--footer-bg', 'Footer surface'],
   ['--button-bg', 'Primary button'],
+  ['--mark-1', 'Pencil mark, 1st skill (fills and marks only, never text)'],
+  ['--mark-2', 'Pencil mark, 2nd skill'],
+  ['--mark-3', 'Pencil mark, 3rd skill'],
+  ['--mark-4', 'Pencil mark, 4th skill'],
+  ['--mark-5', 'Pencil mark, 5th skill'],
+  ['--mark-6', 'Pencil mark, 6th skill'],
 ] as const;
 
 const roleOther = [
@@ -253,7 +259,7 @@ const slideSamples = [
 
 
       <article class="sg-component">
-        <header><h3>Skill accordion</h3><p>Home, "What I do". One row per skill; the open row shows a work example tagged with that skill. Placeholder image until the example has its own.</p></header>
+        <header><h3>Skill accordion</h3><p>Home, "What I do". One row per skill, each with its own pencil color: scribbled under the title when closed; underlined and colored in when open. The open row shows a work example tagged with that skill. Placeholder image until the example has its own.</p></header>
         <div class="sg-frame">
           <SkillAccordion slides={slideSamples} name="sample-skills" />
         </div>

@@ -68,6 +68,19 @@
   /* Ragged top and bottom only, for a drawing that runs edge to edge. */
   --art-mask-bleed: url('../textures/art-edge.svg') center / 130% 100% no-repeat;
 
+  /* Pencil marks: one color per skill on Home's "What I do", in the hatching's order, top to
+     bottom. Fills and marks only (scribbles, underlines, colored-in areas): the bright pencils
+     are under 4.5:1 on paper, so text stays graphite. A colored-in area behind text is kept
+     light enough that every text color stays over 4.5:1. */
+  --mark-1: var(--pencil-yellow);
+  --mark-2: var(--pencil-red);
+  --mark-3: var(--pencil-pink);
+  --mark-4: var(--pencil-green);
+  --mark-5: var(--pencil-blue);
+  --mark-6: var(--pencil-violet);
+  --mark-band: url('../textures/scribble-band.svg');
+  --mark-fill: url('../textures/scribble.svg');
+
   --header-bg: transparent;
   --header-text: var(--color-text);
   --header-muted: var(--color-text-muted);

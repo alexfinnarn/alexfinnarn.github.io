@@ -3,8 +3,11 @@
 // work example tagged with that skill: image, kind, title, summary, and links to it and to the
 // skill's page on Work. The first row starts open; opening another closes it (`<details name>`),
 // so it needs no script. Chosen in eye-test round 7 (docs/design/decisions.md).
+// Each row has a pencil color (rounds 8 and 9): scribbled under its title when closed; when
+// open, the title gets a drawn underline in that color and the row is colored in with it.
 import { Image } from 'astro:assets';
 import { placeholderImage, workLinkText, type WorkExample } from '../lib/content';
+import { pencilLine } from '../lib/pencil';
 
 interface Props {
   slides: { skill: string; href: string; example: WorkExample }[];
@@ -17,8 +20,8 @@ const { slides, name = 'what-i-do' } = Astro.props;
 
 <div class="accordion">
   {slides.map(({ skill, href, example }, i) => (
-    <details name={name} open={i === 0}>
-      <summary>{skill}</summary>
+    <details name={name} open={i === 0} style={`--underline: ${pencilLine(i * 17 + 2, 4)}`}>
+      <summary><span class="title">{skill}</span></summary>
       <div class="body">
         <div class="thumb art">
           {example.image ? (
@@ -123,6 +126,85 @@ const { slides, name = 'what-i-do' } = Astro.props;
     gap: var(--space-2) var(--space-5);
     margin: 0;
     font-weight: 600;
+  }
+
+  /* Each row's pencil color, in order, repeating after six. */
+  details:nth-child(6n + 1) { --mark: var(--mark-1); }
+  details:nth-child(6n + 2) { --mark: var(--mark-2); }
+  details:nth-child(6n + 3) { --mark: var(--mark-3); }
+  details:nth-child(6n + 4) { --mark: var(--mark-4); }
+  details:nth-child(6n + 5) { --mark: var(--mark-5); }
+  details:nth-child(6n + 6) { --mark: var(--mark-6); }
+
+  /* Its own layer, so the marks sit over the paper patch and under the title. */
+  .title {
+    position: relative;
+    z-index: 0;
+  }
+
+  /* Closed: a scribble under the title, in a fixed band under the last line so a title that
+     wraps isn't half covered. It grows a little on hover. */
+  .title::before {
+    content: '';
+    position: absolute;
+    inset: auto -0.3em -0.12em;
+    height: 0.63em;
+    z-index: -1;
+    background: var(--mark);
+    mask: var(--mark-band) 0 0 / 100% 100% no-repeat;
+    opacity: 0.7;
+    transition: height 160ms ease-out, opacity 160ms ease-out;
+  }
+
+  summary:hover .title::before {
+    height: 0.9em;
+  }
+
+  /* Open: a drawn pencil underline instead of the scribble. */
+  .title::after {
+    content: '';
+    position: absolute;
+    inset: auto -0.15em -0.3em;
+    height: 0.4em;
+    z-index: -1;
+    background: var(--mark);
+    mask: var(--underline) 0 0 / 100% 100% no-repeat;
+    opacity: 0;
+    transition: opacity 160ms ease-out;
+  }
+
+  details[open] .title::before {
+    opacity: 0;
+  }
+
+  details[open] .title::after {
+    opacity: 1;
+  }
+
+  /* Open: the row colored in with loose hatching in its color. Its own layer, so the hatching
+     sits over the paper patch and under the text. Light enough that every text color stays
+     over 4.5:1, even where a streak is solid on blue or violet. */
+  details[open] {
+    position: relative;
+    isolation: isolate;
+  }
+
+  details[open]::before {
+    content: '';
+    position: absolute;
+    /* The texture leaves its outer tenth ragged, so reach past the row to cover the title. */
+    inset: calc(-1 * var(--space-4)) calc(-1 * var(--space-5)) calc(-1 * var(--space-2));
+    z-index: -1;
+    background: var(--mark);
+    mask: var(--mark-fill) 0 0 / 100% 100% no-repeat;
+    opacity: 0.25;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .title::before,
+    .title::after {
+      transition: none;
+    }
   }
 
   @media (max-width: 40rem) {

@@ -157,6 +157,48 @@ work, "especially if it takes the whole content area". So the built version runs
 width (the lab one was held to reading width), with bigger row titles and a larger image.
 Both swipe options lost to compact tabs, so the sideways pattern didn't win here.
 
+Before round 8, a scattered cluster of paper clouds (one per skill, opening a modal) was tried
+as a replacement and parked before any eye test: it hid the work behind a click and added a lot
+of moving parts. Notes are in `plans/archive/skill-clouds.md`; the code is on branch
+`skill-clouds-lab`.
+
+## Round 8: dressing up the accordion (2026-11-01)
+
+The accordion looked bland: thin gray rules and plain text, while everything around it is hand
+drawn. Three directions in colored pencil, no font changes, each the full home page with only
+the accordion changed:
+- Pencil colors: each skill gets a pencil color, scribbled under its title like a highlighter;
+  the open row's title is filled in.
+- Pencil lines: the rules between rows are wobbly hand-drawn pencil lines, about as faint as
+  the straight ones.
+- Colored in: the open row is colored in with loose yellow pencil hatching.
+
+Eye-test result:
+1. Pencil colors over Current
+2. Pencil colors over Pencil lines
+3. Colored in over Pencil colors
+
+**Winner: Colored in.** Comment: he liked the colored scribbles under the titles, but the open
+title filled with color looked "crossed out". The open row should feel more expanded instead,
+maybe with an underline. Round 9 builds on that.
+
+## Round 9: colored in, by skill (2026-11-01)
+
+Built on round 8's winner and comment. Colored in (yellow, plain titles) was the champion:
+- Colored in, by skill: each skill's color scribbled under its title, as in Pencil colors, but
+  the open title keeps its scribble instead of filling in; the open row is colored in with that
+  skill's color, lighter than the yellow so text on blue and violet stays over 4.5:1.
+- By skill, underlined: the same, with a drawn pencil underline in the skill's color under the
+  open title instead of its scribble.
+
+Eye-test result:
+1. Colored in, by skill over Colored in
+2. By skill, underlined over Colored in, by skill
+
+**Winner: By skill, underlined.** Built into `SkillAccordion` (2026-11-01): the pencil colors are
+the `--mark-*` role tokens, the scribbles are `scribble.svg` and `scribble-band.svg` in
+`src/styles/textures/`, and the underlines are drawn in code (`src/lib/pencil.ts`).
+
 ## Current choice
 
 **Erased**, adopted 2026-10-30 after round 6. `src/styles/tokens/themes.css` holds it as one set
