@@ -21,7 +21,9 @@ get in touch, and where to go next. Every other page backs up what this one clai
   summary, and links to it and to the skill's page on Work. The first row starts open, and only
   one is open at a time. A skill shows only once something is tagged with it. Each row has a
   pencil color, scribbled under its title; the open row's title is underlined in that color
-  and the row is colored in with it (rounds 8 and 9, 2026-11-01).
+  and the row is colored in with it (rounds 8 and 9, 2026-11-01). Each color also drifts in
+  over the paper's edges from the hatching, strongest for the open row, so the section blends
+  into the page (round 10, 2026-11-01).
 
 ## Open questions
 

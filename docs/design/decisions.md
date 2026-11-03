@@ -199,6 +199,28 @@ Eye-test result:
 the `--mark-*` role tokens, the scribbles are `scribble.svg` and `scribble-band.svg` in
 `src/styles/textures/`, and the underlines are drawn in code (`src/lib/pencil.ts`).
 
+## Round 10: finishing touches on the accordion (2026-11-01)
+
+Round 9's winner was the champion. Each challenger changed one thing:
+- Colors spill out: each row's color drifts in over the paper's edges from the hatching, in
+  soft round puffs, strongest for the open row. It replaced "big row numbers", which Alex cut
+  before the test, asking instead for a wider effect that blends the section into the page,
+  with some of the parked clouds' feel in the colors.
+- Sketched icon: the + and − as a hand-drawn graphite cross that folds into one stroke.
+- Taped photo: the open row's picture tilted and taped down, with crisp edges.
+- Slides open: rows slide open and closed instead of snapping.
+
+Eye-test result:
+1. Colors spill out over Current
+2. Colors spill out over Sketched icon
+3. Colors spill out over Taped photo
+4. Colors spill out over Slides open
+
+**Winner: Colors spill out**, unbeaten, from both sides (2, 2, 1, 1). Built into
+`SkillAccordion`. A first try put the puffs under the paper so they showed only in the
+hatching, but on a laptop-width screen the paper covers the whole width, so they sit over the
+paper's edges instead and fade out before the text.
+
 ## Current choice
 
 **Erased**, adopted 2026-10-30 after round 6. `src/styles/tokens/themes.css` holds it as one set

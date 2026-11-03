@@ -5,6 +5,8 @@
 // so it needs no script. Chosen in eye-test round 7 (docs/design/decisions.md).
 // Each row has a pencil color (rounds 8 and 9): scribbled under its title when closed; when
 // open, the title gets a drawn underline in that color and the row is colored in with it.
+// The color also drifts in over the paper's edges from the hatching, in soft puffs, strongest
+// for the open row, so the patch blends into the page (round 10).
 import { Image } from 'astro:assets';
 import { placeholderImage, workLinkText, type WorkExample } from '../lib/content';
 import { pencilLine } from '../lib/pencil';
@@ -21,7 +23,11 @@ const { slides, name = 'what-i-do' } = Astro.props;
 <div class="accordion">
   {slides.map(({ skill, href, example }, i) => (
     <details name={name} open={i === 0} style={`--underline: ${pencilLine(i * 17 + 2, 4)}`}>
-      <summary><span class="title">{skill}</span></summary>
+      <summary>
+        {/* In the summary, since the rest of a closed row is hidden. */}
+        <span class="puff" aria-hidden="true" />
+        <span class="title">{skill}</span>
+      </summary>
       <div class="body">
         <div class="thumb art">
           {example.image ? (
@@ -47,9 +53,13 @@ const { slides, name = 'what-i-do' } = Astro.props;
 <style>
   .accordion {
     border-top: var(--rule-strong);
+    /* From the text out to the far edge of the patch's paper. The padding matches Home's
+       sections (.section in src/pages/index.astro). */
+    --spill-reach: calc(clamp(var(--space-5), 8vw, var(--space-9)) + var(--patch-reach-inline));
   }
 
   details {
+    position: relative;
     border-bottom: var(--rule);
   }
 
@@ -181,14 +191,10 @@ const { slides, name = 'what-i-do' } = Astro.props;
     opacity: 1;
   }
 
-  /* Open: the row colored in with loose hatching in its color. Its own layer, so the hatching
-     sits over the paper patch and under the text. Light enough that every text color stays
-     over 4.5:1, even where a streak is solid on blue or violet. */
-  details[open] {
-    position: relative;
-    isolation: isolate;
-  }
-
+  /* Open: the row colored in with loose hatching in its color. It shares the page's layer
+     with the patch's paper and comes after it, so it paints over the paper and under the text.
+     Light enough that every text color stays over 4.5:1, even where a streak is solid on blue
+     or violet. */
   details[open]::before {
     content: '';
     position: absolute;
@@ -200,7 +206,55 @@ const { slides, name = 'what-i-do' } = Astro.props;
     opacity: 0.25;
   }
 
+  /* The row's color drifting in over the paper's edges: one soft round puff of its hatching on
+     each side, fading out before the text. */
+  .puff {
+    position: absolute;
+    inset-block: calc(-1 * var(--space-6));
+    inset-inline: calc(-1 * var(--spill-reach));
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.45;
+    transition: opacity 200ms ease-out;
+  }
+
+  .puff::before,
+  .puff::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    width: calc(2 * var(--spill-reach));
+    background: var(--mark);
+    mask:
+      var(--mark-fill) 0 0 / 100% 100% no-repeat,
+      radial-gradient(closest-side, #000 45%, transparent) 0 0 / 100% 100% no-repeat;
+    mask-composite: intersect;
+  }
+
+  .puff::before {
+    left: calc(-1 * var(--spill-reach) + var(--space-3));
+  }
+
+  .puff::after {
+    right: calc(-1 * var(--spill-reach) + var(--space-3));
+    scale: 1 0.8;
+  }
+
+  details:nth-child(even) .puff::before {
+    scale: 1 0.8;
+  }
+
+  details:nth-child(even) .puff::after {
+    scale: 1 1;
+  }
+
+  details[open] .puff {
+    inset-block: calc(-1 * var(--space-8));
+    opacity: 0.85;
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .puff,
     .title::before,
     .title::after {
       transition: none;
