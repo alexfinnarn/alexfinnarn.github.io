@@ -16,7 +16,7 @@ get in touch, and where to go next. Every other page backs up what this one clai
 - Until the story is designed, the hero is static: name, role, location, a Fill in slot, and buttons
   to Work and Contact **(default)**.
 - Featured writing shows the three newest articles **(default)**.
-- "What I do" is an accordion across the full content width (round 7 eye test, 2026-11-01). One
+- *(Replaced by the scraps below.)* "What I do" is an accordion across the full content width (round 7 eye test, 2026-11-01). One
   row per skill; the open row shows a work example tagged with that skill: image, kind, title,
   summary, and links to it and to the skill's page on Work. The first row starts open, and only
   one is open at a time. A skill shows only once something is tagged with it. Each row has a
@@ -24,6 +24,12 @@ get in touch, and where to go next. Every other page backs up what this one clai
   and the row is colored in with it (rounds 8 and 9, 2026-11-01). Each color also drifts in
   over the paper's edges from the hatching, strongest for the open row, so the section blends
   into the page (round 10, 2026-11-01).
+- "What I do" becomes scraps of paper instead of the accordion (round 11, 2026-11-07). Each
+  scrap is a situation a visitor might be in, in their words, not a skill name. Picking one
+  shows Alex's short reply and one piece of proof, in the scrap's pencil color. No images.
+  Start with 3 scraps and grow to 5 at most, adding one only when there's real proof for it.
+  The situations are in `src/data/situations.ts`; until Alex writes them, each scrap shows a
+  Fill in.
 
 ## Open questions
 
@@ -48,8 +54,9 @@ get in touch, and where to go next. Every other page backs up what this one clai
    - Component: Hero, ChoiceCard
    - Notes:
 2. **What I do**
-   - What it holds: A row per skill, each opening to one work example, and a link to Work
-   - Component: SkillAccordion
+   - What it holds: 3 to 5 situations, each opening to a short reply and one work example, and
+     a link to Work
+   - Component: SituationScraps
    - Notes:
 3. **Featured writing**
    - What it holds: Recent articles

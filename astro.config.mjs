@@ -2,7 +2,8 @@
 import { defineConfig } from 'astro/config';
 
 /**
- * Adds /styleguide while running `npm run dev`. It is never part of a production build.
+ * Adds /styleguide and the /lab/ pages while running `npm run dev`. They are never part of a
+ * production build.
  * @type {import('astro').AstroIntegration}
  */
 const styleguide = {
@@ -11,6 +12,7 @@ const styleguide = {
     'astro:config:setup': ({ command, injectRoute }) => {
       if (command === 'dev') {
         injectRoute({ pattern: '/styleguide', entrypoint: './src/styleguide/Styleguide.astro' });
+        // Eye-test labs go here while a round runs (src/lab/README.md).
       }
     },
   },

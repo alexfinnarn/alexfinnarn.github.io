@@ -221,6 +221,60 @@ Eye-test result:
 hatching, but on a laptop-width screen the paper covers the whole width, so they sit over the
 paper's edges instead and fade out before the text.
 
+## Hero fade (2026-11-03)
+
+On wide screens, Home's forest drawing fades in toward the hero text. The first try faded in
+over the left 45% of the hero, but the text's paper covers about the left 60%, so most of the
+fade happened under the paper, and how much showed changed with the window width. A slider
+round on a dev-only lab page showed the hero at laptop (1280px) and wide (1920px) widths at
+once.
+
+**Result:** the fade runs to 77% of the hero's width (`--art-fade-inline`), well past the
+paper, so the drawing visibly fades in toward the text. Phones are unchanged; they use
+`--art-fade-block`.
+
+## Round 11: rethinking "What I do" (2026-11-07)
+
+Alex didn't like the accordion in use. Each row needed a work example, an image and a summary
+per skill, the images had no clear subject (what picture goes with an article?), and the
+skill names read like any consultant's menu. Both challengers dropped the image slot and listed
+the visitor's situations instead of skill names, each opening to a short reply and one piece
+of proof. Dummy text, three items, on `/lab/what-i-do`:
+- Trimmed accordion: round 10's accordion, rows as situations, no image.
+- Paper scraps: the situations as small torn-paper scraps tossed on the hatching, each tilted
+  and in its own pencil color. Picking one lifts and straightens it, colors it in, swaps its
+  scribble for a drawn underline, and shows the reply on a larger scrap below in that color.
+
+Eye-test result:
+1. Paper scraps over Trimmed accordion
+
+**Winner: Paper scraps.** Built as `SituationScraps` on Home (2026-11-07), replacing
+`SkillAccordion`. `patch.svg`'s ragged edge is about 100px wide, which left small scraps nearly
+see-through, so they use `scrap.svg`, with a narrow torn edge (the `--scrap-mask` role token).
+On phones each reply opens right under its scrap, so it's on screen without scrolling.
+Round 8's parked clouds hid the work behind a click; the scraps always show one reply, so
+something is on screen without clicking.
+
+## Round 12: brushier scraps (2026-11-07)
+
+The scraps' torn edge ran in straight lines, while the hatching around them curves like a
+brush. Two edges, on Home's section as built, with only the mask swapped:
+- Swept: each scrap laid down in three overlapping horizontal brush strokes, with round ends,
+  gently curving edges and dry bristle streaks where the paint runs thin.
+- Dabbed: one soft, rounded blob with a slow wavy edge and a little grain at the rim.
+
+Eye-test result:
+1. Alex liked Swept on the top scraps and Dabbed on the bigger scrap below.
+
+**Winner: Swept on the scraps, Dabbed on the reply.** `scrap.svg` is Swept (`--scrap-mask`);
+the reply uses `scrap-soft.svg`, which is Dabbed (`--scrap-mask-soft`). A gentler Swept on the
+reply was tried first, but its stroke ends still cut in where each line of text starts, which
+made it hard to read.
+
+The scraps also dropped yellow: it barely shows on the cream paper, and the reply is colored
+in with the picked scrap's color. They run red, green, blue, violet, pink: one color per scrap
+up to the limit of five.
+
 ## Current choice
 
 **Erased**, adopted 2026-10-30 after round 6. `src/styles/tokens/themes.css` holds it as one set

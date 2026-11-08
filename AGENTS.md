@@ -46,3 +46,4 @@ branch. What each page is for is in [docs/ia/](docs/ia/).
 - [docs/design/decisions.md](docs/design/decisions.md): how the visual direction was chosen.
 - [docs/design/eye-test.md](docs/design/eye-test.md): the "1 or 2?" comparison method. The tool
   itself was removed from this site; the standalone version is in `~/Sites/personal/eye-test`.
+  To build comparison pages for a round, see [src/lab/README.md](src/lab/README.md).

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <!-- The calmer scrap for a reply (Home's "What I do"): one soft, rounded blob of paint with a
+       slow, wavy edge and a little dry grain at the rim, so lines of text start on solid paper.
+       "Dabbed", round 12 (docs/design/decisions.md). No viewBox: numbers are CSS pixels. -->
+  <defs>
+    <mask id="inside">
+      <!-- The black stroke covers the outer 14px, room for the edge to wave. -->
+      <rect width="100%" height="100%" rx="48" fill="#fff" stroke="#000" stroke-width="28" />
+    </mask>
+    <filter id="dab" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="wobble" />
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="26" xChannelSelector="R" yChannelSelector="G" result="wavy" />
+      <feGaussianBlur in="wavy" stdDeviation="4" result="soft" />
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="5" result="tooth" />
+      <feColorMatrix in="tooth" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="toothAlpha" />
+      <feComposite in="soft" in2="toothAlpha" operator="arithmetic" k1="0" k2="1.8" k3="0.7" k4="-0.75" />
+    </filter>
+  </defs>
+  <g filter="url(#dab)">
+    <rect width="100%" height="100%" fill="#000" mask="url(#inside)" />
+  </g>
+</svg>

@@ -58,12 +58,19 @@
   --patch-reach-inline: 8rem;
   --patch-tilt: -2.5deg;
   --patch-tilt-alt: 2deg;
+  /* A small scrap of paper (Home's "What I do"): patch.svg's edge is too wide for a card a few
+     lines tall, so scraps are laid down in brush strokes instead. The bigger scrap holding a
+     reply is one soft blob, so lines of text start on solid paper. */
+  --scrap-mask: url('../textures/scrap.svg') center / 100% 100% no-repeat;
+  --scrap-mask-soft: url('../textures/scrap-soft.svg') center / 100% 100% no-repeat;
 
   /* Drawings fade into the paper at ragged edges instead of ending in a hard rectangle. */
   --art-mask: url('../textures/art-edge.svg') center / 100% 100% no-repeat;
   /* A wide drawing behind text (the home hero) also fades out toward the text. Layered with
      --art-mask using mask-composite: intersect. */
-  --art-fade-inline: linear-gradient(to right, transparent, #000 45%);
+  /* Runs well past the text's paper (about 60% of the width), so the drawing visibly fades
+     in toward the text. Picked with a slider round (2026-11-03, docs/design/decisions.md). */
+  --art-fade-inline: linear-gradient(to right, transparent, #000 77%);
   --art-fade-block: linear-gradient(to bottom, #000 60%, transparent 98%);
   /* Ragged top and bottom only, for a drawing that runs edge to edge. */
   --art-mask-bleed: url('../textures/art-edge.svg') center / 130% 100% no-repeat;

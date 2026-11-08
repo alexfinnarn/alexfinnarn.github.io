@@ -86,6 +86,8 @@ The pages that set the tone. Both need answers from Alex first (see "Inputs need
   - Meta description
 - **Home**
   - Positioning line (two options). Temporary until the story hero exists
+  - "What I do": 3 situations a visitor might be in, in their words, each with a reply of a
+    sentence or two (`title` and `reply` in `src/data/situations.ts`)
   - Meta description
 
 Done when: both pages read as Alex's.

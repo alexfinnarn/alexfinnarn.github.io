@@ -2,15 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Button from '../components/Button.astro';
-import SkillAccordion from '../components/SkillAccordion.astro';
+import SituationScraps from '../components/SituationScraps.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import { Image } from 'astro:assets';
 import forestImage from '../assets/me-on-rock-and-forest.png';
-import { getArticles, articleHref, getWorkExamples, getSkillSlides } from '../lib/content';
+import { getArticles, articleHref, getWorkExamples, getSituations } from '../lib/content';
 import { site } from '../site';
 
 const featured = (await getArticles()).slice(0, 3);
-const slides = getSkillSlides(await getWorkExamples());
+const situations = getSituations(await getWorkExamples());
 ---
 
 <Base
@@ -35,11 +35,11 @@ const slides = getSkillSlides(await getWorkExamples());
     />
   </Hero>
 
-  {slides.length > 0 && (
-    <section class="container section patch">
-      <h2>What I do</h2>
-      <SkillAccordion slides={slides} />
-      <p class="more"><a href="/work/">All work</a></p>
+  {situations.length > 0 && (
+    <section class="container section scraps">
+      <h2 class="patch tilt">What I do</h2>
+      <SituationScraps items={situations} />
+      <p class="more patch tilt"><a href="/work/">All work</a></p>
     </section>
   )}
 
@@ -68,6 +68,29 @@ const slides = getSkillSlides(await getWorkExamples());
     padding-inline: clamp(var(--space-5), 8vw, var(--space-9));
     /* Neighbouring patches overlap a little. */
     margin-block: calc(-1 * var(--space-5));
+  }
+
+  /* "What I do" has no big patch: the scraps sit on the hatching, and the heading and the
+     link get small scraps of their own. */
+  .scraps {
+    margin-block: var(--space-8);
+  }
+
+  /* Like neighbouring patches, no rule across the hatching. */
+  .scraps + .section {
+    border-top: 0;
+  }
+
+  .scraps h2,
+  .scraps .more {
+    --patch-reach-block: var(--space-4);
+    --patch-reach-inline: var(--space-5);
+    --patch-mask: var(--scrap-mask);
+    width: fit-content;
+  }
+
+  .scraps .more {
+    margin-inline: auto;
   }
 
   .list {

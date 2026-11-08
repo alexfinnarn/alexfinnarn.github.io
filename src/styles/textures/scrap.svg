@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <!-- An alpha mask for a small scrap of paper (Home's "What I do"), laid down in three
+       overlapping horizontal brush strokes: round ends, gently curving edges, and dry bristle
+       streaks where the paint runs thin. Chosen in round 12 (docs/design/decisions.md).
+       No viewBox: rx is in CSS pixels, so every stroke keeps fully round ends at any size. -->
+  <defs>
+    <filter id="brush" x="-5%" y="-10%" width="110%" height="120%">
+      <!-- Long, slow wobble: the stroke edges curve instead of running straight. -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.03" numOctaves="2" seed="3" result="wobble" />
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="18" xChannelSelector="R" yChannelSelector="G" result="curved" />
+      <feGaussianBlur in="curved" stdDeviation="2.5" result="soft" />
+      <!-- Bristle streaks: noise stretched along the stroke, so the edges break up in lines. -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.3" numOctaves="2" seed="11" result="streaks" />
+      <feColorMatrix in="streaks" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="streakAlpha" />
+      <feComposite in="soft" in2="streakAlpha" operator="arithmetic" k1="0" k2="1.7" k3="0.7" k4="-0.75" />
+    </filter>
+  </defs>
+  <g filter="url(#brush)" fill="#000">
+    <rect x="4%" y="7%" width="88%" height="36%" rx="999" />
+    <rect x="2%" y="30%" width="95%" height="40%" rx="999" />
+    <rect x="6%" y="57%" width="90%" height="36%" rx="999" />
+  </g>
+</svg>

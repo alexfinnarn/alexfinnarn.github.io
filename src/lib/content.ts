@@ -2,6 +2,7 @@
 import type { ImageMetadata } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { skills } from '../data/skills';
+import { situations } from '../data/situations';
 
 export type Article = CollectionEntry<'writing'>;
 export type CaseStudyEntry = CollectionEntry<'work'>;
@@ -83,18 +84,22 @@ export function readingMinutes(body = ''): number {
 export const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
-/** A stand-in image at the size a slot needs, until a work example has its own. */
-export const placeholderImage = (width: number, height: number) =>
-  `https://placehold.co/${width}x${height}/efe3c9/5c5245/webp`;
+/** One of Home's "What I do" situations, with its proof and its skill's page on Work. */
+export interface Situation {
+  title?: string;
+  reply?: string;
+  skill: string;
+  href: string;
+  example: WorkExample;
+}
 
-/** One slide per skill with work, each showing a different example where there are enough. */
-export function getSkillSlides(examples: WorkExample[]) {
-  const used = new Set<string>();
-  return getSkillsWithWork(examples).map((skill) => {
-    const tagged = examples.filter((e) => e.skills.includes(skill.title));
-    const example = tagged.find((e) => !used.has(e.id)) ?? tagged[0];
-    used.add(example.id);
-    return { skill: skill.title, href: `/work/skills/${skill.slug}/`, example };
+/** Home's situations, skipping any whose proof isn't published (a draft outside dev). */
+export function getSituations(examples: WorkExample[]): Situation[] {
+  return situations.flatMap(({ title, reply, skill, proof }) => {
+    if (!skills.some((s) => s.title === skill)) throw new Error(`Situation skill "${skill}" isn't in src/data/skills.ts.`);
+    const example = examples.find((e) => e.id === proof);
+    if (!example) return [];
+    return [{ title, reply, skill, href: `/work/skills/${topicSlug(skill)}/`, example }];
   });
 }
 

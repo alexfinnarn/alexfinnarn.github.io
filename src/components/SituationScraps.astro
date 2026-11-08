@@ -1,0 +1,321 @@
+---
+// Home's "What I do": situations a visitor might be in, as scraps of paper tossed on the
+// hatching, each tilted and in its own pencil color. Picking one lifts it, colors it in, and
+// shows Alex's reply and one piece of proof on a larger scrap: below the pile on wide screens,
+// right under the scrap on phones. Works as tabs: one open at a time, arrow keys move between
+// them. Without script, every reply shows. Chosen in eye-test round 11 (docs/design/decisions.md).
+import FillIn from './FillIn.astro';
+import { workLinkText, type Situation } from '../lib/content';
+import { pencilLine } from '../lib/pencil';
+
+interface Props {
+  items: Situation[];
+  id?: string;
+}
+
+const { items, id = 'scraps' } = Astro.props;
+// A fixed scatter, so the toss looks the same on every visit: tilt and drop for each scrap.
+const scatter = [
+  { tilt: -3, drop: 0 },
+  { tilt: 2.5, drop: 1.75 },
+  { tilt: -1.25, drop: 0.5 },
+  { tilt: 3, drop: 1.25 },
+  { tilt: -2, drop: 0.25 },
+];
+---
+
+<div class="scraps" data-scraps id={id}>
+  <div class="pile" role="tablist" aria-label="Situations">
+    {items.map(({ title }, i) => {
+      const { tilt, drop } = scatter[i % scatter.length];
+      return (
+        <button
+          class="scrap"
+          role="tab"
+          id={`${id}-tab-${i}`}
+          aria-controls={`${id}-panel-${i}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          style={`--tilt: ${tilt}deg; --drop: ${drop}rem; --order: ${i * 2}; --underline: ${pencilLine(i * 17 + 2, 4)}`}
+        >
+          <span class="title">{title ?? `Fill in: situation ${i + 1}`}</span>
+        </button>
+      );
+    })}
+  </div>
+
+  {items.map(({ reply, skill, href, example }, i) => (
+    <div class="panel" role="tabpanel" id={`${id}-panel-${i}`} aria-labelledby={`${id}-tab-${i}`} style={`--order: ${i * 2 + 1}`}>
+      {reply ? <p class="reply">{reply}</p> : <FillIn what="Alex's reply to this situation, a sentence or two" />}
+      <p class="proof">
+        <span class="label">{example.kind}</span>
+        <a href={example.href}>{example.title}</a>
+      </p>
+      <p class="links">
+        <a href={example.href}>{workLinkText[example.kind]}</a>
+        <a href={href}>More {skill}</a>
+      </p>
+    </div>
+  ))}
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-scraps]')) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+
+    const pick = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+        panels[i].hidden = !on;
+      });
+      // The panel takes the picked scrap's color.
+      root.style.setProperty('--mark', getComputedStyle(tabs[index]).getPropertyValue('--scrap-mark'));
+      if (focus) tabs[index].focus();
+    };
+
+    // On phones the reply opens right under its scrap; if it ends below the screen, bring it up.
+    const phone = matchMedia('(max-width: 40rem)');
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        pick(i);
+        if (phone.matches) {
+          panels[i].scrollIntoView({ block: 'nearest', behavior: still.matches ? 'auto' : 'smooth' });
+        }
+      });
+      tab.addEventListener('keydown', (event) => {
+        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+        if (step === undefined) return;
+        event.preventDefault();
+        pick((i + step + tabs.length) % tabs.length, true);
+      });
+    });
+
+    pick(0);
+  }
+</script>
+
+<style>
+  .scraps {
+    --mark: var(--mark-2);
+  }
+
+  .pile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-5) var(--space-6);
+    padding-block: var(--space-4) var(--space-8);
+  }
+
+  /* Each scrap is a small patch of paper: the site's patch mask, reaching only a little past
+     the text so neighbouring scraps stay apart. */
+  .scrap {
+    position: relative;
+    max-width: 17rem;
+    padding: var(--space-5) var(--space-5);
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-weight: var(--weight-heading);
+    font-size: var(--h2-size);
+    letter-spacing: var(--tracking-heading);
+    line-height: var(--leading-heading);
+    text-align: left;
+    cursor: pointer;
+    rotate: var(--tilt);
+    translate: 0 var(--drop);
+    transition: rotate 220ms ease-out, translate 220ms ease-out, scale 220ms ease-out;
+  }
+
+  .scrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--patch-bg);
+    mask: var(--scrap-mask);
+  }
+
+  /* Colored in with its pencil when picked; light enough to keep the title over 4.5:1. */
+  .scrap::after {
+    content: '';
+    position: absolute;
+    inset: var(--space-2);
+    z-index: -1;
+    background: var(--scrap-mark);
+    mask: var(--mark-fill) 0 0 / 100% 100% no-repeat;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+
+  /* Each scrap's pencil color, one per scrap up to the limit of five. No yellow: it barely
+     shows on the cream paper, and the reply is colored in with the picked scrap's color. */
+  .scrap:nth-child(5n + 1) { --scrap-mark: var(--mark-2); } /* red */
+  .scrap:nth-child(5n + 2) { --scrap-mark: var(--mark-4); } /* green */
+  .scrap:nth-child(5n + 3) { --scrap-mark: var(--mark-5); } /* blue */
+  .scrap:nth-child(5n + 4) { --scrap-mark: var(--mark-6); } /* violet */
+  .scrap:nth-child(5n + 5) { --scrap-mark: var(--mark-3); } /* pink */
+
+  .title {
+    position: relative;
+    z-index: 0;
+  }
+
+  /* Not picked: a scribble under the title. Picked: a drawn underline instead. */
+  .title::before,
+  .title::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: var(--scrap-mark);
+    transition: opacity 160ms ease-out, height 160ms ease-out;
+  }
+
+  .title::before {
+    inset: auto -0.3em -0.12em;
+    height: 0.63em;
+    mask: var(--mark-band) 0 0 / 100% 100% no-repeat;
+    opacity: 0.7;
+  }
+
+  .title::after {
+    inset: auto -0.15em -0.3em;
+    height: 0.4em;
+    mask: var(--underline) 0 0 / 100% 100% no-repeat;
+    opacity: 0;
+  }
+
+  .scrap:hover {
+    scale: 1.04;
+  }
+
+  .scrap:hover .title::before {
+    height: 0.9em;
+  }
+
+  /* Picked: it straightens a little and rises off the pile. */
+  .scrap[aria-selected='true'] {
+    rotate: calc(var(--tilt) / 3);
+    translate: 0 calc(var(--drop) - var(--space-3));
+    scale: 1.06;
+  }
+
+  .scrap[aria-selected='true']::after {
+    opacity: 0.25;
+  }
+
+  .scrap[aria-selected='true'] .title::before {
+    opacity: 0;
+  }
+
+  .scrap[aria-selected='true'] .title::after {
+    opacity: 1;
+  }
+
+  /* The reply sits on its own straight patch, colored in faintly with the picked scrap's color. */
+  .panel {
+    position: relative;
+    max-width: calc(var(--measure) + 2 * var(--space-7));
+    margin-inline: auto;
+    padding: var(--space-6) var(--space-7);
+  }
+
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: var(--patch-bg);
+    mask: var(--scrap-mask-soft);
+  }
+
+  .panel::after {
+    content: '';
+    position: absolute;
+    inset: var(--space-3);
+    z-index: -1;
+    background: var(--mark);
+    mask: var(--mark-fill) 0 0 / 100% 100% no-repeat;
+    opacity: 0.18;
+  }
+
+  .panel + .panel {
+    margin-top: var(--space-8);
+  }
+
+  .panel[hidden] + .panel,
+  .panel + .panel[hidden] {
+    margin-top: 0;
+  }
+
+  .reply {
+    margin: 0 0 var(--space-4);
+  }
+
+  .proof {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0 0 var(--space-3);
+    font-weight: 600;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scrap,
+    .scrap::after,
+    .title::before,
+    .title::after {
+      transition: none;
+    }
+  }
+
+  /* Phones: the scraps stack, and the picked one's reply sits right under it. The pile steps
+     aside (display: contents) so scraps and replies share one column, ordered by --order. */
+  @media (max-width: 40rem) {
+    .scraps {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-6);
+      padding-block: var(--space-4) var(--space-6);
+    }
+
+    .pile {
+      display: contents;
+    }
+
+    .scrap,
+    .panel {
+      order: var(--order);
+    }
+
+    .panel,
+    .panel + .panel {
+      margin: 0;
+      padding: var(--space-5);
+      scroll-margin-block: var(--space-5);
+    }
+
+    .scrap {
+      translate: 0;
+    }
+
+    .scrap[aria-selected='true'] {
+      translate: 0;
+    }
+  }
+</style>
