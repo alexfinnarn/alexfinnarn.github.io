@@ -1,0 +1,26 @@
+---
+// Top of every inner page: optional label, heading, short intro in the default slot.
+interface Props {
+  label?: string;
+  title: string;
+}
+
+const { label, title } = Astro.props;
+---
+
+<header class="page-header">
+  {label && <span class="label">{label}</span>}
+  <h1>{title}</h1>
+  <div class="intro measure lede"><slot /></div>
+</header>
+
+<style>
+  .page-header {
+    padding-block: var(--space-section) var(--space-block);
+    border-bottom: var(--rule);
+  }
+
+  .intro :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

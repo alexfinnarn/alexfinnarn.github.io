@@ -1,0 +1,47 @@
+---
+// Top of an article: title, byline line (author, dates, reading time), description as standfirst.
+import { site } from '../site';
+import { formatDate } from '../lib/content';
+
+interface Props {
+  title: string;
+  description: string;
+  publishedDate: Date;
+  updatedDate?: Date;
+  minutes: number;
+}
+
+const { title, description, publishedDate, updatedDate, minutes } = Astro.props;
+const iso = (date: Date) => date.toISOString().slice(0, 10);
+---
+
+<header class="article-header">
+  <h1>{title}</h1>
+  <p class="meta">
+    <span>{site.name}</span>
+    <time datetime={iso(publishedDate)}>{formatDate(publishedDate)}</time>
+    {updatedDate && <span>Updated <time datetime={iso(updatedDate)}>{formatDate(updatedDate)}</time></span>}
+    <span>{minutes} min read</span>
+  </p>
+  <p class="lede measure">{description}</p>
+</header>
+
+<style>
+  .article-header {
+    padding-block: var(--space-section) var(--space-block);
+    border-bottom: var(--rule);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .lede {
+    margin: var(--space-4) 0 0;
+  }
+</style>

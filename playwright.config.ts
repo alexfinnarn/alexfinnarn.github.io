@@ -84,11 +84,13 @@ export default defineConfig({
   /* Run your local dev server before starting the tests.
    * Skipped entirely when PLAYWRIGHT_BASE_URL points at a server you manage.
    * reuseExistingServer is false so a stray process squatting the port fails
-   * loudly instead of being silently tested against. */
+   * loudly instead of being silently tested against.
+   * --ignore-lock keeps the server in the foreground. Without it, Astro moves the server to
+   * the background when an AI agent runs the tests, and Playwright thinks it died. */
   webServer: envBaseURL
     ? undefined
     : {
-        command: `npm run dev -- --port ${port}`,
+        command: `npm run dev -- --port ${port} --ignore-lock`,
         url: baseURL,
         reuseExistingServer: false,
       },

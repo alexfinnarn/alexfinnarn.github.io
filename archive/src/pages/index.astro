@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import VisualNovel from '../components/VisualNovel.tsx';
+import { readFileSync } from 'fs';
+
+const storyContent = readFileSync('src/ink/career.json', 'utf-8');
+// console.log(storyContent);
+---
+
+<Layout title="My Career Story">
+  <VisualNovel client:load storyData={storyContent} />
+</Layout>

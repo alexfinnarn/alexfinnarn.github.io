@@ -1,0 +1,90 @@
+---
+// One case study in the fixed Problem / Solution / Result format. The project name is
+// optional and secondary: the problem leads.
+interface Props {
+  title: string;
+  project?: string;
+  problem: string;
+  solution: string;
+  result: string;
+  /** Heading level of the title: 1 when the case study is the page (the default), 2 inside a page. */
+  level?: 1 | 2;
+}
+
+const { title, project, problem, solution, result, level = 1 } = Astro.props;
+const Heading = `h${level}` as const;
+---
+
+<article class="case">
+  <header>
+    <Heading class="title">{title}</Heading>
+    {project && <p class="meta">{project}</p>}
+  </header>
+  <dl>
+    <div>
+      <dt>Problem</dt>
+      <dd>{problem}</dd>
+    </div>
+    <div>
+      <dt>Solution</dt>
+      <dd>{solution}</dd>
+    </div>
+    <div>
+      <dt>Result</dt>
+      <dd>{result}</dd>
+    </div>
+  </dl>
+</article>
+
+<style>
+  .case {
+    padding-block: var(--space-block);
+    border-top: var(--rule-strong);
+  }
+
+  /* Looks the same at either heading level. */
+  .title {
+    font-size: var(--h2-size);
+    margin-bottom: var(--space-1);
+  }
+
+  .meta {
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+    color: var(--color-text-muted);
+  }
+
+  dl {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-5) 0 0;
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-4);
+  }
+
+  dt {
+    font-family: var(--font-label);
+    font-size: var(--label-size);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--label-tracking);
+    text-transform: var(--label-case);
+    color: var(--color-text-muted);
+    padding-top: 0.2em;
+  }
+
+  dd {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  @media (max-width: 40rem) {
+    dl > div {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

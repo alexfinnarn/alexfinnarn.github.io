@@ -1,0 +1,70 @@
+/*
+ * Base tokens: the raw palette and scales. Nothing here says what a value is FOR.
+ * Components never use these directly; they use the role tokens in themes.css,
+ * which point at these.
+ */
+:root {
+  /* Paper: the cream the colored-pencil drawings are drawn on */
+  --paper-0: #f6edda;
+  --paper-50: #efe3c9;
+  --paper-200: #d9c9a8;
+  --white: #ffffff;
+
+  /* Graphite: text. Both pass 4.5:1 on all the paper tones. */
+  --graphite-900: #24222b; /* 13.5:1 on paper */
+  --graphite-600: #5c5245; /* 6.6:1 on paper */
+
+  /* Pencil colors, picked from the drawings. Yellow, red, pink, green and blue are under 4.5:1
+     on paper: hatching and fills only. Text uses the deep ones. */
+  --pencil-yellow: #f2bf2a;
+  --pencil-red: #e2532b;
+  --pencil-pink: #e07a8a;
+  --pencil-green: #3b8a4a;
+  --pencil-blue: #2f6db5;
+  --pencil-violet: #6a4fa3;
+  --pencil-blue-deep: #1f4f8f; /* 7.0:1 on paper */
+  --pencil-violet-deep: #5a3f8f; /* 7.1:1 on paper */
+
+  /* The paper cut-out bird on Home. Picked by Alex with color pickers on the drawing
+     (2026-11-14): a paper a shade darker than the page, so the cut-out shows against it. */
+  --cutout-paper: #eaddc3;
+  --cutout-edge: #6580ae;
+  --cutout-blue: #1d4581;
+  --cutout-navy: #0a398a;
+  --cutout-orange: #c9641f;
+
+  /* Type families (system stacks only: nothing to download) */
+  --family-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --family-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --family-heavy-sans: "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --family-condensed: "Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif;
+  --family-mono:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Type sizes (a modular scale, ratio ~1.25) */
+  --size-sm: 0.875rem;
+  --size-md: 1rem;
+  --size-lg: 1.125rem;
+  --size-xl: 1.35rem;
+  --size-2xl: 1.75rem;
+  --size-3xl: 2.25rem;
+  --size-4xl: 2.875rem;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6rem;
+
+  /* Corners and lines */
+  --radius-0: 0;
+  --radius-1: 3px;
+  --radius-2: 6px;
+  --line-1: 1px;
+  --line-2: 2px;
+  --line-3: 4px;
+}

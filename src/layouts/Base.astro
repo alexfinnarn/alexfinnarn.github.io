@@ -1,0 +1,101 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, titleSuffix } from '../site';
+
+interface Props {
+  /** Page name, shown before the site suffix. Omit on the homepage. */
+  title?: string;
+  /** Leave out until Alex writes one; the tag is omitted rather than shipping a placeholder. */
+  description?: string;
+  /** Set on article pages: marks the page as an article and gives search engines its dates. */
+  article?: { publishedDate: Date; updatedDate?: Date; topics?: string[] };
+  /** Keep the page out of search results (the 404 page). */
+  noindex?: boolean;
+}
+
+const { title, description, article, noindex = false } = Astro.props;
+const pageTitle = title ? `${title} | ${titleSuffix}` : titleSuffix;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Structured data (JSON-LD) for search and answer engines. Every page says who the site belongs
+// to; article pages also describe the article. Built only from src/site.ts and frontmatter.
+const home = new URL('/', Astro.site).href;
+const personId = `${home}#person`;
+const [addressLocality, addressRegion] = site.location.split(', ');
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: site.name,
+    url: home,
+    jobTitle: site.role,
+    address: { '@type': 'PostalAddress', addressLocality, addressRegion, addressCountry: 'US' },
+    sameAs: [site.linkedin, site.github, site.medium],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${home}#website`,
+    url: home,
+    name: site.name,
+    inLanguage: 'en',
+    publisher: { '@id': personId },
+  },
+];
+if (article) {
+  graph.push({
+    '@type': 'BlogPosting',
+    '@id': `${canonical.href}#article`,
+    mainEntityOfPage: canonical.href,
+    url: canonical.href,
+    headline: title,
+    ...(description && { description }),
+    datePublished: article.publishedDate.toISOString(),
+    dateModified: (article.updatedDate ?? article.publishedDate).toISOString(),
+    ...(article.topics?.length && { keywords: article.topics }),
+    inLanguage: 'en',
+    author: { '@id': personId },
+    publisher: { '@id': personId },
+    isPartOf: { '@id': `${home}#website` },
+  });
+}
+// "<" is escaped so text in a title or description can't close the script tag.
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="author" content={site.name} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name}: Writing`} href="/rss.xml" />
+
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    {article && <meta property="article:published_time" content={article.publishedDate.toISOString()} />}
+    {article?.updatedDate && <meta property="article:modified_time" content={article.updatedDate.toISOString()} />}
+    {article && <meta property="article:author" content={site.name} />}
+    {article?.topics?.map((topic) => <meta property="article:tag" content={topic} />)}
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" is:inline set:html={jsonLd} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

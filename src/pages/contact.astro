@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FillIn from '../components/FillIn.astro';
+// The booking link is hidden until Alex sets it up (2026-11-14). When it's ready it goes after
+// the form: a Button to the Google Calendar appointment schedule.
+import ContactList from '../components/ContactList.astro';
+import Portrait from '../components/Portrait.astro';
+import portrait from '../assets/portrait-extended.png';
+import { site } from '../site';
+---
+
+<Base title="Contact" description="How to get in touch with Alex Finnarn about a project.">
+  <div class="container patch page">
+    <PageHeader title="Contact">
+      <p>Got a problem with a website, a Drupal platform or an AI workflow? Tell me about it, even if you're not sure it's a fit.</p>
+    </PageHeader>
+    <section class="section stack">
+      <div class="intro">
+        <Portrait src={portrait} alt={`Colored-pencil drawing of ${site.name}`} />
+        <p class="measure">
+          After 12 years of working on the web, I am back to exploring the wilderness of opportunity and innovation within the intersection of software development and local manufacturing.
+        </p>
+      </div>
+      {/* Hidden until the form is built:
+      <FillIn what="The gate and contact form (to build, once the gate is decided)." />
+      */}
+      <ContactList
+        items={[
+          { label: 'LinkedIn', value: 'linkedin.com/in/alexfinnarn', href: site.linkedin, icon: 'linkedin' },
+          { label: 'GitHub', value: 'github.com/alexfinnarn', href: site.github, icon: 'github' },
+          { label: 'Medium', value: 'medium.com/@alexfinnarn', href: site.medium, icon: 'medium' },
+          { label: 'Location', value: site.location },
+        ]}
+      />
+    </section>
+  </div>
+</Base>
+
+<style>
+  .stack {
+    display: grid;
+    gap: var(--space-5);
+    /* Closer to the page header than a normal section: the portrait has its own air around it. */
+    padding-top: var(--space-block);
+  }
+
+  /* The portrait beside the opening paragraph; stacked on a narrow screen. */
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .intro p {
+    margin: 0;
+  }
+
+  /* Wider here than the portrait's usual limit. */
+  .intro :global(.portrait) {
+    max-width: none;
+  }
+
+  @media (max-width: 56rem) {
+    .intro {
+      grid-template-columns: minmax(0, 30rem);
+    }
+  }
+</style>

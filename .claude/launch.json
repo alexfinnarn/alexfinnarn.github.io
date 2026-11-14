@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "astro-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "--port", "4399"],
+      "runtimeExecutable": "/opt/homebrew/bin/mise",
+      "runtimeArgs": ["exec", "--", "npm", "run", "dev", "--", "--port", "4399"],
       "port": 4399,
       "autoPort": false
     }

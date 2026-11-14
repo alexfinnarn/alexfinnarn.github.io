@@ -1,0 +1,77 @@
+---
+import ProfileIcon from './ProfileIcon.astro';
+import { site } from '../site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer patch tilt">
+  <div class="grid">
+    <div>
+      <p class="name">{site.name}</p>
+      <p class="muted">{site.role} · {site.location}</p>
+    </div>
+    <ul aria-label="Profiles">
+      <li><a href={site.linkedin}><ProfileIcon name="linkedin" /> LinkedIn</a></li>
+      <li><a href={site.github}><ProfileIcon name="github" /> GitHub</a></li>
+      <li><a href={site.medium}><ProfileIcon name="medium" /> Medium</a></li>
+    </ul>
+  </div>
+  <div>
+    <p class="copyright">© {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    width: min(100% - 2 * var(--gutter), 52rem);
+    margin: var(--space-section) auto var(--space-8);
+    padding: var(--space-6) clamp(var(--space-4), 5vw, var(--space-7)) var(--space-5);
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    font-size: var(--size-md);
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-6);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .name {
+    font-weight: 700;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li + li {
+    margin-top: var(--space-1);
+  }
+
+  .copyright {
+    margin-top: var(--space-5);
+    font-size: var(--size-sm);
+    color: var(--footer-muted);
+  }
+
+  .muted {
+    color: var(--footer-muted);
+  }
+
+  a {
+    color: var(--footer-link);
+  }
+
+  a:hover {
+    color: var(--footer-text);
+  }
+</style>

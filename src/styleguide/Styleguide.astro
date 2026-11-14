@@ -1,0 +1,659 @@
+---
+// Dev-only style guide: the site's tokens and components.
+// All text here is dummy text. None of it is site copy.
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import Hero from '../components/Hero.astro';
+import ForestScene from '../components/ForestScene.astro';
+import ProfileIcon from '../components/ProfileIcon.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SituationScraps from '../components/SituationScraps.astro';
+import CaseStudy from '../components/CaseStudy.astro';
+import ArticleListItem from '../components/ArticleListItem.astro';
+import Portrait from '../components/Portrait.astro';
+import CtaCard from '../components/CtaCard.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import Callout from '../components/Callout.astro';
+import ContactList from '../components/ContactList.astro';
+import drawing from '../assets/portrait-extended.png';
+import forest from '../assets/me-on-rock-and-forest.png';
+import { Image } from 'astro:assets';
+
+
+const baseColors = [
+  ['Paper', ['--paper-0', '--paper-50', '--paper-200', '--white']],
+  ['Graphite', ['--graphite-900', '--graphite-600']],
+  ['Pencil', ['--pencil-yellow', '--pencil-red', '--pencil-pink', '--pencil-green', '--pencil-blue', '--pencil-violet']],
+  ['Pencil, deep (text)', ['--pencil-blue-deep', '--pencil-violet-deep']],
+  ['Cut-out bird', ['--cutout-paper', '--cutout-edge', '--cutout-blue', '--cutout-navy', '--cutout-orange']],
+] as const;
+
+const roleColors = [
+  ['--color-bg', 'Page background'],
+  ['--color-bg-alt', 'Footer and panel background'],
+  ['--color-text', 'Body text and headings'],
+  ['--color-text-muted', 'Dates, labels, secondary text'],
+  ['--color-rule', 'Divider lines'],
+  ['--color-accent', 'Links, buttons, figures'],
+  ['--color-accent-hover', 'Hover state for accent'],
+  ['--color-accent-tint', 'Callout background, secondary button hover'],
+  ['--color-brand', 'Focus outline, figures'],
+  ['--header-bg', 'Header surface'],
+  ['--hero-bg', 'Hero surface'],
+  ['--footer-bg', 'Footer surface'],
+  ['--button-bg', 'Primary button'],
+  ['--mark-1', 'Pencil mark, 1st skill (fills and marks only, never text)'],
+  ['--mark-2', 'Pencil mark, 2nd skill'],
+  ['--mark-3', 'Pencil mark, 3rd skill'],
+  ['--mark-4', 'Pencil mark, 4th skill'],
+  ['--mark-5', 'Pencil mark, 5th skill'],
+  ['--mark-6', 'Pencil mark, 6th skill'],
+  ['--bird-paper', 'Forest scene bird: the paper it is cut from'],
+  ['--bird-edge', 'Forest scene bird: outline'],
+  ['--bird-body', 'Forest scene bird: body and head coloring'],
+  ['--bird-wing', 'Forest scene bird: wing and tail coloring'],
+  ['--bird-beak', 'Forest scene bird: beak coloring'],
+  ['--bird-shadow', 'Forest scene bird: shadow under the paper'],
+  ['--needle-1', 'Forest scene: falling pine needle'],
+  ['--needle-2', 'Forest scene: falling pine needle'],
+  ['--needle-3', 'Forest scene: falling pine needle'],
+] as const;
+
+const roleOther = [
+  ['--font-heading', 'Heading family'],
+  ['--font-body', 'Body family'],
+  ['--font-label', 'Label family'],
+  ['--font-figure', 'Figure family (numbers)'],
+  ['--weight-heading', 'Heading weight'],
+  ['--h1-size', 'Largest headline size'],
+  ['--label-case', 'Label capitalization'],
+  ['--text-body', 'Body text size'],
+  ['--radius', 'Corner radius'],
+  ['--patch-reach-block', 'How far a paper patch reaches above and below its content'],
+  ['--patch-reach-inline', 'How far a paper patch reaches left and right of its content'],
+  ['--patch-tilt', 'Tilt of a short patch'],
+  ['--rule-strong', 'Strong rule (top of blocks)'],
+  ['--space-section', 'Space between sections'],
+  ['--measure', 'Reading width'],
+] as const;
+
+const typeScale = ['--size-sm', '--size-md', '--size-lg', '--size-xl', '--size-2xl', '--size-3xl', '--size-4xl'];
+const spaceScale = ['--space-1', '--space-2', '--space-3', '--space-4', '--space-5', '--space-6', '--space-7', '--space-8', '--space-9'];
+
+const lorem =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+const sampleExample = (n: string, kind: 'case study' | 'article' | 'project' | 'talk') => ({
+  id: `sample-${n}`,
+  kind,
+  title: `Work example title ${n}`,
+  summary: lorem,
+  href: '#components',
+  skills: [],
+});
+const situationSamples = [
+  { title: 'Situation title one', reply: `Reply text one. ${loremShort}`, skill: 'Skill title one', href: '#components', example: sampleExample('one', 'case study') },
+  { title: 'Situation title two', reply: `Reply text two. ${loremShort}`, skill: 'Skill title two', href: '#components', example: sampleExample('two', 'article') },
+  { skill: 'Skill title three', href: '#components', example: sampleExample('three', 'project') },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Style guide</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="sg-toolbar">
+      <div class="container sg-toolbar-inner">
+        <strong class="sg-title">Style guide</strong>
+      </div>
+    </div>
+
+    <div class="container sg-intro">
+      <p class="sg-note">
+        All text below is dummy text. Components use only role tokens, so the site's look lives in <code>src/styles/tokens/themes.css</code>. How it was chosen is in <code>docs/design/decisions.md</code>.
+      </p>
+      <nav class="sg-toc" aria-label="Sections">
+        <a href="#paper">Paper and pencil</a>
+        <a href="#tokens">Tokens</a>
+        <a href="#type">Typography</a>
+        <a href="#components">Components</a>
+      </nav>
+    </div>
+
+
+    <!-- ───────────── Paper and pencil ───────────── -->
+    <section id="paper" class="container sg-section">
+      <h2 class="sg-h">Paper and pencil</h2>
+      <div class="sg-desc sg-prose">
+        <p>
+          The page is loose colored-pencil hatching that scrolls with the content, warm at the top and
+          cool at the bottom. Content sits on <strong>patches</strong> of cream paper rubbed out of it:
+          add <code>.patch</code> to a block (and <code>.tilt</code> if it's short). Drawings get
+          <code>.art</code> for a ragged edge. The textures are in <code>src/styles/textures/</code>.
+        </p>
+        <p>
+          The bright pencil colors are too light for text (WCAG AA asks for <strong>4.5:1</strong> for
+          normal text and <strong>3:1</strong> for large text). Text is graphite, and links use the deep blue.
+        </p>
+        <div class="sg-contrast">
+          <div style="background: var(--color-bg); color: var(--color-text)"><strong>Aa</strong> Graphite on paper · 13.5:1 · text</div>
+          <div style="background: var(--color-bg); color: var(--color-text-muted)"><strong>Aa</strong> Soft graphite on paper · 6.6:1 · dates, labels</div>
+          <div style="background: var(--color-bg); color: var(--color-accent)"><strong>Aa</strong> Deep blue on paper · 7.0:1 · links</div>
+          <div style="background: var(--color-bg); color: var(--pencil-blue)"><strong>Aa</strong> Pencil blue on paper · 4.5:1 · borderline; hatching only</div>
+          <div style="background: var(--color-bg); color: var(--pencil-red)"><strong>Aa</strong> Pencil red on paper · 3.3:1 · hatching and fills only</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Tokens ───────────── -->
+    <section id="tokens" class="container sg-section">
+      <h2 class="sg-h">Tokens</h2>
+      <p class="sg-desc">
+        <strong>Base tokens</strong> are the raw palette and scales (<code>tokens/base.css</code>); they're the
+        source the role tokens draw from. <strong>Role tokens</strong> say what a value is for
+        (<code>tokens/themes.css</code>); components use only these.
+      </p>
+
+      <h3 class="sg-sub">Role tokens: color</h3>
+      <div class="sg-roles">
+        {roleColors.map(([name, use]) => (
+          <div class="sg-role">
+            <span class="sg-chip" style={`background: var(${name})`}></span>
+            <div>
+              <code>{name}</code>
+              <span class="sg-use">{use}</span>
+              <span class="sg-val" data-var={name}></span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="sg-sub">Role tokens: type, shape, space</h3>
+      <dl class="sg-kv">
+        {roleOther.map(([name, use]) => (
+          <div>
+            <dt><code>{name}</code><span class="sg-use">{use}</span></dt>
+            <dd class="sg-val" data-var={name}></dd>
+          </div>
+        ))}
+      </dl>
+
+      <h3 class="sg-sub">Base palette</h3>
+      {baseColors.map(([group, names]) => (
+        <div class="sg-palette">
+          <span class="sg-palette-name">{group}</span>
+          <div class="sg-swatches">
+            {names.map((n) => (
+              <div class="sg-swatch">
+                <span class="sg-chip lg" style={`background: var(${n})`}></span>
+                <code>{n}</code>
+                <span class="sg-val" data-var={n}></span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <h3 class="sg-sub">Type scale</h3>
+      <div class="sg-scale">
+        {typeScale.map((n) => (
+          <div class="sg-scale-row">
+            <code>{n} <span class="sg-val" data-var={n}></span></code>
+            <span style={`font-size: var(${n}); font-family: var(--font-heading); line-height: 1.2`}>Plant floor data</span>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="sg-sub">Spacing scale</h3>
+      <div class="sg-scale">
+        {spaceScale.map((n) => (
+          <div class="sg-scale-row">
+            <code>{n} <span class="sg-val" data-var={n}></span></code>
+            <span class="sg-bar" style={`width: var(${n})`}></span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ───────────── Typography ───────────── -->
+    <section id="type" class="container sg-section">
+      <h2 class="sg-h">Typography</h2>
+      <div class="sg-frame">
+        <div class="prose measure">
+          <span class="label">Label text</span>
+          <h1>Heading level one sample</h1>
+          <p class="lede">Lede paragraph. {lorem}</p>
+          <h2>Heading level two sample</h2>
+          <p>Body paragraph. {lorem} <a href="#type">An inline link</a> sits in the middle of the text. {loremShort}</p>
+          <h3>Heading level three sample</h3>
+          <ul>
+            <li>List item one. {loremShort}</li>
+            <li>List item two. {loremShort}</li>
+            <li>List item three.</li>
+          </ul>
+          <blockquote><p>Block quote. {lorem}</p></blockquote>
+          <p class="muted">Muted text, for dates and secondary details.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Components ───────────── -->
+    <section id="components" class="container sg-section">
+      <h2 class="sg-h">Components</h2>
+
+      <article class="sg-component">
+        <header><h3>Header</h3><p>Every page. Shown with "Writing" as the current page.</p></header>
+        <div class="sg-frame flush"><Header current="/writing" /></div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Forest scene</h3><p>Home, top of page. The forest drawing fills the screen, with the label and headline on a scrap of paper. Two spots in the drawing are links, labelled with the menu's own words. A paper cut-out bird flies in, lands on the first label as it appears, then perches on the backpack as the second appears; reload to see it again. Needles drift down. On a narrow screen the drawing pans sideways and opens on the hiker. With reduced motion, nothing moves and the pause button is hidden.</p></header>
+        <div class="sg-frame flush">
+          <ForestScene label="Label · Location" title="Headline text sample" alt="Colored-pencil forest drawing" />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Hero</h3><p>Not used on a page now; Home used it before the forest scene. Label, headline, lede and two actions on a tilted patch, with a wide drawing fading in behind it.</p></header>
+        <div class="sg-frame flush">
+          <Hero label="Label · Location" title="Headline text sample">
+            <p>Lede text. {lorem}</p>
+            <Fragment slot="actions">
+              <Button href="#components">Primary action</Button>
+              <Button href="#components" variant="secondary">Secondary action</Button>
+            </Fragment>
+            <Image slot="art" src={forest} alt="Colored-pencil forest drawing" widths={[700, 1200]} sizes="52rem" />
+          </Hero>
+        </div>
+      </article>
+
+
+
+      <article class="sg-component">
+        <header><h3>Situation scraps</h3><p>Home, "What I do" (hidden on Home for now). 3 to 5 situations a visitor might be in, as tilted scraps of paper, each in its own pencil color. Picking one lifts it, colors it in, and shows the reply and one work example on a larger scrap: below the pile, or right under the scrap on phones. The third sample has no text yet, so it shows its Fill ins.</p></header>
+        <div class="sg-frame">
+          <SituationScraps items={situationSamples} id="sample-scraps" />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Page header</h3><p>Top of every inner page.</p></header>
+        <div class="sg-frame">
+          <PageHeader label="Label" title="Page title sample"><p>Intro text. {lorem}</p></PageHeader>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Case study</h3><p>Work. Problem, Solution, Result; project name optional.</p></header>
+        <div class="sg-frame">
+          <CaseStudy
+            level={2}
+            title="Case study title sample"
+            project="Project name"
+            problem={`Problem text. ${lorem}`}
+            solution={`Solution text. ${lorem}`}
+            result={`Result text. ${loremShort}`}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Article list</h3><p>Writing index and Home (featured).</p></header>
+        <div class="sg-frame">
+          <ul class="sg-list">
+            <ArticleListItem title="Article title sample one" href="#components" date={new Date('2026-10-01')} description={loremShort} />
+            <ArticleListItem title="Article title sample two, a little longer than the first" href="#components" date={new Date('2026-09-01')} description={lorem} />
+          </ul>
+        </div>
+      </article>
+
+
+      <article class="sg-component">
+        <header><h3>Process steps</h3><p>Not used on a page yet.</p></header>
+        <div class="sg-frame">
+          <ProcessSteps
+            steps={[
+              { title: 'Step one', text: loremShort },
+              { title: 'Step two', text: loremShort },
+              { title: 'Step three', text: loremShort },
+              { title: 'Step four', text: loremShort },
+            ]}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Callout</h3><p>Work (availability line).</p></header>
+        <div class="sg-frame">
+          <Callout label="Label"><p>Callout text. {loremShort}</p></Callout>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Buttons</h3><p>Hero and page-ending actions.</p></header>
+        <div class="sg-frame sg-row">
+          <Button href="#components">Primary action</Button>
+          <Button href="#components" variant="secondary">Secondary action</Button>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Portrait</h3><p>About. Empty frame, and the drawing with a caption.</p></header>
+        <div class="sg-frame sg-row">
+          <Portrait />
+          <Portrait src={drawing} alt="Colored-pencil portrait drawing" caption="Caption text" />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Contact list</h3><p>Contact. A row can show a profile's logo before its link.</p></header>
+        <div class="sg-frame">
+          <ContactList
+            items={[
+              { label: 'Profile', value: 'example.com/profile', href: '#components', icon: 'github' },
+              { label: 'Profile', value: 'example.com/no-logo', href: '#components' },
+              { label: 'Location', value: 'City, State' },
+            ]}
+          />
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Profile icons</h3><p>Contact list and Footer. LinkedIn, GitHub, Medium. They take the color and size of the text around them, and always sit next to the profile's name.</p></header>
+        <div class="sg-frame sg-row">
+          <span><ProfileIcon name="linkedin" /> LinkedIn</span>
+          <span><ProfileIcon name="github" /> GitHub</span>
+          <span><ProfileIcon name="medium" /> Medium</span>
+          <a href="#components"><ProfileIcon name="github" /> As a link</a>
+          <span style="font-size: var(--size-2xl)"><ProfileIcon name="medium" /> Larger text</span>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>CTA card</h3><p>End of each article. Every article supplies its own.</p></header>
+        <div class="sg-frame">
+          <CtaCard heading="CTA heading sample" href="#components" action="Action label"><p>CTA text. {lorem}</p></CtaCard>
+        </div>
+      </article>
+
+      <article class="sg-component">
+        <header><h3>Footer</h3><p>Every page.</p></header>
+        <div class="sg-frame flush sg-footer"><Footer /></div>
+      </article>
+    </section>
+
+    <script>
+      const root = document.documentElement;
+
+      function readValues() {
+        const styles = getComputedStyle(root);
+        document.querySelectorAll<HTMLElement>('[data-var]').forEach((el) => {
+          el.textContent = styles.getPropertyValue(el.dataset.var!).trim();
+        });
+      }
+
+      readValues();
+    </script>
+
+  </body>
+</html>
+
+<style is:global>
+  /* Style guide chrome only. Deliberately plain and theme-independent. */
+  /* Plain paper, so the guide's own notes don't sit on the hatching. */
+  body {
+    background: var(--color-bg);
+  }
+
+  .sg-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #16191f;
+    color: #fff;
+    font-family: var(--family-sans);
+    font-size: 0.9rem;
+  }
+
+  .sg-toolbar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    padding-block: 0.6rem;
+  }
+
+  .sg-intro {
+    padding-block: 1.5rem 0;
+    font-family: var(--family-sans);
+  }
+
+  .sg-note,
+  .sg-desc,
+  .sg-component > header p,
+  .sg-use,
+  .sg-val,
+  .sg-palette-name {
+    font-family: var(--family-sans);
+    font-size: 0.9rem;
+    color: #4a5261;
+  }
+
+  .sg-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-family: var(--family-sans);
+    font-size: 0.95rem;
+  }
+
+  .sg-section {
+    padding-block: 3rem;
+    border-top: 1px solid #d8dde4;
+    margin-top: 2rem;
+  }
+
+  .sg-h,
+  .sg-sub,
+  .sg-component > header h3 {
+    font-family: var(--family-sans);
+    letter-spacing: 0;
+    font-weight: 700;
+  }
+
+  .sg-h {
+    font-size: 1.6rem;
+  }
+
+  .sg-sub {
+    font-size: 1.05rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .sg-chip {
+    display: inline-block;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
+
+  .sg-chip.lg {
+    width: 100%;
+    height: 3rem;
+  }
+
+  .sg-roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 0.75rem 1.5rem;
+  }
+
+  .sg-role {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .sg-role code,
+  .sg-kv code,
+  .sg-swatch code,
+  .sg-scale code {
+    display: block;
+    font-family: var(--family-mono);
+    font-size: 0.8rem;
+  }
+
+  .sg-use,
+  .sg-val {
+    display: block;
+  }
+
+  .sg-val {
+    font-family: var(--family-mono);
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+  }
+
+  .sg-kv {
+    margin: 0;
+  }
+
+  .sg-kv > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 1rem;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid #d8dde4;
+  }
+
+  .sg-kv dd {
+    margin: 0;
+  }
+
+  .sg-palette {
+    margin-bottom: 1.25rem;
+  }
+
+  .sg-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+  }
+
+  .sg-scale-row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 0.4rem;
+    border-bottom: 1px solid #e9edf1;
+  }
+
+  .sg-scale-row .sg-val {
+    display: inline;
+    color: #8a93a1;
+  }
+
+  .sg-bar {
+    display: block;
+    height: 0.75rem;
+    background: var(--color-accent);
+  }
+
+  .sg-component {
+    margin-top: 2.5rem;
+  }
+
+  .sg-component > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .sg-component > header h3 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .sg-component > header p {
+    margin: 0;
+  }
+
+  .sg-frame {
+    padding: 1.5rem;
+    border: 1px dashed #b8c0cc;
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .sg-frame.flush {
+    padding: 0;
+    /* Full-width components show the real page behind them. Isolation keeps their patches'
+       paper inside the frame, above its background. */
+    isolation: isolate;
+    background: var(--page-bg);
+  }
+
+  .sg-footer .site-footer {
+    margin-top: 0;
+  }
+
+  .sg-prose {
+    max-width: 46rem;
+    font-size: 1rem;
+    color: #262b33;
+  }
+
+  .sg-contrast {
+    display: grid;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .sg-contrast > div {
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    font-family: var(--family-sans);
+  }
+
+  .sg-contrast strong {
+    font-size: 1.4rem;
+    margin-right: 0.5rem;
+  }
+
+  .sg-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .sg-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (max-width: 30rem) {
+    .sg-frame {
+      padding: 1rem;
+    }
+
+    .sg-scale-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

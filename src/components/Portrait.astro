@@ -1,0 +1,57 @@
+---
+// Portrait for the About page. Without a src it renders an empty, labeled frame.
+import { Image } from 'astro:assets';
+
+interface Props {
+  src?: ImageMetadata;
+  alt?: string;
+  caption?: string;
+}
+
+const { src, alt = '', caption } = Astro.props;
+---
+
+<figure class="portrait">
+  {src ? (
+    <Image src={src} alt={alt} widths={[480, 960]} sizes="(max-width: 40rem) 100vw, 28rem" />
+  ) : (
+    <div class="empty" role="img" aria-label="Portrait not yet chosen">Portrait</div>
+  )}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .portrait {
+    margin: 0;
+    max-width: 28rem;
+  }
+
+  img,
+  .empty {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+  }
+
+  img {
+    mask: var(--art-mask);
+  }
+
+  .empty {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    background: var(--color-bg-alt);
+    border: var(--line-1) dashed var(--color-rule);
+    color: var(--color-text-muted);
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+  }
+
+  figcaption {
+    margin-top: var(--space-2);
+    font-size: var(--size-sm);
+    color: var(--color-text-muted);
+  }
+</style>

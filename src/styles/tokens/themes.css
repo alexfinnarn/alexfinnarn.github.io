@@ -1,0 +1,131 @@
+/*
+ * Role tokens: what each value is FOR. Components only use these, never base tokens.
+ *
+ * The site's look ("Erased" in docs/design/decisions.md): the page is loose colored-pencil
+ * hatching that scrolls with the content, warm at the top and cool at the bottom. Content
+ * sits on patches of cream paper that look rubbed out of it with an eraser, a little tilted.
+ * Heavy, tightly spaced sans headlines in graphite, sans body, plain buttons.
+ *
+ * "Surface" roles (header, hero, footer, button) say how those areas look, so a
+ * component never needs to know about colors directly.
+ */
+:root {
+  --color-bg: var(--paper-0);
+  --color-bg-alt: var(--paper-50);
+  --color-text: var(--graphite-900);
+  --color-text-muted: var(--graphite-600);
+  --color-rule: var(--paper-200);
+  --color-accent: var(--pencil-blue-deep);
+  --color-accent-hover: var(--pencil-violet-deep);
+  --color-accent-tint: var(--paper-50);
+  --color-on-accent: var(--white);
+  --color-brand: var(--pencil-blue-deep); /* also the focus outline, so it must stand out */
+  --color-on-brand: var(--white);
+  --font-body: var(--family-sans);
+  --font-heading: var(--family-sans);
+  --font-label: var(--family-sans);
+  --font-figure: var(--family-sans);
+  --weight-heading: 700;
+  --tracking-heading: -0.02em;
+  --leading-heading: 1.02;
+  --h1-size: clamp(2.6rem, 1.4rem + 5vw, 5rem);
+  --h2-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
+  --label-case: uppercase;
+  --label-tracking: 0.1em;
+  --label-size: 0.8rem;
+  --weight-label: 800;
+  --figure-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
+  --text-body: var(--size-lg);
+  --leading-body: 1.65;
+
+  --radius: var(--radius-0);
+  --rule: var(--line-1) solid var(--color-rule);
+  --rule-strong: var(--line-2) solid var(--color-text);
+  --panel-bg: var(--color-bg-alt);
+
+  /* The page behind everything: paper grain over pencil hatching over paper. The hatching
+     is stretched to the page's height, so its colors run warm to cool as you scroll. */
+  --page-bg:
+    url('../textures/grain.svg'),
+    url('../textures/hatch.svg') center top / max(100%, 1600px) 100% no-repeat,
+    var(--paper-0);
+
+  /* Patches: paper rubbed out of the hatching (the .patch helper in global.css). Each
+     reaches past its content so the ragged edge never touches the text. */
+  --patch-bg: var(--color-bg);
+  --patch-mask: url('../textures/patch.svg') center / 100% 100% no-repeat;
+  --patch-reach-block: 7rem;
+  --patch-reach-inline: 8rem;
+  --patch-tilt: -2.5deg;
+  --patch-tilt-alt: 2deg;
+  /* A small scrap of paper (Home's "What I do"): patch.svg's edge is too wide for a card a few
+     lines tall, so scraps are laid down in brush strokes instead. The bigger scrap holding a
+     reply is one soft blob, so lines of text start on solid paper. */
+  --scrap-mask: url('../textures/scrap.svg') center / 100% 100% no-repeat;
+  --scrap-mask-soft: url('../textures/scrap-soft.svg') center / 100% 100% no-repeat;
+
+  /* Drawings fade into the paper at ragged edges instead of ending in a hard rectangle. */
+  --art-mask: url('../textures/art-edge.svg') center / 100% 100% no-repeat;
+  /* A wide drawing behind text (the home hero) also fades out toward the text. Layered with
+     --art-mask using mask-composite: intersect. */
+  /* Runs well past the text's paper (about 60% of the width), so the drawing visibly fades
+     in toward the text. Picked with a slider round (2026-11-03, docs/design/decisions.md). */
+  --art-fade-inline: linear-gradient(to right, transparent, #000 77%);
+  --art-fade-block: linear-gradient(to bottom, #000 60%, transparent 98%);
+  /* Ragged top and bottom only, for a drawing that runs edge to edge. */
+  --art-mask-bleed: url('../textures/art-edge.svg') center / 130% 100% no-repeat;
+
+  /* Pencil marks: one color per skill on Home's "What I do", in the hatching's order, top to
+     bottom. Fills and marks only (scribbles, underlines, colored-in areas): the bright pencils
+     are under 4.5:1 on paper, so text stays graphite. A colored-in area behind text is kept
+     light enough that every text color stays over 4.5:1. */
+  --mark-1: var(--pencil-yellow);
+  --mark-2: var(--pencil-red);
+  --mark-3: var(--pencil-pink);
+  --mark-4: var(--pencil-green);
+  --mark-5: var(--pencil-blue);
+  --mark-6: var(--pencil-violet);
+  --mark-band: url('../textures/scribble-band.svg');
+  --mark-fill: url('../textures/scribble.svg');
+
+  /* Home's forest scene: the paper cut-out bird, and the pine needles that drift down.
+     Fills only, never text. */
+  --bird-paper: var(--cutout-paper);
+  --bird-edge: var(--cutout-edge);
+  --bird-body: var(--cutout-blue);
+  --bird-wing: var(--cutout-navy);
+  --bird-beak: var(--cutout-orange);
+  --bird-shadow: var(--graphite-900);
+  --needle-1: var(--pencil-green);
+  --needle-2: var(--cutout-orange);
+  --needle-3: var(--pencil-yellow);
+
+  --header-bg: transparent;
+  --header-text: var(--color-text);
+  --header-muted: var(--color-text-muted);
+  --header-top: 0 solid transparent;
+  --header-bottom: 0 solid transparent;
+  /* Red, not yellow: the current-page underline has to reach 3:1 on paper (red is 3.3:1). */
+  --header-current: var(--pencil-red);
+  --hero-bg: transparent;
+  --hero-text: var(--color-text);
+  --hero-muted: var(--color-text-muted);
+
+  --footer-bg: transparent;
+  --footer-text: var(--color-text);
+  --footer-muted: var(--color-text-muted);
+  --footer-link: var(--color-accent);
+
+  --button-bg: var(--graphite-900);
+  --button-text: var(--white);
+  --button-hover-bg: var(--pencil-violet-deep);
+  --button-alt-border: var(--graphite-900);
+  --button-alt-text: var(--graphite-900);
+  --space-section: var(--space-9);
+  --space-block: var(--space-6);
+  --measure: 44rem;
+  --container: 72rem;
+  /* Everything is sized in rem, so this scales the whole site: 16px up to a 1280px screen,
+     growing to 20px by about 2100px. */
+  --root-size: clamp(1rem, 0.625rem + 0.47vw, 1.25rem);
+}
