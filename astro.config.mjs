@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 /**
  * Adds /styleguide and the /lab/ pages while running `npm run dev`. They are never part of a
@@ -22,7 +23,8 @@ const styleguide = {
 export default defineConfig({
   site: 'https://alexfinnarn.github.io',
   output: 'static',
-  integrations: [styleguide],
+  // The sitemap lists every built page; redirects and the 404 page are left out.
+  integrations: [styleguide, sitemap()],
   // Old URLs from the previous site, pointed at their closest replacement.
   redirects: {
     '/projects': '/work',

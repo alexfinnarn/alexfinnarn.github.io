@@ -23,7 +23,7 @@ const { title, description, publishedDate, updatedDate, topics, cta } = article.
 const { Content } = await render(article);
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} article={{ publishedDate, updatedDate, topics }}>
   <article class="container patch page">
     <ArticleHeader
       title={title}
