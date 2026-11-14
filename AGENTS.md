@@ -22,8 +22,8 @@ branch. What each page is for is in [docs/ia/](docs/ia/).
 
 ## Project facts
 
-- Node comes from mise (`~/Sites/personal/.tool-versions` → `node 22`). Astro 7.4 needs
-  Node ≥ 22.22. Run commands with `mise exec --` if the shell has an older Node.
+- Node comes from mise (`~/Sites/personal/.tool-versions` → `node 22`). Astro 7.4.7 and later
+  need Node ≥ 22.23.4 (`mise install node@22` gets the newest 22). Run commands with `mise exec --` if the shell has an older Node.
 - `npm run dev` starts the site. `/styleguide` (tokens and components) exists only in dev,
   added by an integration in `astro.config.mjs`.
 - **Styling:** components use only role tokens (`src/styles/tokens/themes.css`), never base
