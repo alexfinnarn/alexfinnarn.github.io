@@ -7,8 +7,8 @@ topics: ["AI", "prompts"]
 cta:
   heading: "Want an AI project manager of your own?"
   text: "I build Markdown workflows, like my standup routine, that run on an everyday AI plan."
-  href: "/work/"
-  action: "See what I do"
+  href: "/contact/"
+  action: "Get in touch"
 ---
 
 I was scrolling through my X feed when I saw a gem amongst all the AI news and clickbait. I tend 

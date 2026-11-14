@@ -7,8 +7,8 @@ topics: ["AI", "CMS"]
 cta:
   heading: "Codebase growing faster than your team?"
   text: "I've spent twelve years in big Drupal codebases. Let's figure out what you can cut."
-  href: "/work/"
-  action: "See what I do"
+  href: "/contact/"
+  action: "Get in touch"
 ---
 
 It can be hard to limit complexity in any system that involves many minds. Human nature craves
