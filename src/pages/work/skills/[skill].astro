@@ -33,6 +33,7 @@ const { skill, skills, examples } = Astro.props;
     <ul class="list">
       {examples.map((example) => (
         <ArticleListItem
+          level={2}
           title={example.title}
           href={example.href}
           label={example.kind}

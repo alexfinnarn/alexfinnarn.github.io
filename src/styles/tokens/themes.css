@@ -93,7 +93,8 @@
   --header-muted: var(--color-text-muted);
   --header-top: 0 solid transparent;
   --header-bottom: 0 solid transparent;
-  --header-current: var(--pencil-yellow);
+  /* Red, not yellow: the current-page underline has to reach 3:1 on paper (red is 3.3:1). */
+  --header-current: var(--pencil-red);
   --hero-bg: transparent;
   --hero-text: var(--color-text);
   --hero-muted: var(--color-text-muted);

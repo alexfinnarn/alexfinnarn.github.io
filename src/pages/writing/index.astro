@@ -18,6 +18,7 @@ const topics = getTopics(articles);
     <ul class="list">
       {articles.map((article) => (
         <ArticleListItem
+          level={2}
           title={article.data.title}
           href={articleHref(article)}
           date={article.data.publishedDate}

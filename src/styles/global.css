@@ -175,6 +175,13 @@ img {
   color: var(--color-text-muted);
 }
 
+/* A Markdown table sits in a box that scrolls sideways when the table is wider than the
+   text column (added by scrollableTables in astro.config.mjs). */
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: var(--space-4);
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

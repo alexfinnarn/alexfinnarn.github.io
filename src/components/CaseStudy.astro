@@ -7,14 +7,17 @@ interface Props {
   problem: string;
   solution: string;
   result: string;
+  /** Heading level of the title: 1 when the case study is the page (the default), 2 inside a page. */
+  level?: 1 | 2;
 }
 
-const { title, project, problem, solution, result } = Astro.props;
+const { title, project, problem, solution, result, level = 1 } = Astro.props;
+const Heading = `h${level}` as const;
 ---
 
 <article class="case">
   <header>
-    <h2>{title}</h2>
+    <Heading class="title">{title}</Heading>
     {project && <p class="meta">{project}</p>}
   </header>
   <dl>
@@ -39,7 +42,9 @@ const { title, project, problem, solution, result } = Astro.props;
     border-top: var(--rule-strong);
   }
 
-  h2 {
+  /* Looks the same at either heading level. */
+  .title {
+    font-size: var(--h2-size);
     margin-bottom: var(--space-1);
   }
 

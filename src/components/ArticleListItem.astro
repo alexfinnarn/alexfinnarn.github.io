@@ -15,9 +15,12 @@ interface Props {
   external?: string;
   /** A short tag before the title, e.g. a work example's kind. */
   label?: string;
+  /** Heading level of the title: 3 under a section's h2 (the default), 2 right under the page's h1. */
+  level?: 2 | 3;
 }
 
-const { title, href, date, description, image, imageAlt = '', external, label } = Astro.props;
+const { title, href, date, description, image, imageAlt = '', external, label, level = 3 } = Astro.props;
+const Heading = `h${level}` as const;
 ---
 
 <li class:list={['article', { 'has-image': image }]}>
@@ -30,7 +33,7 @@ const { title, href, date, description, image, imageAlt = '', external, label } 
         {external && <span>On {external}</span>}
       </p>
     )}
-    <h3><a href={href}>{title}</a></h3>
+    <Heading class="title"><a href={href}>{title}</a></Heading>
     {description && <p class="description">{description}</p>}
   </div>
 </li>
@@ -68,16 +71,18 @@ const { title, href, date, description, image, imageAlt = '', external, label } 
     text-transform: capitalize;
   }
 
-  h3 {
+  /* Looks the same at either heading level. */
+  .title {
+    font-size: var(--size-xl);
     margin-bottom: var(--space-2);
   }
 
-  h3 a {
+  .title a {
     color: var(--color-text);
     text-decoration: none;
   }
 
-  h3 a:hover {
+  .title a:hover {
     color: var(--color-accent);
     text-decoration: underline;
   }

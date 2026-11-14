@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { satteri } from '@astrojs/markdown-satteri';
 
 /**
  * Adds /styleguide and the /lab/ pages while running `npm run dev`. They are never part of a
@@ -19,12 +20,29 @@ const styleguide = {
   },
 };
 
+/**
+ * Wraps every Markdown table in a box that scrolls sideways, so a wide table can be read on a
+ * phone instead of being cut off at the screen edge. The box takes keyboard focus so it can be
+ * scrolled with the arrow keys. Styled as .table-scroll in global.css.
+ * @type {import('satteri').HastPluginDefinition}
+ */
+const scrollableTables = {
+  name: 'scrollable-tables',
+  element: {
+    filter: ['table'],
+    visit(node, ctx) {
+      ctx.wrapNode(node, { raw: '<div class="table-scroll" tabindex="0" role="region" aria-label="Table"></div>' });
+    },
+  },
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://alexfinnarn.github.io',
   output: 'static',
   // The sitemap lists every built page; redirects and the 404 page are left out.
   integrations: [styleguide, sitemap()],
+  markdown: { processor: satteri({ hastPlugins: [scrollableTables] }) },
   // Old URLs from the previous site, pointed at their closest replacement.
   redirects: {
     '/projects': '/work',

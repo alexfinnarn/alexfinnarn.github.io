@@ -30,6 +30,7 @@ const { topic, topics, articles } = Astro.props;
     <ul class="list">
       {articles.map((article) => (
         <ArticleListItem
+          level={2}
           title={article.data.title}
           href={articleHref(article)}
           date={article.data.publishedDate}
