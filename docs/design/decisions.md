@@ -275,6 +275,33 @@ The scraps also dropped yellow: it barely shows on the cream paper, and the repl
 in with the picked scrap's color. They run red, green, blue, violet, pink: one color per scrap
 up to the limit of five.
 
+## Round 13: the forest drawing as the way around (2026-11-14)
+
+Not an eye test: one idea, built on `/lab/forest` and adjusted until Alex was happy with it.
+The idea was Home as mainly the forest drawing, with parts of the drawing as links and some
+motion in it. What was tried, in order:
+- Four links on objects in the drawing (hiker, backpack, tall pines, a bird), with swaying
+  treetops, falling needles and a bird flying in. The sway was soft-edged copies of the PNG
+  leaning over the original; it flickered and was dropped. The drawing is one flat image, so
+  moving trees would need it redrawn in layers.
+- Two links only, Writing and Contact, because Work, About and "What I do" are hidden until
+  there is more content. The bird introduces them in order: it lands on the first label as that
+  appears, then moves to its perch as the second appears.
+- The links started on the left of the drawing, which put them off screen on a phone. Alex
+  didn't want himself cropped out, so both links moved next to the hiker: Writing on the young
+  pine to his left, Contact on his backpack, where the bird perches. A phone opens on that part
+  and the drawing pans sideways. The bird's approach is off screen on a phone, which is fine.
+- The bird began as a flat blue shape, then became a paper cut-out colored in with pencil. Its
+  cream outline looked wrong, so Alex picked the colors with color pickers on the lab page. An
+  "overlay" blend made it too hard to see against the trees; the final bird sits on top with no
+  blend, a light blue edge and dark blue coloring (the `--bird-*` role tokens).
+
+**Result:** built as `ForestScene` on Home (2026-11-14), replacing `Hero` there. "What I do"
+is commented out in `src/pages/index.astro`, so Writing follows the scene, and Work and About
+are commented out of the main menu in `src/site.ts`; their pages are still built. The previous
+hero's lede has no place in the scene, so it moved to the top of Contact. The words
+on the "Pause motion" button are a placeholder.
+
 ## Current choice
 
 **Erased**, adopted 2026-10-30 after round 6. `src/styles/tokens/themes.css` holds it as one set
@@ -296,8 +323,10 @@ Applied to the whole site, not just the home page:
 - `.patch` (in `global.css`) makes a block a paper patch. The header bar, the footer, the home
   hero and home sections are tilted patches; each inner page's body is one straight patch, so a
   long article doesn't swing off its text.
-- On Home, the forest drawing runs edge to edge and the hero's patch is rubbed out of it
-  (2026-11-01). On phones the drawing sits above the text instead.
+- On Home, the forest drawing fills the screen and two spots in it are links, introduced by a
+  paper cut-out bird (round 13, 2026-11-14). On phones the drawing pans sideways and opens on
+  the hiker. Before that, the drawing ran edge to edge behind a text patch (2026-11-01); the
+  `Hero` component still does this and is shown in the style guide.
 - Everything scales up on wide screens (`--root-size`, 2026-11-01): 16px up to a 1280px screen,
   about 19px at 1920px. The container is 72rem.
 - The patch shape (`patch.svg`) is drawn in pixels, so its edge is the same size on a short card

@@ -88,6 +88,18 @@
   --mark-band: url('../textures/scribble-band.svg');
   --mark-fill: url('../textures/scribble.svg');
 
+  /* Home's forest scene: the paper cut-out bird, and the pine needles that drift down.
+     Fills only, never text. */
+  --bird-paper: var(--cutout-paper);
+  --bird-edge: var(--cutout-edge);
+  --bird-body: var(--cutout-blue);
+  --bird-wing: var(--cutout-navy);
+  --bird-beak: var(--cutout-orange);
+  --bird-shadow: var(--graphite-900);
+  --needle-1: var(--pencil-green);
+  --needle-2: var(--cutout-orange);
+  --needle-3: var(--pencil-yellow);
+
   --header-bg: transparent;
   --header-text: var(--color-text);
   --header-muted: var(--color-text-muted);

@@ -13,6 +13,14 @@ This folder is empty between rounds.
 - Show each option on the real page or section, with only the thing being compared changed.
 - Use dummy text that is obviously dummy. Site copy is Alex's.
 - Lab files may break the styling rules (hard-coded values, local masks) while a round runs.
+- A lab doesn't have to be a comparison. For a new idea with nothing to compare it to, build one
+  prototype page and change it after each comment (round 13, the forest scene).
+- For values Alex should set himself (colors, widths), put controls on the lab page that write
+  CSS variables, print the current values so he can paste them back, and remember them in the
+  browser. Remove the controls once the values are picked.
+- After each layout change, look at a phone width as well as a desktop one.
+- For motion, check each moment of the sequence (pause it and step to set times), and check
+  moving things in every place they end up.
 
 ## After Alex picks
 

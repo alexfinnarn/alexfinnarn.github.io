@@ -15,9 +15,13 @@ How to reach Alex, and a chance to book time with him.
 - No phone number.
 - A way to book a call. Google Calendar's appointment schedules (a booking page tied to Alex's
   free/busy time) may do this without Calendly. Check what Alex's account includes.
-- LinkedIn stays in the footer as a way in that doesn't need the gate.
-- Until the gate and form are built, the page lists LinkedIn and location, with Fill in slots for the
-  form and booking link **(default)**.
+- LinkedIn stays in the footer as a way in that doesn't need the gate. GitHub and Medium are
+  there too, each with its logo (2026-11-14).
+- Until the gate and form are built, the page lists LinkedIn, GitHub, Medium and location, with a
+  Fill in slot for the form. The booking link is hidden until Alex sets it up (2026-11-14).
+- The positioning paragraph that used to be Home's lede sits at the top of this page
+  (2026-11-14), since the forest scene on Home has no place for it. The colored-pencil portrait
+  from About sits beside it.
 - Form delivery: Formspree when the form is built **(default)**. It works from a static site, has a
   free tier, and keeps the address off the page.
 

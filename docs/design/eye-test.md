@@ -85,6 +85,38 @@ describing a perception and reliable at comparing two.
   tool records picks; it doesn't assume a ranking.
 - **One person's taste.** It finds what one viewer prefers. It isn't audience research.
 
+## When there's nothing to compare yet (round 13, 2026-11-14)
+
+Round 13 (the forest scene on Home) wasn't a "1 or 2?" round, and it still used the lab. What
+it showed about the method:
+
+- **An open "what would it look like if…" starts as one prototype, not a pair.** There was no
+  current version of the idea to be king of the hill. One lab page, changed after each comment,
+  got there in six passes. "1 or 2?" is for narrowing; it needs at least one option worth
+  keeping first.
+- **Comments did the steering, and they were about problems, not preferences.** "Flickering",
+  "don't crop me out", "the outline is white and I don't like that", "too hard to see". Each
+  one named a thing that was wrong, which is easier to act on than a pick.
+- **A panel of open controls is the opposite of the blind rules, and that was fine for color.**
+  Alex set the bird's five colors with color pickers on the real page, with the values printed
+  so he could paste them back into the conversation. Two pastes settled it. Blind sliders would
+  have taken far longer for five linked colors. It is not a comparison, so treat the result as
+  "what he set today", and look at it again later.
+- **A setting made in one state can fail in another.** His first paste used an "overlay" blend.
+  It looked right while he was adjusting it and was too hard to see once the bird sat in front
+  of a dark tree trunk. Anything that moves, or sits over a busy drawing, has to be checked in
+  every place it ends up before the values are kept.
+- **Offering a control invites using it.** The blend control was added as an extra, and it
+  produced the one setting that had to be undone. Give controls only for what is actually in
+  question.
+- **Look at a phone width before settling the layout.** The first layout that looked right on a
+  desktop had both links off screen on a phone. Checking a narrow width after each layout
+  change would have caught it a step earlier.
+- **Motion needs its own way of being checked.** A screenshot shows one moment. To check a
+  sequence, pause it and step it to set times (start, each stop, the end), and look at each. A
+  browser tab in the background may not run animations at all, so "nothing moved" can be the
+  tab, not the page.
+
 ## Standalone version
 
 A framework-agnostic prototype of this tool is in `~/Sites/personal/eye-test`, intended to be
@@ -95,4 +127,7 @@ open-sourced. Ideas from this doc that apply there:
   research tools that fit a model;
 - results meant to be pasted back into that conversation, including comments, not just picks;
 - a "no real difference" answer, recorded as a tie, so the next round knows what to stop varying;
-- coarse-to-fine guidance for whoever writes the challengers.
+- coarse-to-fine guidance for whoever writes the challengers;
+- the notes from round 13 above: a prototype-first stage before any comparison, open controls
+  for linked values like colors, and checking picks in every state (copied into that repo's
+  `docs/knobs.md`, 2026-11-14).

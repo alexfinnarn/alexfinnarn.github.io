@@ -100,6 +100,9 @@ Old URLs with no redirect (they get the 404 page):
 **Header** (every page): name and role on the left, linking home. Main navigation on the right:
 Work · Writing · About · Contact. The current page is marked.
 
+For now the menu shows only Writing · Contact: Work and About are hidden until there is more to
+show (2026-11-14). Their pages still exist.
+
 Order stays as listed: evidence first, Contact last, all styled alike **(default)**.
 
 **Footer** (every page): name, role, location; LinkedIn, GitHub; © line. No email address (see

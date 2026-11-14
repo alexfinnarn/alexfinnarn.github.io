@@ -1,17 +1,23 @@
 ---
-// Contact methods as label/value rows. Items without an href render as plain text.
+// Contact methods as label/value rows. Items without an href render as plain text. A profile
+// can show its logo before the link.
+import ProfileIcon from './ProfileIcon.astro';
+
 interface Props {
-  items: { label: string; value: string; href?: string }[];
+  items: { label: string; value: string; href?: string; icon?: 'linkedin' | 'github' | 'medium' }[];
 }
 
 const { items } = Astro.props;
 ---
 
 <dl class="contact">
-  {items.map(({ label, value, href }) => (
+  {items.map(({ label, value, href, icon }) => (
     <div>
       <dt>{label}</dt>
-      <dd>{href ? <a href={href}>{value}</a> : value}</dd>
+      <dd>
+        {icon && <ProfileIcon name={icon} />}
+        {href ? <a href={href}>{value}</a> : value}
+      </dd>
     </div>
   ))}
 </dl>
@@ -45,6 +51,9 @@ const { items } = Astro.props;
   }
 
   dd {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     margin: 0;
     overflow-wrap: anywhere;
   }

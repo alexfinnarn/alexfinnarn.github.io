@@ -25,6 +25,14 @@
   --pencil-blue-deep: #1f4f8f; /* 7.0:1 on paper */
   --pencil-violet-deep: #5a3f8f; /* 7.1:1 on paper */
 
+  /* The paper cut-out bird on Home. Picked by Alex with color pickers on the drawing
+     (2026-11-14): a paper a shade darker than the page, so the cut-out shows against it. */
+  --cutout-paper: #eaddc3;
+  --cutout-edge: #6580ae;
+  --cutout-blue: #1d4581;
+  --cutout-navy: #0a398a;
+  --cutout-orange: #c9641f;
+
   /* Type families (system stacks only: nothing to download) */
   --family-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --family-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;

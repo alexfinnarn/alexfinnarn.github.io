@@ -13,8 +13,14 @@ get in touch, and where to go next. Every other page backs up what this one clai
 - The hero is interactive: an Ink-style story where the visitor picks from choice cards. Cards work
   as tap targets on a phone.
 - Featured writing shows whatever is published; nothing is pinned (see [Writing](writing.md)).
-- Until the story is designed, the hero is static: name, role, location, a Fill in slot, and buttons
-  to Work and Contact **(default)**.
+- *(Replaced by the forest scene below.)* Until the story is designed, the hero is static: name,
+  role, location, a Fill in slot, and buttons to Work and Contact **(default)**.
+- Until the story is designed, the hero is the forest drawing filling the screen, with name, role
+  and location on a scrap of paper (2026-11-14). Two spots in the drawing are links: Writing and
+  Contact. A paper cut-out bird flies in and introduces them in that order. On a phone the
+  drawing pans sideways and opens on the hiker and both links.
+- "What I do" is hidden until there is more work to show (2026-11-14). It is commented out, not
+  deleted. Work and About are also out of the main menu for now; their pages still exist.
 - Featured writing shows the three newest articles **(default)**.
 - *(Replaced by the scraps below.)* "What I do" is an accordion across the full content width (round 7 eye test, 2026-11-01). One
   row per skill; the open row shows a work example tagged with that skill: image, kind, title,
@@ -51,13 +57,13 @@ get in touch, and where to go next. Every other page backs up what this one clai
 
 1. **Hero**
    - What it holds: Name, location, and the story with choice cards
-   - Component: Hero, ChoiceCard
-   - Notes:
+   - Component: ForestScene for now; later Hero, ChoiceCard
+   - Notes: The forest scene links to Writing and Contact.
 2. **What I do**
    - What it holds: 3 to 5 situations, each opening to a short reply and one work example, and
      a link to Work
    - Component: SituationScraps
-   - Notes:
+   - Notes: Hidden for now (2026-11-14).
 3. **Featured writing**
    - What it holds: Recent articles
    - Component: ArticleListItem ×n
