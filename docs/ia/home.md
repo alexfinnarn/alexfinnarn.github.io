@@ -20,7 +20,7 @@ get in touch, and where to go next. Every other page backs up what this one clai
   Contact. A paper cut-out bird flies in and introduces them in that order. On a phone the
   drawing pans sideways and opens on the hiker and both links.
 - "What I do" is hidden until there is more work to show (2026-11-14). It is commented out, not
-  deleted. Work and About are also out of the main menu for now; their pages still exist.
+  deleted. Work and About are also off the site for now: out of the main menu and not built.
 - Featured writing shows the three newest articles **(default)**.
 - *(Replaced by the scraps below.)* "What I do" is an accordion across the full content width (round 7 eye test, 2026-11-01). One
   row per skill; the open row shows a work example tagged with that skill: image, kind, title,

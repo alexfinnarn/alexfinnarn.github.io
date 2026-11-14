@@ -298,7 +298,8 @@ motion in it. What was tried, in order:
 
 **Result:** built as `ForestScene` on Home (2026-11-14), replacing `Hero` there. "What I do"
 is commented out in `src/pages/index.astro`, so Writing follows the scene, and Work and About
-are commented out of the main menu in `src/site.ts`; their pages are still built. The previous
+are commented out of the main menu in `src/site.ts` and not built (their pages are renamed with
+a leading underscore). The previous
 hero's lede has no place in the scene, so it moved to the top of Contact. The words
 on the "Pause motion" button are a placeholder.
 

@@ -81,6 +81,9 @@ Page docs:
 
 Redirects from the old site, set in `astro.config.mjs`:
 
+While Work is not built (2026-11-14), the three redirects below that point at `/work` go to `/`
+instead.
+
 - `/projects` → `/work`: Closest replacement
 - `/projects/shipping-container` → `/work`: Experiment retired
 - `/tags` → `/writing`: Old tags not carried over
@@ -100,8 +103,11 @@ Old URLs with no redirect (they get the 404 page):
 **Header** (every page): name and role on the left, linking home. Main navigation on the right:
 Work · Writing · About · Contact. The current page is marked.
 
-For now the menu shows only Writing · Contact: Work and About are hidden until there is more to
-show (2026-11-14). Their pages still exist.
+For now the menu shows only Writing · Contact: Work and About are off the site until there is
+more to show (2026-11-14). Their pages are kept in `src/pages/_about.astro` and `src/pages/_work/`
+but are not built, so they are not in the sitemap and their addresses return the Not found
+page. Old addresses that redirected to Work go to Home for now. `src/site.ts` says how to bring
+them back.
 
 Order stays as listed: evidence first, Contact last, all styled alike **(default)**.
 

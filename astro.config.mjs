@@ -44,11 +44,13 @@ export default defineConfig({
   integrations: [styleguide, sitemap()],
   markdown: { processor: satteri({ hastPlugins: [scrollableTables] }) },
   // Old URLs from the previous site, pointed at their closest replacement.
+  // While Work is not built (see src/site.ts), its old URLs go to Home. Point them back at
+  // '/work' when the page returns.
   redirects: {
-    '/projects': '/work',
+    '/projects': '/',
     // Consulting merged into Work (2026-11-01).
-    '/consulting': '/work',
-    '/projects/shipping-container': '/work',
+    '/consulting': '/',
+    '/projects/shipping-container': '/',
     '/tags': '/writing',
     '/fractal': '/',
     // 2025 posts: the ones copied over keep their content at a new address; the rest go to /writing.
