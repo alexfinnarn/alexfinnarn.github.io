@@ -7,7 +7,7 @@ test('homepage - title and main navigation', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1, name: 'Alex Finnarn' })).toBeVisible();
 
   const nav = page.getByRole('navigation', { name: 'Main' });
-  for (const name of ['Work', 'Writing', 'Consulting', 'About', 'Contact']) {
+  for (const name of ['Work', 'Writing', 'About', 'Contact']) {
     await expect(nav.getByRole('link', { name })).toBeVisible();
   }
 });

@@ -18,5 +18,5 @@ test('topic page - shows only that topic', async ({ page }) => {
   await page.goto('/writing/topics/cms/');
 
   await expect(page.getByRole('heading', { level: 1, name: 'CMS' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'CMS' })).toHaveAttribute('aria-current', 'page');
+  await expect(page.getByRole('link', { name: 'CMS', exact: true })).toHaveAttribute('aria-current', 'page');
 });
