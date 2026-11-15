@@ -1,5 +1,5 @@
 // Content collections. Fields follow docs/ia/README.md ("Content types").
-import { defineCollection, reference, z } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 // File names may start with a number prefix ("003-title.md"); the URL slug drops it.
@@ -31,28 +31,4 @@ const writing = defineCollection({
     }),
 });
 
-// Work examples. A case study has its own page (problem, solution, result). The other kinds
-// link elsewhere: an article to its page here, a project or talk to `href`. An article example
-// takes its title and summary from the article unless they're given here.
-const work = defineCollection({
-  loader: glob({ base: './src/content/work', pattern: '**/*.{md,mdx}', generateId: slugFromFile }),
-  schema: ({ image }) =>
-    z.object({
-      kind: z.enum(['case study', 'article', 'project', 'talk']).default('case study'),
-      article: reference('writing').optional(),
-      title: z.string().optional(),
-      summary: z.string().optional(),
-      href: z.string().optional(),
-      image: image().optional(),
-      imageAlt: z.string().optional(),
-      project: z.string().optional(),
-      problem: z.string().optional(),
-      solution: z.string().optional(),
-      result: z.string().optional(),
-      // Names from src/data/skills.ts. They drive the Work filters and Home's "What I do" accordion.
-      skills: z.array(z.string()).default([]),
-      draft: z.boolean(),
-    }),
-});
-
-export const collections = { writing, work };
+export const collections = { writing };

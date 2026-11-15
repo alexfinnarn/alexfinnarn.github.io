@@ -3,9 +3,9 @@
 // hatching, each tilted and in its own pencil color. Picking one lifts it, colors it in, and
 // shows Alex's reply and one piece of proof on a larger scrap: below the pile on wide screens,
 // right under the scrap on phones. Works as tabs: one open at a time, arrow keys move between
-// them. Without script, every reply shows. Chosen in eye-test round 11 (docs/design/decisions.md).
+// them. Without script, every reply shows. See docs/design/decisions.md.
 import FillIn from './FillIn.astro';
-import { workLinkText, type Situation } from '../lib/content';
+import type { Situation } from '../data/situations';
 import { pencilLine } from '../lib/pencil';
 
 interface Props {
@@ -14,6 +14,13 @@ interface Props {
 }
 
 const { items, id = 'scraps' } = Astro.props;
+// What the proof's link says, by kind.
+const linkText: Record<Situation['proof']['kind'], string> = {
+  'case study': 'Read the case study',
+  article: 'Read the article',
+  project: 'See the project',
+  talk: 'Watch the talk',
+};
 // A fixed scatter, so the toss looks the same on every visit: tilt and drop for each scrap.
 const scatter = [
   { tilt: -3, drop: 0 },
@@ -44,16 +51,15 @@ const scatter = [
     })}
   </div>
 
-  {items.map(({ reply, skill, href, example }, i) => (
+  {items.map(({ reply, proof }, i) => (
     <div class="panel" role="tabpanel" id={`${id}-panel-${i}`} aria-labelledby={`${id}-tab-${i}`} style={`--order: ${i * 2 + 1}`}>
       {reply ? <p class="reply">{reply}</p> : <FillIn what="Alex's reply to this situation, a sentence or two" />}
       <p class="proof">
-        <span class="label">{example.kind}</span>
-        <a href={example.href}>{example.title}</a>
+        <span class="label">{proof.kind}</span>
+        <a href={proof.href}>{proof.title}</a>
       </p>
       <p class="links">
-        <a href={example.href}>{workLinkText[example.kind]}</a>
-        <a href={href}>More {skill}</a>
+        <a href={proof.href}>{linkText[proof.kind]}</a>
       </p>
     </div>
   ))}

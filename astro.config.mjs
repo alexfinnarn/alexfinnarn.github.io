@@ -56,13 +56,13 @@ export default defineConfig({
     // 2025 posts: the ones copied over keep their content at a new address; the rest go to /writing.
     '/writing/003-cms-first-principles': '/writing/cms-first-principles/',
     '/writing/006-prompts-are-tickets': '/writing/prompts-are-tickets/',
+    '/writing/008-ai-drupal-not': '/writing/ai-drupal-not/',
+    '/writing/009-ai-will-take-your-job': '/writing/ai-will-take-your-job/',
+    '/writing/010-cms-can-fail-you-succeed': '/writing/cms-can-fail-you-succeed/',
     '/writing/011-cms-intent-over-implementation': '/writing/cms-intent-over-implementation/',
     '/writing/012-cms-content-complexity': '/writing/cms-content-complexity/',
+    '/writing/013-limit-playwright-tokens': '/writing/limit-playwright-tokens/',
+    '/writing/014-workflow-to-code': '/writing/workflow-to-code/',
     '/writing/001-container-windows': '/writing/',
-    '/writing/008-ai-drupal-not': '/writing/',
-    '/writing/009-ai-will-take-your-job': '/writing/',
-    '/writing/010-cms-can-fail-you-succeed': '/writing/',
-    '/writing/013-limit-playwright-tokens': '/writing/',
-    '/writing/014-workflow-to-code': '/writing/',
   },
 });
