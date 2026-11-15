@@ -11,7 +11,7 @@ Often the first page someone sees, because articles get forwarded. It has to sta
 
 - Under the title: the author's name, published date, updated date (when edited after publishing), and reading time.
 - No related or "next" articles for now.
-- Each article ends with its own CTA card that flows from the article's content. It isn't the same on every article. CTAs may be written with an AI agent and A/B tested.
+- Each article ends with its own CTA card that flows from the article's content. It isn't the same on every article. Alex writes each one. Variations may be A/B tested later.
 - An article without a `cta` ends without a card, rather than with a generic one **(default)**.
 - Figures (image plus caption) when an article calls for one.
 - Code blocks use default rendering for now; no syntax highlighting until articles actually use code.

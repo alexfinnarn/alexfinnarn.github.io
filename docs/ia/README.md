@@ -31,7 +31,7 @@ Decisions that show up on more than one page:
 - **The site is the proof.** Interaction (story choices on Home, a preference game on About, a gated contact form) shows what Alex can do rather than telling. These should share one "make a choice" pattern rather than being separate gimmicks.
 - **Problem → Solution, not Client → Implementation.** Work and articles lead with the problem and how it was solved. Client and project names are secondary.
 - **One voice.** One bio, no versions for different audiences, no "not a fit for" lists.
-- **Not build-and-forget.** Alex will iterate with AI agents: filling in metadata, writing CTA variations to A/B test, and so on. Content types should leave room for that.
+- **Not build-and-forget.** Alex will keep changing the site, with AI agents doing the building. Content types should leave room for that, for example CTA variations to A/B test. The words are still his to write.
 
 ## Sitemap
 
