@@ -89,6 +89,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     {article?.topics?.map((topic) => <meta property="article:tag" content={topic} />)}
     <meta name="twitter:card" content="summary" />
     <script type="application/ld+json" is:inline set:html={jsonLd} />
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>

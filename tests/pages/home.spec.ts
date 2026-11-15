@@ -15,3 +15,54 @@ test('homepage - title and main navigation', async ({ page }) => {
     await expect(nav.getByRole('link', { name })).toHaveCount(0);
   }
 });
+
+// The forest scene's motion waits for the drawing (src/components/ForestScene.astro).
+test.describe('forest scene on a phone', () => {
+  const isDrawing = (url: URL) => url.href.includes('me-on-rock-and-forest');
+
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('motion holds until a slow drawing arrives, then the links appear in view', async ({ page }) => {
+    await page.route(isDrawing, async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+      await route.fallback();
+    });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const scene = page.locator('[data-forest-scene]');
+    await expect(scene).toHaveClass(/waiting/);
+    await expect(scene.locator('.tag-first')).toHaveCSS('opacity', '0');
+
+    await expect(scene).not.toHaveClass(/waiting/);
+    for (const name of ['Writing', 'Contact']) {
+      const label = scene.getByRole('link', { name }).getByText(name, { exact: true });
+      await expect(label.locator('..')).toHaveCSS('opacity', '1', { timeout: 10_000 });
+      await expect(label).toBeInViewport({ ratio: 0.99 });
+    }
+  });
+
+  test('the links show after a few seconds when the drawing never arrives', async ({ page }) => {
+    // Never answered, like a stalled connection.
+    await page.route(isDrawing, () => {});
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const scene = page.locator('[data-forest-scene]');
+    for (const name of ['Writing', 'Contact']) {
+      const label = scene.getByRole('link', { name }).getByText(name, { exact: true });
+      await expect(label.locator('..')).toHaveCSS('opacity', '1', { timeout: 10_000 });
+      await expect(label).toBeInViewport({ ratio: 0.99 });
+    }
+    await expect(scene).toHaveClass(/waiting/);
+  });
+
+  test.describe('without scripts', () => {
+    test.use({ javaScriptEnabled: false });
+
+    test('the links still appear', async ({ page }) => {
+      await page.goto('/');
+      for (const tag of ['.tag-first', '.tag-second']) {
+        await expect(page.locator(`[data-forest-scene] ${tag}`)).toHaveCSS('opacity', '1', { timeout: 10_000 });
+      }
+    });
+  });
+});

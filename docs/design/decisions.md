@@ -28,6 +28,7 @@ Picked in comparisons, so don't change these without asking:
 Home's forest scene (`ForestScene`):
 - Two links, Writing and Contact, both next to the hiker so a phone shows them: Writing on the young pine to his left, Contact on his backpack. The bird lands on the first label as it appears, then moves to its perch on the backpack as the second appears.
 - The bird is a paper cut-out colored in with pencil: a light blue edge and dark blue coloring (the `--bird-*` role tokens), sitting on top of the drawing with no blend mode. Alex set the colors himself with color pickers.
+- The motion waits for the drawing to load. Until then the scene shows a blurred thumbnail of it and nothing moves. If the drawing takes more than 4 seconds, both labels show without waiting for the bird.
 - The words on the "Pause motion" button are a placeholder.
 
 Home's "What I do" (`SituationScraps`, hidden since 2026-11-14):

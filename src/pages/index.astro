@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import ForestScene from '../components/ForestScene.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import { getArticles, articleHref } from '../lib/content';
+import { getForest } from '../lib/forest';
 import { site } from '../site';
 // "What I do" is hidden until there is more work to show (2026-11-14). To bring it back,
 // uncomment these lines and the section further down.
@@ -10,11 +11,14 @@ import { site } from '../site';
 // import { situations } from '../data/situations';
 
 const featured = (await getArticles()).slice(0, 3);
+const forest = await getForest();
 ---
 
 <Base
   description="Alex Finnarn is a software consultant in Troy, Ohio, with twelve years of building and running everything on the web and a growing interest in industrial automation."
 >
+  {/* The drawing is the first thing on the page, and the browser would otherwise find it late. */}
+  <link slot="head" rel="preload" as="image" type="image/webp" href={forest.src} fetchpriority="high" />
   <ForestScene
     label={`${site.role} · ${site.location}`}
     title={site.name}
