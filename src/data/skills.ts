@@ -1,6 +1,5 @@
-// Skills, in the order Home's "What I do" and the Work filters show them. Work examples are tagged
-// with these titles (`skills` in src/content/work/). A skill shows only once something is
-// tagged with it; its description heads its filter page.
+// Skills, in the order the Work page lists them: a plain menu of what Alex does, each with a
+// one-line description.
 export interface Skill {
   title: string;
   description: string;

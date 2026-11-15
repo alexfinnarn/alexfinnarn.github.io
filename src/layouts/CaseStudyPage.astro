@@ -1,0 +1,48 @@
+---
+// The page for one case study: the Problem / Solution / Result block, then anything extra the
+// page puts inside this layout, then the way out to Contact or back to Work.
+import Base from './Base.astro';
+import CaseStudy from '../components/CaseStudy.astro';
+import Button from '../components/Button.astro';
+
+interface Props {
+  title: string;
+  /** Client or project name, mentioned in passing. */
+  project?: string;
+  problem: string;
+  solution: string;
+  result: string;
+}
+
+const { title, project, problem, solution, result } = Astro.props;
+---
+
+<Base title={title} description={problem}>
+  <article class="container patch page">
+    <p class="crumb label"><a href="/work/">Work</a></p>
+    <CaseStudy title={title} project={project} problem={problem} solution={solution} result={result} />
+    {Astro.slots.has('default') && (
+      <div class="prose measure">
+        <slot />
+      </div>
+    )}
+    <div class="actions">
+      <Button href="/contact/">Contact</Button>
+      <Button href="/work/" variant="secondary">All work</Button>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .crumb {
+    padding-top: var(--space-section);
+    margin-bottom: var(--space-4);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-block: var(--space-6) var(--space-section);
+  }
+</style>

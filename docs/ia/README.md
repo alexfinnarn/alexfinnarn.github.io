@@ -49,8 +49,7 @@ Decisions that show up on more than one page:
 ```
 /                     Home
 ├── /work             Work (index; also covers consulting)
-│   ├── /work/<slug>          Case study
-│   └── /work/skills/<skill>  Work filtered by skill
+│   └── /work/<slug>      Case study
 ├── /writing          Writing (index)
 │   └── /writing/<slug>   Article
 ├── /about            About
@@ -61,7 +60,7 @@ Decisions that show up on more than one page:
 Page docs:
 
 - [Home](home.md)
-- [Work](work.md) (index, skill pages and case study)
+- [Work](work.md) (index and case study)
 - [Writing index](writing.md)
 - [Article](article.md)
 - [Consulting](consulting.md): merged into Work on 2026-11-01
@@ -75,7 +74,6 @@ Page docs:
 - Articles live at `/writing/<slug>`, where the slug is the file name without the number prefix.
   No date in the URL **(default)**.
 - Case studies live at `/work/<slug>`.
-- Skill pages live at `/work/skills/<skill>`.
 - Topic pages live at `/writing/topics/<topic>`.
 - The RSS feed is at `/rss.xml`.
 
@@ -150,31 +148,24 @@ into the page.
 - **cta**, required: no. The article's own closing call to action (see [Article](article.md))
 - **draft**, required: yes. `true` keeps it out of production
 
-Stored in `src/content/writing/`. A few 2025 posts are copied in as the starting set **(default)**:
-CMS First Principles, Intent over Implementation, Content Over Complexity, Prompts are Tickets.
+Stored in `src/content/writing/`. The nine finished 2025 posts that fit the site
+are copied in (2026-11-15). File names carry a three-digit number in publish order (`001-` is
+the oldest); the number only orders the files and is dropped from the URL.
 
-### Work example
-Anything that shows Alex's work: a case study, an article, a project or a talk.
+### Case study
+A page of its own, not a content file: one `.astro` file per case study in `src/pages/work/`,
+copied from `_template.astro` there. The file name is the URL slug.
 
-- **kind**, required: no. `case study` (the default), `article`, `project` or `talk`
-- **title**, required: yes, except for an article example (it uses the article's title)
-- **summary**, required: yes, except for an article example (it uses the article's description).
-  One paragraph, shown in lists and on Home's "What I do"
-- **image**, required: no. Shown on Home's "What I do"; a placeholder stands in until there is one
-- **skills**, required: no. Skill titles from `src/data/skills.ts`. They drive the Work filters
-  and Home's "What I do"; a typo fails the build
-- **article**, for an article example: the article's slug. Links to it
-- **href**, for a project or talk: where it links (GitHub, a recording)
-- **problem**, **solution**, **result**, for a case study: the three parts of its page
-- **project**, for a case study, required: no. Client or project name, mentioned in passing
-- **draft**, required: yes. `true` keeps it out of production
+- **title**, required: yes
+- **project**, required: no. Client or project name, mentioned in passing
+- **problem**, **solution**, **result**, required: yes. The three parts of its page
+- Anything more goes below those as plain HTML
 
-Stored in `src/content/work/`. Case studies get their own page; the other kinds link to theirs.
-The placeholder case studies there are drafts, so they show only in dev.
+The Work index lists case studies by hand (title, summary, link), along with the articles that
+count as work, by slug.
 
 ### Skill
-- **title**, required: yes. Work examples are tagged with it
-- **description**, required: yes. Heads the skill's page on Work
+- **title**, required: yes
+- **description**, required: yes. One line, shown under the title on Work
 
-Stored in `src/data/skills.ts`, in the order the filters and Home's "What I do" show them. A skill with no
-work example tagged with it doesn't show anywhere.
+Stored in `src/data/skills.ts`, in the order Work lists them.

@@ -3,7 +3,7 @@ title: "Creating CMS First Principles"
 description: "Content Management Systems have principles once you get the code out of the way."
 publishedDate: 2025-05-23
 draft: false
-topics: ["CMS", "first principles"]
+topics: ["CMS"]
 cta:
   heading: "Starting your CMS over?"
   text: "If your content is stuck in a system that decided everything for you, I'd like to hear about it."

@@ -1,0 +1,21 @@
+---
+// Template for a case study. Not built: Astro skips pages whose name starts with an underscore.
+// To add a case study:
+// 1. Copy this file to a name without the underscore. The file name is the URL:
+//    drupal-migration.astro is published at /work/drupal-migration/.
+// 2. Replace the placeholder text below.
+// 3. Add it to the `caseStudies` list in index.astro, so the Work page links to it.
+import CaseStudyPage from '../../layouts/CaseStudyPage.astro';
+---
+
+<CaseStudyPage
+  title="Placeholder case study title"
+  project="Project name"
+  problem="Placeholder problem. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  solution="Placeholder solution. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  result="Placeholder result. Lorem ipsum dolor sit amet."
+>
+  {/* Optional: anything more to say goes here, as plain HTML. Delete this part if there is nothing. */}
+  <h2>Placeholder heading</h2>
+  <p>Placeholder paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</CaseStudyPage>

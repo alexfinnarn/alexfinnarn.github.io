@@ -3,7 +3,7 @@ title: "AI Musings: Prompts are Tickets"
 description: "Yes, you do need to start every coding session with a prompt. How could you not?"
 publishedDate: 2025-06-03
 draft: false
-topics: ["AI", "prompts"]
+topics: ["AI"]
 cta:
   heading: "Want an AI project manager of your own?"
   text: "I build Markdown workflows, like my standup routine, that run on an everyday AI plan."

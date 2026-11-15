@@ -39,7 +39,7 @@ Read the sources below, newest first, and write [docs/voice.md](../../docs/voice
 Sources:
 
 - **This site, 2025 posts**
-  - Where: `archive/writing/` (14 posts, about 15,700 words; four already copied to
+  - Where: `archive/writing/` (14 posts, about 15,700 words; nine already copied to
     `src/content/writing/`)
   - Access: local
 - **IA answers**
@@ -96,9 +96,8 @@ Done when: both pages read as Alex's.
 
 Consulting merged into Work on 2026-11-01; its intro and availability line moved there.
 
-- **Skills** (`src/data/skills.ts`, shared by Home and Consulting)
+- **Skills** (`src/data/skills.ts`, listed on Work)
   - The list of skills: Alex names them; Claude drafts the one-line descriptions
-  - Links to case studies, once those exist
 - **Consulting**
   - Intro
   - Availability line, dated
@@ -111,13 +110,13 @@ Consulting merged into Work on 2026-11-01; its intro and availability line moved
     project (not done yet)
   - Meta description
 
-Done when: at least three real case studies are published and each skill links to one.
+Done when: at least three real case studies are published.
 
 ## Step 4: Writing, articles and the small lines
 
 - **Writing**
   - Intro
-  - Which other archived posts to bring over, beyond the four already copied
+  - Whether to bring over the container windows post, and which Medium pieces to list
   - Meta description
 - **Articles**
   - A `cta` for each published article (heading, one or two sentences, button label, link),
@@ -130,8 +129,7 @@ Done when: at least three real case studies are published and each skill links t
 - **Labels Claude wrote while building**, for Alex to keep or rewrite:
   - Buttons: Work, Contact, Consulting, Home
   - Links: All writing, All work, Report a broken link
-  - Work example links: Read the case study, Read the article, See the project, Watch the talk,
-    More <skill>
+  - Work example links: Read the case study, Read the article, See the project, Watch the talk
   - Section headings: What I do, Principles
   - RSS feed description: "Articles by Alex Finnarn, Senior Software Consultant."
 

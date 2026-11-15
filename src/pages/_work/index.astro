@@ -2,14 +2,21 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import FillIn from '../../components/FillIn.astro';
-import TopicList from '../../components/TopicList.astro';
 import ArticleListItem from '../../components/ArticleListItem.astro';
 import Callout from '../../components/Callout.astro';
 import Button from '../../components/Button.astro';
-import { getWorkExamples, getSkillsWithWork } from '../../lib/content';
+import { getArticles, articleHref } from '../../lib/content';
+import { skills } from '../../data/skills';
 
-const examples = await getWorkExamples();
-const skills = getSkillsWithWork(examples);
+// Case studies, listed by hand. Each one is a page in this folder (start from _template.astro);
+// add it here so this page links to it.
+const caseStudies: { title: string; summary: string; href: string }[] = [
+  // { title: 'Case study title', summary: 'One paragraph.', href: '/work/file-name/' },
+];
+
+// Articles that count as work, by slug (the file name without its number). Shown newest first.
+const articleSlugs = ['cms-first-principles', 'prompts-are-tickets', 'cms-intent-over-implementation', 'cms-content-complexity'];
+const articles = (await getArticles()).filter((article) => articleSlugs.includes(article.id));
 ---
 
 <Base title="Work" description="Case studies from Alex Finnarn: the problem, what he did, and how it turned out.">
@@ -20,23 +27,33 @@ const skills = getSkillsWithWork(examples);
       </p>
       <p>I'm a generalist. Pick what you need from the menu below, and if your problem isn't on it, get in touch anyway.</p>
     </PageHeader>
-    <TopicList topics={skills} label="Skills" base="/work/skills/" />
-    {examples.length > 0 ? (
+    <dl class="skills">
+      {skills.map((skill) => (
+        <div>
+          <dt>{skill.title}</dt>
+          <dd>{skill.description}</dd>
+        </div>
+      ))}
+    </dl>
+    {caseStudies.length + articles.length > 0 ? (
       <ul class="list">
-        {examples.map((example) => (
+        {caseStudies.map((study) => (
+          <ArticleListItem level={2} title={study.title} href={study.href} label="case study" description={study.summary} />
+        ))}
+        {articles.map((article) => (
           <ArticleListItem
             level={2}
-            title={example.title}
-            href={example.href}
-            label={example.kind}
-            description={example.summary}
-            image={example.image}
-            imageAlt={example.imageAlt}
+            title={article.data.title}
+            href={articleHref(article)}
+            label="article"
+            description={article.data.description}
+            image={article.data.image}
+            imageAlt={article.data.imageAlt}
           />
         ))}
       </ul>
     ) : (
-      <div class="empty"><FillIn what="Work examples (src/content/work/)." /></div>
+      <div class="empty"><FillIn what="Case studies (pages in src/pages/work/)." /></div>
     )}
     <Callout label="Availability">
       <p>October 2026: open to projects outside my day job.</p>
@@ -48,6 +65,22 @@ const skills = getSkillsWithWork(examples);
 </Base>
 
 <style>
+  .skills {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0 0 var(--space-block);
+    max-width: var(--measure);
+  }
+
+  .skills dt {
+    font-weight: 600;
+  }
+
+  .skills dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
   .list {
     margin: 0 0 var(--space-block);
     padding: 0;

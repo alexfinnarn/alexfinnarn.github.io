@@ -1,21 +1,25 @@
 # Work
 
-- **URL:** `/work` (index), `/work/skills/<skill>` (filtered by skill), `/work/<slug>` (each case
-  study)
+- **URL:** `/work` (index), `/work/<slug>` (each case study)
 - **Status:** draft
 
 ## Purpose
 
 The evidence page, and since 2026-11-01 the consulting page too. Each example shows a problem and
-how Alex solved it, so a visitor can judge whether he can handle theirs, and the skill filters
-answer "what can he do for me?".
+how Alex solved it, so a visitor can judge whether he can handle theirs, and the skills menu
+answers "what can he do for me?".
 
 ## Decisions
 
-- Consulting merged into Work (2026-11-01). Skills aren't a separate menu: they're tags on work
-  examples, and visitors filter by them, like topics on Writing. `/consulting` redirects here.
-- Work examples aren't only case studies: articles, projects and talks count too, each linking to
-  its own page. Until real case studies exist, the articles stand in.
+- Consulting merged into Work (2026-11-01). `/consulting` redirects here.
+- Work is kept simple (2026-11-15). There will only be a handful of case studies, so each is a
+  plain page in `src/pages/work/`, and the index lists them by hand. There is no work content
+  collection and no filtering by skill. Add filtering back only if the list grows enough to
+  need it.
+- Skills are a plain list on the index, each with a one-line description. They don't link
+  anywhere.
+- Articles can be listed as work too. The index names them by slug. Until real case studies
+  exist, the articles stand in.
 - From the old Consulting page: every hirer is a client, whether a company or a staffing agency;
   availability is one dated line; no "not a fit for" list; no process section for now.
 - An index page, with each case study on its own page so it can be sent to someone on its own.
@@ -48,10 +52,10 @@ Index page:
    - What it holds: Heading and a one- or two-sentence intro
    - Component: PageHeader
    - Notes:
-2. **Skill filters**
-   - What it holds: A tag for each skill with work, linking to its skill page
-   - Component: TopicList
-   - Notes:
+2. **Skills menu**
+   - What it holds: Each skill's name and one-line description, as plain text
+   - Component: none (a list on the page)
+   - Notes: From `src/data/skills.ts`.
 3. **Work list**
    - What it holds: Kind, title and summary for each example, linking to it
    - Component: ArticleListItem ×n
@@ -65,13 +69,10 @@ Index page:
    - Component: Button
    - Notes:
 
-Skill page: the skill's name and description, the skill filters with this one marked, its work
-list, a link back to all work, and Contact.
-
 Case study page:
 
 1. **Header**
-   - What it holds: Title, project (optional), skills
+   - What it holds: Title, project (optional)
    - Component: PageHeader
    - Notes:
 2. **Problem / Solution / Result**
@@ -79,7 +80,7 @@ Case study page:
    - Component: Prose
    - Notes:
 3. **Closing action**
-   - What it holds: Lead to Contact or back to all work; its skills link to their skill pages
+   - What it holds: Lead to Contact or back to all work
    - Component: Button
    - Notes:
 

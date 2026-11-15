@@ -34,8 +34,8 @@ get in touch, and where to go next. Every other page backs up what this one clai
   scrap is a situation a visitor might be in, in their words, not a skill name. Picking one
   shows Alex's short reply and one piece of proof, in the scrap's pencil color. No images.
   Start with 3 scraps and grow to 5 at most, adding one only when there's real proof for it.
-  The situations are in `src/data/situations.ts`; until Alex writes them, each scrap shows a
-  Fill in.
+  The situations are in `src/data/situations.ts`, each with its proof's title and link written
+  out; until Alex writes them, each scrap shows a Fill in.
 
 ## Open questions
 

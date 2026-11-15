@@ -85,18 +85,15 @@ const spaceScale = ['--space-1', '--space-2', '--space-3', '--space-4', '--space
 const lorem =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const loremShort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-const sampleExample = (n: string, kind: 'case study' | 'article' | 'project' | 'talk') => ({
-  id: `sample-${n}`,
+const sampleProof = (n: string, kind: 'case study' | 'article' | 'project' | 'talk') => ({
   kind,
   title: `Work example title ${n}`,
-  summary: lorem,
   href: '#components',
-  skills: [],
 });
 const situationSamples = [
-  { title: 'Situation title one', reply: `Reply text one. ${loremShort}`, skill: 'Skill title one', href: '#components', example: sampleExample('one', 'case study') },
-  { title: 'Situation title two', reply: `Reply text two. ${loremShort}`, skill: 'Skill title two', href: '#components', example: sampleExample('two', 'article') },
-  { skill: 'Skill title three', href: '#components', example: sampleExample('three', 'project') },
+  { title: 'Situation title one', reply: `Reply text one. ${loremShort}`, proof: sampleProof('one', 'case study') },
+  { title: 'Situation title two', reply: `Reply text two. ${loremShort}`, proof: sampleProof('two', 'article') },
+  { proof: sampleProof('three', 'project') },
 ];
 ---
 
