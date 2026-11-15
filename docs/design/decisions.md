@@ -15,7 +15,7 @@ What Erased is, in plain terms:
 
 Applied to the whole site, not just the home page:
 - `.patch` (in `global.css`) makes a block a paper patch. The header bar, the footer, the home hero and home sections are tilted patches; each inner page's body is one straight patch, so a long article doesn't swing off its text.
-- On Home, the forest drawing fills the screen and two spots in it are links, introduced by a paper cut-out bird (`ForestScene`, 2026-11-14). On phones the drawing pans sideways and opens on the hiker. The `Hero` component, which runs a drawing edge to edge behind a text patch, is not used on any page now; it is shown in the style guide.
+- On Home, the forest drawing frames the hiker and both links (`ForestScene`). The crop fits the screen width and the page scrolls vertically. The `Hero` component, which runs a drawing edge to edge behind a text patch, is not used on any page now; it is shown in the style guide.
 - Everything scales up on wide screens (`--root-size`, 2026-11-01): 16px up to a 1280px screen, about 19px at 1920px. The container is 72rem.
 - The patch shape (`patch.svg`) is drawn in pixels, so its edge is the same size on a short card and a long article. The lab version stretched to fit, which would have eaten into long pages.
 
@@ -26,7 +26,7 @@ Picked in comparisons, so don't change these without asking:
 - Patches reach well past their text, with ragged, rounded edges.
 
 Home's forest scene (`ForestScene`):
-- Two links, Writing and Contact, both next to the hiker so a phone shows them: Writing on the young pine to his left, Contact on his backpack. The bird lands on the first label as it appears, then moves to its perch on the backpack as the second appears.
+- Two links, Writing and Contact, both next to the hiker so a phone shows them: Writing on the young pine to his left, Contact on his backpack. Both labels are visible from the start. The bird lands on the first label, then moves to its perch on the backpack, highlighting each label in turn.
 - The bird is a paper cut-out colored in with pencil: a light blue edge and dark blue coloring (the `--bird-*` role tokens), sitting on top of the drawing with no blend mode. Alex set the colors himself with color pickers.
 - The words on the "Pause motion" button are a placeholder.
 

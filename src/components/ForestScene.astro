@@ -1,15 +1,14 @@
 ---
 // Home page opening: the forest drawing, filling the screen, with two spots in it that are
-// links (Writing and Contact). A paper cut-out bird flies in and introduces them in order: it
-// lands on the first label as that appears, then hops onto the backpack as the second appears.
+// links (Writing and Contact). Both labels are visible from the start. A paper cut-out bird
+// flies to the first label, then hops onto the backpack, highlighting each label in turn.
 // Pine needles drift down; the drawing itself stays still.
 //
 // Everything is drawn in one SVG whose coordinates are the drawing's own pixels (1913 x 822),
 // so the links and the motion stay lined up with the picture at any screen size. The numbers
 // in the SVG below are positions in the drawing, not design values.
 //
-// On narrow screens the drawing is wider than the screen and pans sideways; it opens on the
-// hiker and the links beside him.
+// The crop is positioned around the hiker and both links in CSS.
 //
 // Visitors who ask for reduced motion get the finished picture: both labels, the bird perched.
 import { getImage } from 'astro:assets';
@@ -27,6 +26,9 @@ const { label, title, alt } = Astro.props;
 
 const W = 1913;
 const H = 822;
+// Keep this span of the drawing in view: the labels on the left and the hiker on the right.
+const focusWidth = 570;
+const focusX = 1260;
 const forest = await getImage({ src: forestImage, width: forestImage.width, format: 'webp' });
 
 // The labels in the drawing use the same words as the main navigation.
@@ -53,8 +55,12 @@ const needles = [
 ].map((n, i) => ({ ...n, color: needleColors[i % needleColors.length], r: (i * 47) % 180 }));
 ---
 
-<section class="scene" data-forest-scene>
-  <div class="pan" data-pan>
+<section
+  class="scene"
+  data-forest-scene
+  style={`--drawing-ratio: ${W} / ${H}; --focus-ratio: ${focusWidth} / ${H}; --focus-x: ${focusX / W}`}
+>
+  <div class="artwork">
     <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" role="group" aria-label={alt}>
       <defs>
         {/* Wobbles straight edges so added shapes look hand-drawn. */}
@@ -107,9 +113,6 @@ const needles = [
           ))
         }
       </g>
-
-      {/* What a phone opens on: the hiker and both links. Invisible. */}
-      <rect data-focus x="1000" y="0" width="430" height={H} fill="none" pointer-events="none" />
 
       {/* Link 1: the young pine and fallen branches left of the hiker. */}
       <a class="spot" href="/writing/" aria-label={writing}>
@@ -167,47 +170,46 @@ const needles = [
   </div>
 
   {/* DRAFT COPY: the button's words are a placeholder until Alex writes them. */}
-  <button class="pause" type="button" data-pause aria-pressed="false">Pause motion</button>
+  <button class="pause" type="button" data-pause aria-pressed="false" hidden>Pause motion</button>
 </section>
 
 <script>
   const scene = document.querySelector<HTMLElement>('[data-forest-scene]');
-  const pan = scene?.querySelector<HTMLElement>('[data-pan]');
   const pause = scene?.querySelector<HTMLButtonElement>('[data-pause]');
 
-  // On narrow screens the drawing pans sideways. Start centred on the hiker and the links.
-  const focus = scene?.querySelector('[data-focus]')?.getBoundingClientRect();
-  if (pan && focus) pan.scrollLeft += focus.left + focus.width / 2 - pan.clientWidth / 2;
-
-  pause?.addEventListener('click', () => {
-    const paused = scene?.classList.toggle('paused') ?? false;
-    pause.setAttribute('aria-pressed', String(paused));
-  });
+  if (scene && pause) {
+    pause.hidden = false;
+    pause.addEventListener('click', () => {
+      const paused = scene.classList.toggle('paused');
+      pause.setAttribute('aria-pressed', String(paused));
+    });
+  }
 </script>
 
 <style>
   .scene {
-    /* Fills the screen below the header. */
-    --scene-height: max(26rem, calc(100svh - 5.5rem));
+    /* Fill the screen below the header, with a shorter scene where the crop needs more room. */
+    --scene-height: min(max(26rem, calc(100svh - 5.5rem)), calc(100vw / (var(--focus-ratio))));
     position: relative;
     isolation: isolate;
     height: var(--scene-height);
     color: var(--hero-text);
   }
 
-  .pan {
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+  .artwork {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
     /* Ragged top and bottom, like every edge-to-edge drawing. */
     mask: var(--art-mask-bleed);
   }
 
   svg {
-    display: block;
-    width: 100%;
-    /* Never crop to less than the middle ~70% of the drawing; narrower screens pan instead. */
-    min-width: calc(var(--scene-height) * 1.65);
+    --drawing-width: max(100%, calc(var(--scene-height) * (var(--drawing-ratio))));
+    position: absolute;
+    /* Center the hiker and links, stopping at the drawing's edges. */
+    left: clamp(calc(100% - var(--drawing-width)), calc(50% - var(--drawing-width) * var(--focus-x)), 0px);
+    width: var(--drawing-width);
     height: 100%;
   }
 
@@ -291,6 +293,9 @@ const needles = [
 
   .tag rect {
     fill: var(--color-bg);
+    stroke: var(--color-brand);
+    stroke-width: 3;
+    stroke-opacity: 0;
     filter: url(#forest-rough);
   }
 
@@ -370,7 +375,7 @@ const needles = [
     /* One timeline, 5s long, starting 0.8s after load:
        0-40%   the bird flies in from the left and lands on the first label
        40-62%  it rests there
-       62-100% it hops up onto the backpack, where the second label appears */
+       62-100% it hops up onto the backpack, highlighting the second label */
     .fly {
       animation: fly 5s 0.8s backwards;
     }
@@ -385,12 +390,12 @@ const needles = [
       animation: folded 5s 0.8s step-end backwards;
     }
 
-    .tag-first {
-      animation: appear 0.5s 2.6s ease-out backwards;
+    .tag-first rect {
+      animation: highlight-tag 0.8s 2.8s ease-in-out;
     }
 
-    .tag-second {
-      animation: appear 0.5s 5.6s ease-out backwards;
+    .tag-second rect {
+      animation: highlight-tag 0.8s 5.8s ease-in-out;
     }
 
     /* Perched, it glances around every few seconds. */
@@ -398,7 +403,7 @@ const needles = [
       animation: look 7s 7s ease-in-out infinite;
     }
 
-    .paused :is(.needle, .fly, .wing-flap, .wing-fold, .tag, .bird) {
+    .paused :is(.needle, .fly, .wing-flap, .wing-fold, .tag rect, .bird) {
       animation-play-state: paused;
     }
   }
@@ -443,9 +448,12 @@ const needles = [
     }
   }
 
-  @keyframes appear {
-    from {
-      opacity: 0;
+  @keyframes highlight-tag {
+    0%, 100% {
+      stroke-opacity: 0;
+    }
+    40%, 65% {
+      stroke-opacity: 1;
     }
   }
 

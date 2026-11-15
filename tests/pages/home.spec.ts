@@ -15,3 +15,24 @@ test('homepage - title and main navigation', async ({ page }) => {
     await expect(nav.getByRole('link', { name })).toHaveCount(0);
   }
 });
+
+test('forest links are in view on a phone before the image and scripts load', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.route(/me-on-rock-and-forest\..*\.webp(?:\?|$)/, (route) => route.abort());
+  await page.route('**/*', (route) =>
+    route.request().resourceType() === 'script' ? route.abort() : route.fallback(),
+  );
+  await page.goto('/');
+
+  const scene = page.locator('[data-forest-scene]');
+  for (const name of ['Writing', 'Contact']) {
+    const label = scene.getByRole('link', { name }).getByText(name, { exact: true });
+    await expect(label).toBeInViewport({ ratio: 0.99 });
+    await expect(label.locator('..')).toHaveCSS('opacity', '1');
+  }
+  await expect(scene.locator('.artwork')).toHaveCSS('overflow-x', 'clip');
+
+  await scene.getByRole('link', { name: 'Writing' }).getByText('Writing', { exact: true }).click();
+  await expect(page).toHaveURL(/\/writing\/$/);
+});
