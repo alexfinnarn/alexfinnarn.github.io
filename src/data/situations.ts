@@ -2,7 +2,7 @@
 // Keep 3 to 5 (docs/ia/home.md). Each needs real proof: one piece of work, with its title and
 // where it links.
 //
-// `title` and `reply` are Alex's to write (plans/active/copy-plan.md). Until then the scrap
+// `title` and `reply` are Alex's to write. Until then the scrap
 // shows a Fill in.
 export interface Situation {
   /** The visitor's situation, in their words. */
