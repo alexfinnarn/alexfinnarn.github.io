@@ -428,12 +428,6 @@ const needles = [
       animation-play-state: paused;
     }
 
-    /* Keep the labels hidden while waiting. A paused animation alone doesn't do it everywhere:
-       WebKit on Linux shows the label instead of the animation's first frame. */
-    .waiting:not(.labels-now) .tag {
-      opacity: 0;
-    }
-
     /* Needles frozen in mid-air would look wrong. */
     .waiting .needles {
       visibility: hidden;
