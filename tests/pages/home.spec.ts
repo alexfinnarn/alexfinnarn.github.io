@@ -25,9 +25,16 @@ test.describe('forest scene on a phone', () => {
   test.use({ viewport: { width: 390, height: 844 }, contextOptions: { reducedMotion: 'no-preference' } });
 
   test('motion holds until a slow drawing arrives, then the links appear in view', async ({ page }) => {
+    // Stop the page's timers so the slow-connection fallback can't fire while the test looks.
+    // CSS animations still run in real time.
+    await page.clock.install();
+    // Hold the drawing until the test has checked the waiting state, however slow the server is.
+    let release = () => {};
+    const released = new Promise<void>((resolve) => (release = resolve));
     await page.route(isDrawing, async (route) => {
-      await new Promise((resolve) => setTimeout(resolve, 2500));
-      await route.fallback();
+      const response = await route.fetch();
+      await released;
+      await route.fulfill({ response });
     });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
@@ -35,6 +42,7 @@ test.describe('forest scene on a phone', () => {
     await expect(scene).toHaveClass(/waiting/);
     await expect(scene.locator('.tag-first')).toHaveCSS('opacity', '0');
 
+    release();
     await expect(scene).not.toHaveClass(/waiting/);
     for (const name of ['Writing', 'Contact']) {
       const label = scene.getByRole('link', { name }).getByText(name, { exact: true });
