@@ -20,7 +20,9 @@ test('homepage - title and main navigation', async ({ page }) => {
 test.describe('forest scene on a phone', () => {
   const isDrawing = (url: URL) => url.href.includes('me-on-rock-and-forest');
 
-  test.use({ viewport: { width: 390, height: 844 } });
+  // The motion only runs for visitors who haven't asked for less of it. Some browsers (WebKit on
+  // Linux CI) report reduced motion by default, so say which one these tests mean.
+  test.use({ viewport: { width: 390, height: 844 }, contextOptions: { reducedMotion: 'no-preference' } });
 
   test('motion holds until a slow drawing arrives, then the links appear in view', async ({ page }) => {
     await page.route(isDrawing, async (route) => {
