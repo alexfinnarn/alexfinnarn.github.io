@@ -11,9 +11,13 @@
 // On narrow screens the drawing is wider than the screen and pans sideways; it opens on the
 // hiker and the links beside him.
 //
+// The motion waits for the drawing. Until the file arrives the scene shows a blurred stand-in
+// and everything holds at its first frame. If it takes more than a few seconds, or fails, the
+// labels show anyway so the links are never stuck hidden. Without scripts the motion runs on
+// the clock.
+//
 // Visitors who ask for reduced motion get the finished picture: both labels, the bird perched.
-import { getImage } from 'astro:assets';
-import forestImage from '../assets/me-on-rock-and-forest.png';
+import { forestSize, getForest, getForestPlaceholder } from '../lib/forest';
 import { nav } from '../site';
 
 interface Props {
@@ -25,9 +29,9 @@ interface Props {
 
 const { label, title, alt } = Astro.props;
 
-const W = 1913;
-const H = 822;
-const forest = await getImage({ src: forestImage, width: forestImage.width, format: 'webp' });
+const { width: W, height: H } = forestSize;
+const forest = await getForest();
+const placeholder = await getForestPlaceholder();
 
 // The labels in the drawing use the same words as the main navigation.
 const navLabel = (href: string) => nav.find((item) => item.href === href)?.label ?? href;
@@ -54,6 +58,22 @@ const needles = [
 ---
 
 <section class="scene" data-forest-scene>
+  {/* Runs before the drawing is read, so the motion never starts ahead of it. */}
+  <script is:inline>
+    (() => {
+      const scene = document.currentScript.parentElement;
+      scene.classList.add('waiting');
+      const start = () => scene.classList.remove('waiting');
+      // "load" doesn't bubble, so catch it on the way down.
+      const onDrawing = (event) => event.target instanceof Element && event.target.matches('[data-drawing]') && start();
+      scene.addEventListener('load', onDrawing, true);
+      scene.addEventListener('error', onDrawing, true);
+      // Slow connection: show the links now; the bird still waits for the drawing.
+      setTimeout(() => scene.classList.contains('waiting') && scene.classList.add('labels-now'), 4000);
+      // In case a browser never reports the drawing.
+      setTimeout(start, 20000);
+    })();
+  </script>
   <div class="pan" data-pan>
     <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" role="group" aria-label={alt}>
       <defs>
@@ -92,7 +112,8 @@ const needles = [
         </pattern>
       </defs>
 
-      <image href={forest.src} width={W} height={H} />
+      <image href={placeholder} width={W} height={H} preserveAspectRatio="none" aria-hidden="true" />
+      <image href={forest.src} width={W} height={H} data-drawing />
 
       {/* Falling needles */}
       <g class="needles" aria-hidden="true">
@@ -160,6 +181,15 @@ const needles = [
       </a>
     </svg>
   </div>
+  {/* On narrow screens the drawing pans sideways. Start centred on the hiker and the links,
+      before the rest of the page is read. */}
+  <script is:inline>
+    (() => {
+      const pan = document.currentScript.previousElementSibling;
+      const focus = pan.querySelector('[data-focus]').getBoundingClientRect();
+      pan.scrollLeft += focus.left + focus.width / 2 - pan.clientWidth / 2;
+    })();
+  </script>
 
   <div class="name">
     {label && <span class="label">{label}</span>}
@@ -172,12 +202,7 @@ const needles = [
 
 <script>
   const scene = document.querySelector<HTMLElement>('[data-forest-scene]');
-  const pan = scene?.querySelector<HTMLElement>('[data-pan]');
   const pause = scene?.querySelector<HTMLButtonElement>('[data-pause]');
-
-  // On narrow screens the drawing pans sideways. Start centred on the hiker and the links.
-  const focus = scene?.querySelector('[data-focus]')?.getBoundingClientRect();
-  if (pan && focus) pan.scrollLeft += focus.left + focus.width / 2 - pan.clientWidth / 2;
 
   pause?.addEventListener('click', () => {
     const paused = scene?.classList.toggle('paused') ?? false;
@@ -367,7 +392,7 @@ const needles = [
       animation: fall linear infinite;
     }
 
-    /* One timeline, 5s long, starting 0.8s after load:
+    /* One timeline, 5s long, starting 0.8s after the drawing loads:
        0-40%   the bird flies in from the left and lands on the first label
        40-62%  it rests there
        62-100% it hops up onto the backpack, where the second label appears */
@@ -398,8 +423,18 @@ const needles = [
       animation: look 7s 7s ease-in-out infinite;
     }
 
-    .paused :is(.needle, .fly, .wing-flap, .wing-fold, .tag, .bird) {
+    .paused :is(.needle, .fly, .wing-flap, .wing-fold, .tag, .bird),
+    .waiting :is(.needle, .fly, .wing-flap, .wing-fold, .tag, .bird) {
       animation-play-state: paused;
+    }
+
+    /* Needles frozen in mid-air would look wrong. */
+    .waiting .needles {
+      visibility: hidden;
+    }
+
+    .labels-now .tag {
+      animation: none;
     }
   }
 
