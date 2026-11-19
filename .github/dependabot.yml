@@ -1,8 +1,24 @@
 version: 2
+# Security updates (PRs for known vulnerabilities) are switched on in the repository's settings,
+# not here. They skip the cooldown below.
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"                
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "weekly"  
+      interval: weekly
     open-pull-requests-limit: 5
-    security-updates: true
+    # Wait a week after a release before proposing it, so a broken or compromised version has
+    # time to be caught and pulled first.
+    cooldown:
+      default-days: 7
+
+  # Keeps the SHA-pinned actions in .github/workflows current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ['*']
