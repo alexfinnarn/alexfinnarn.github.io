@@ -11,6 +11,9 @@ Dev-only pages for eye-test rounds: comparing design options with the "1 or 2?" 
 - Lab files may break the styling rules (hard-coded values, local masks) while a round runs.
 - A lab doesn't have to be a comparison. For a new idea with nothing to compare it to, build one prototype page and change it after each comment (round 13, the forest scene).
 - For values Alex should set himself (colors, widths), put controls on the lab page that write CSS variables, print the current values so he can paste them back, and remember them in the browser. Remove the controls once the values are picked.
+- To try something on a real page without changing the page, show it in a frame on the lab page and change it from there: set a role token on the frame's root, or add the prototype to the frame's page with a script. Round 14 did both (the cursor, then the forest palette).
+- For where something sits, give sliders for position, tilt and size, measured in the coordinates of what it sits on (a drawing's own pixels), instead of nudging it by guess.
+- Check the lab at the width Alex is looking at. Something that only works where the hatching shows can do nothing at a laptop width, with no error.
 - After each layout change, look at a phone width as well as a desktop one.
 - For motion, check each moment of the sequence (pause it and step to set times), and check moving things in every place they end up.
 
