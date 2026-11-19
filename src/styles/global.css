@@ -122,6 +122,19 @@ img {
   rotate: var(--patch-tilt-alt);
 }
 
+/* Over the hatching and drawings the pointer is a pencil; on paper, text and links keep their
+   usual cursors. Mouse and pen only: touch has no pointer to show. Hovering a patch's ragged
+   edge counts as hovering the patch, so the whole paper gets the usual cursors. */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: var(--cursor-page);
+  }
+
+  .patch {
+    cursor: auto;
+  }
+}
+
 /* Patches already separate sections; a rule between them would cross the hatching. */
 .patch + .patch {
   border-top: 0;

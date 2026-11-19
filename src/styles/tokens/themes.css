@@ -100,6 +100,10 @@
   --needle-2: var(--cutout-orange);
   --needle-3: var(--pencil-yellow);
 
+  /* The pointer over the hatching and drawings: a pencil, its hotspot on the lead tip. Paper
+     keeps the normal cursors (the .patch rule in global.css). */
+  --cursor-page: url('../textures/pencil.svg') 3 29, auto;
+
   --header-bg: transparent;
   --header-text: var(--color-text);
   --header-muted: var(--color-text-muted);
