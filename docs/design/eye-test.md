@@ -59,6 +59,16 @@ Round 13 (the forest scene on Home) wasn't a "1 or 2?" round, and it still used 
 - **Look at a phone width before settling the layout.** The first layout that looked right on a desktop had both links off screen on a phone. Checking a narrow width after each layout change would have caught it a step earlier.
 - **Motion needs its own way of being checked.** A screenshot shows one moment. To check a sequence, pause it and step it to set times (start, each stop, the end), and look at each. A browser tab in the background may not run animations at all, so "nothing moved" can be the tab, not the page.
 
+## A blind round that led to a prototype (round 14, 2026-11-19)
+
+Round 14 picked a mouse cursor for the site and then turned into a new feature: a painter's palette in Home's forest that lets a visitor draw on the drawing. What it showed about the method:
+
+- **Some things can only be judged by using them.** A cursor doesn't show in a screenshot, so the lab showed the real page in a frame and swapped only the cursor inside it. Alex compared the pencils by moving the mouse, not by looking at pictures. Three options took two comparisons; the graphite pencil won.
+- **A pick can start the next idea.** Right after choosing the graphite pencil, Alex asked for a palette whose paints recolor it, which turned the round into a prototype (the round 13 way of working). Leave room after a pick for "what if…", not just "done".
+- **"Nothing happens" is a result too, and often a silent one.** The first drawing prototype only drew on the hatching, and at Alex's window width the paper covered all of it, so nothing drew and nothing reported an error. The check that passed had run at a much wider window. Test at the width the person will actually use, and make a prototype say where it works.
+- **After the second "move it a bit", hand over the knobs.** Placing the palette by guessing took three passes of "smaller", "lower", "slightly…". Then Alex asked for sliders. Four sliders (across, down, tilt, size) with a printed line to paste back settled it in one paste. Placement is a value he should set himself, like the bird's colors in round 13.
+- **Measure placement in the picture's own coordinates.** The sliders moved the palette in the drawing's pixels, not the screen's, so where Alex put it holds at every window size.
+
 ## Standalone version
 
 A framework-agnostic prototype of this tool is in `~/Sites/personal/eye-test`, intended to be open-sourced. Ideas from this doc that apply there:
@@ -68,4 +78,5 @@ A framework-agnostic prototype of this tool is in `~/Sites/personal/eye-test`, i
 - results meant to be pasted back into that conversation, including comments, not just picks;
 - a "no real difference" answer, recorded as a tie, so the next round knows what to stop varying;
 - coarse-to-fine guidance for whoever writes the challengers;
-- the notes from round 13 above: a prototype-first stage before any comparison, open controls for linked values like colors, and checking picks in every state (copied into that repo's `docs/knobs.md`, 2026-11-14).
+- the notes from round 13 above: a prototype-first stage before any comparison, open controls for linked values like colors, and checking picks in every state (copied into that repo's `docs/knobs.md`, 2026-11-14);
+- the notes from round 14 above: judging by use, a pick that starts a new idea, silent "nothing happens" results, and handing over placement sliders early (copied into that repo's `docs/knobs.md`, 2026-11-19).

@@ -104,6 +104,23 @@
      keeps the normal cursors (the .patch rule in global.css). */
   --cursor-page: url('../textures/pencil.svg') 3 29, auto;
 
+  /* Home's forest: the painter's palette by the rocks. A paper cut-out like the bird, colored in
+     as wood. Its paints are the --mark-* pencils; picking one makes the pointer that pencil
+     (one cursor per paint, in mark order) and lets you draw on the drawing. */
+  --palette-wood: color-mix(in srgb, var(--cutout-orange), var(--cutout-paper) 55%);
+  --palette-grain: var(--cutout-orange);
+  --palette-eraser: var(--pencil-pink);
+  --palette-stop: color-mix(in srgb, var(--graphite-900), var(--cutout-paper) 55%);
+  --palette-stop-on: var(--graphite-900);
+  --palette-selected: var(--graphite-900);
+  --cursor-paint-1: url('../textures/pencil-yellow.svg') 3 29, auto;
+  --cursor-paint-2: url('../textures/pencil-red.svg') 3 29, auto;
+  --cursor-paint-3: url('../textures/pencil-pink.svg') 3 29, auto;
+  --cursor-paint-4: url('../textures/pencil-green.svg') 3 29, auto;
+  --cursor-paint-5: url('../textures/pencil-blue.svg') 3 29, auto;
+  --cursor-paint-6: url('../textures/pencil-violet.svg') 3 29, auto;
+  --cursor-eraser: url('../textures/eraser.svg') 16 16, auto;
+
   --header-bg: transparent;
   --header-text: var(--color-text);
   --header-muted: var(--color-text-muted);

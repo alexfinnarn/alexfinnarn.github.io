@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- The eraser cursor, for rubbing out marks on Home's forest. Hotspot in the middle (16, 16). -->
+  <g transform="rotate(-30 16 16)">
+    <rect x="6" y="9" width="20" height="14" rx="3" fill="#e07a8a" stroke="#f6edda" stroke-width="3"/>
+    <rect x="6" y="9" width="20" height="14" rx="3" fill="#e07a8a" stroke="#24222b" stroke-width="1"/>
+    <path d="M19 9 L19 23" stroke="#24222b" stroke-width="0.8" opacity="0.6"/>
+  </g>
+</svg>

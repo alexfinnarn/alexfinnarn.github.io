@@ -55,6 +55,20 @@ const needles = [
   { x: 830, y: 60, dx: 140, fall: 460, s: 14, delay: -11 },
   { x: 1340, y: 60, dx: 110, fall: 300, s: 10, delay: -6.5 },
 ].map((n, i) => ({ ...n, color: needleColors[i % needleColors.length], r: (i * 47) % 180 }));
+
+// The painter's palette: six paints (the --mark-* pencils) around its rim, in its own
+// coordinates, centred on 0,0. DRAFT COPY: the names are placeholders until Alex writes them.
+const paints = [
+  { name: 'Yellow', x: -28, y: -48 },
+  { name: 'Red', x: 18, y: -56 },
+  { name: 'Pink', x: 60, y: -42 },
+  { name: 'Green', x: 86, y: -8 },
+  { name: 'Blue', x: 76, y: 32 },
+  { name: 'Violet', x: 36, y: 52 },
+].map((p, i) => ({ ...p, n: i + 1 }));
+// A dab of paint: a slightly lumpy blob of radius r.
+const dab = (r: number) =>
+  `M${-r} 0 C${-r} ${-r * 0.9} ${-r * 0.2} ${-r * 1.1} ${r * 0.3} ${-r} C${r * 1.1} ${-r * 0.8} ${r} ${r * 0.4} ${r * 0.6} ${r * 0.8} C0 ${r * 1.2} ${-r * 0.9} ${r * 0.9} ${-r} 0 Z`;
 ---
 
 <section class="scene" data-forest-scene>
@@ -95,6 +109,13 @@ const needles = [
           <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 3.4 -0.5" result="a" />
           <feComposite in="SourceGraphic" in2="a" operator="in" />
         </filter>
+        {/* Paper grain through the visitor's marks. Sized to the whole drawing: a filter sized to its
+            content, like forest-grain, is fixed while the marks are still empty and hides them. */}
+        <filter id="forest-marks-grain" filterUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
+          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="3" result="g" />
+          <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 2.2 -0.3" result="a" />
+          <feComposite in="SourceGraphic" in2="a" operator="in" />
+        </filter>
         {/* Pencil hatching: a light wash with slanted strokes over it. */}
         <pattern id="forest-hatch-body" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
           <rect width="5" height="5" style="fill: var(--bird-body)" opacity="0.4" />
@@ -115,6 +136,9 @@ const needles = [
       <image href={placeholder} width={W} height={H} preserveAspectRatio="none" aria-hidden="true" />
       <image href={forest.src} width={W} height={H} data-drawing />
 
+      {/* What visitors draw with the palette: above the drawing, under the needles, links and bird. */}
+      <g class="marks" filter="url(#forest-marks-grain)" aria-hidden="true" data-marks></g>
+
       {/* Falling needles */}
       <g class="needles" aria-hidden="true">
         {
@@ -131,6 +155,38 @@ const needles = [
 
       {/* What a phone opens on: the hiker and both links. Invisible. */}
       <rect data-focus x="1000" y="0" width="430" height={H} fill="none" pointer-events="none" />
+
+      {/* The painter's palette, leaning on the near rock on the left (placed by Alex with sliders).
+          Picking a paint turns the pointer into that pencil and lets you draw on the drawing; the
+          middle dab becomes an X that stops; the eraser rubs marks out. Marks stay until you leave
+          the page. Mouse and pen only, so it shows only for them once the script has run; a phone
+          never shows this part of the drawing anyway. DRAFT COPY: the names are placeholders. */}
+      <g class="palette" role="group" aria-label="Paints" transform="translate(644 619) rotate(-19) scale(0.58)" data-palette>
+        <path
+          class="wood"
+          fill-rule="evenodd"
+          d="M-110 -18 C-118 -70 -36 -86 28 -78 C96 -70 126 -32 120 8 C114 56 56 80 2 76 C-42 72 -60 54 -54 38 C-49 24 -22 24 -24 8 C-26 -6 -54 -2 -76 12 C-98 26 -106 2 -110 -18 Z M-52 -30 a13 11 0 1 0 -26 0 a13 11 0 1 0 26 0 Z"
+        />
+        <path class="wood-grain" d="M-96 -30 C-80 -66 -20 -72 30 -66 M-40 60 C0 70 60 64 100 24" />
+        {
+          paints.map((p) => (
+            <g class="tool" role="button" tabindex="0" aria-pressed="false" aria-label={p.name} data-tool={p.n} transform={`translate(${p.x} ${p.y})`}>
+              <path class="dab" style={`fill: var(--mark-${p.n})`} d={dab(15)} />
+              <circle class="ring" r="21" />
+            </g>
+          ))
+        }
+        {/* Graphite until you're drawing; then an X that stops. */}
+        <g class="tool stop" role="button" tabindex="-1" aria-hidden="true" aria-label="Stop drawing" data-tool="off" transform="translate(22 4)">
+          <path class="dab" d={dab(16)} />
+          <path class="close" d="M-7 -7 L7 7 M7 -7 L-7 7" />
+          <circle class="ring" r="22" />
+        </g>
+        <g class="tool" role="button" tabindex="0" aria-pressed="false" aria-label="Eraser" data-tool="eraser" transform="translate(-66 34)">
+          <rect class="eraser" x="-22" y="-12" width="44" height="24" rx="5" transform="rotate(-18)" />
+          <circle class="ring" r="30" />
+        </g>
+      </g>
 
       {/* Link 1: the young pine and fallen branches left of the hiker. */}
       <a class="spot" href="/writing/" aria-label={writing}>
@@ -208,6 +264,103 @@ const needles = [
     const paused = scene?.classList.toggle('paused') ?? false;
     pause.setAttribute('aria-pressed', String(paused));
   });
+
+  // ---- Drawing with the palette ----
+  // The tool is 'off', a paint (1-6, its --mark-* number) or 'eraser'. The scene carries it as
+  // data-tool, which picks the cursor in the CSS below.
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const STROKE = 11; // drawing pixels
+  const ERASER = 40;
+  const svg = scene?.querySelector<SVGSVGElement>('.pan svg');
+  const palette = scene?.querySelector<SVGGElement>('[data-palette]');
+  const marks = scene?.querySelector<SVGGElement>('[data-marks]');
+
+  if (scene && svg && palette && marks) {
+    scene.classList.add('can-draw');
+    const tools = [...palette.querySelectorAll<SVGGElement>('[data-tool]')];
+    const stop = palette.querySelector<SVGGElement>('[data-tool="off"]')!;
+    let tool = 'off';
+
+    const pick = (next: string) => {
+      tool = next === tool ? 'off' : next;
+      const on = tool !== 'off';
+      scene.dataset.tool = tool;
+      tools.forEach((t) => t !== stop && t.setAttribute('aria-pressed', String(t.dataset.tool === tool)));
+      stop.setAttribute('aria-hidden', String(!on));
+      stop.setAttribute('tabindex', on ? '0' : '-1');
+    };
+    pick('off');
+    tools.forEach((t) => {
+      t.addEventListener('click', () => pick(t.dataset.tool!));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          pick(t.dataset.tool!);
+        }
+      });
+    });
+
+    const el = (tag: string, attrs: Record<string, string | number>) => {
+      const node = document.createElementNS(SVG_NS, tag);
+      for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
+      return node;
+    };
+    const { width: W, height: H } = svg.viewBox.baseVal;
+
+    // Marks drawn after an erase go in a new layer, so the eraser only rubs out what was there.
+    // Each layer is masked by the eraser strokes made after it.
+    const layers: SVGGElement[] = []; // each layer's eraser strokes, inside its mask
+    let layer: SVGGElement | null = null;
+    const currentLayer = () => {
+      if (layer) return layer;
+      const id = `forest-erase-${layers.length}`;
+      const mask = el('mask', { id, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H });
+      const erased = el('g', {}) as SVGGElement;
+      mask.append(el('rect', { width: W, height: H, fill: 'white' }), erased);
+      svg.querySelector('defs')!.append(mask);
+      layer = el('g', { mask: `url(#${id})` }) as SVGGElement;
+      marks.append(layer);
+      layers.push(erased);
+      return layer;
+    };
+
+    const at = (e: PointerEvent) => {
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(svg.getScreenCTM()!.inverse());
+      return `${p.x.toFixed(1)} ${p.y.toFixed(1)}`;
+    };
+    let strokes: SVGPathElement[] = [];
+
+    svg.addEventListener('pointerdown', (e) => {
+      // Touch keeps scrolling and panning; links and the palette keep working.
+      if (tool === 'off' || e.pointerType === 'touch' || e.button !== 0) return;
+      if ((e.target as Element).closest('.spot, [data-palette]')) return;
+      e.preventDefault();
+      svg.setPointerCapture(e.pointerId);
+      const start = `M${at(e)} L${at(e)}`;
+      if (tool === 'eraser') {
+        strokes = layers.map((erased) => {
+          const path = el('path', { d: start, fill: 'none', stroke: 'black', 'stroke-width': ERASER, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) as SVGPathElement;
+          erased.append(path);
+          return path;
+        });
+        layer = null;
+      } else {
+        const path = el('path', { d: start, fill: 'none', style: `stroke: var(--mark-${tool})`, opacity: 0.95, 'stroke-width': STROKE, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) as SVGPathElement;
+        currentLayer().append(path);
+        strokes = [path];
+      }
+    });
+    svg.addEventListener('pointermove', (e) => {
+      if (!strokes.length) return;
+      // Some browsers give an empty list here; fall back to the event itself.
+      const coalesced = e.getCoalescedEvents?.() ?? [];
+      const points = (coalesced.length ? coalesced : [e]).map(at).join(' L');
+      strokes.forEach((path) => path.setAttribute('d', `${path.getAttribute('d')} L${points}`));
+    });
+    const end = () => (strokes = []);
+    svg.addEventListener('pointerup', end);
+    svg.addEventListener('pointercancel', end);
+  }
 </script>
 
 <style>
@@ -333,6 +486,131 @@ const needles = [
   .spot:hover .tag text,
   .spot:focus-visible .tag text {
     text-decoration: underline;
+  }
+
+  /* ---- Palette ---- */
+
+  /* Mouse and pen only, and only once the script can make it work. */
+  .palette {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .can-draw .palette {
+      display: inline;
+    }
+  }
+
+  .wood {
+    fill: var(--palette-wood);
+    filter: url(#forest-cutout);
+  }
+
+  .wood-grain {
+    fill: none;
+    stroke: var(--palette-grain);
+    stroke-width: 1.6;
+    opacity: 0.5;
+  }
+
+  .tool {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .dab {
+    filter: url(#forest-rough);
+  }
+
+  .stop .dab {
+    fill: var(--palette-stop);
+  }
+
+  .eraser {
+    fill: var(--palette-eraser);
+    filter: url(#forest-cutout);
+  }
+
+  .ring {
+    fill: none;
+    stroke: var(--palette-selected);
+    stroke-width: 3;
+    opacity: 0;
+  }
+
+  .tool:hover .ring {
+    opacity: 1;
+    stroke-dasharray: 4 4;
+  }
+
+  .tool[aria-pressed='true'] .ring {
+    opacity: 1;
+    stroke-dasharray: none;
+  }
+
+  .tool:focus-visible .ring {
+    opacity: 1;
+    stroke: var(--color-brand);
+    stroke-width: 4;
+    stroke-dasharray: none;
+  }
+
+  /* The middle dab: graphite while you're not drawing, then an X that stops. */
+  .close {
+    fill: none;
+    stroke: var(--color-bg);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    opacity: 0;
+  }
+
+  .stop {
+    pointer-events: none;
+  }
+
+  .scene:not([data-tool='off']) .stop {
+    pointer-events: auto;
+  }
+
+  .scene:not([data-tool='off']) .stop .dab {
+    fill: var(--palette-stop-on);
+  }
+
+  .scene:not([data-tool='off']) .close {
+    opacity: 1;
+  }
+
+  /* The pointer is the pencil being drawn with, over the whole drawing. */
+  .scene[data-tool='1'] svg {
+    cursor: var(--cursor-paint-1);
+  }
+
+  .scene[data-tool='2'] svg {
+    cursor: var(--cursor-paint-2);
+  }
+
+  .scene[data-tool='3'] svg {
+    cursor: var(--cursor-paint-3);
+  }
+
+  .scene[data-tool='4'] svg {
+    cursor: var(--cursor-paint-4);
+  }
+
+  .scene[data-tool='5'] svg {
+    cursor: var(--cursor-paint-5);
+  }
+
+  .scene[data-tool='6'] svg {
+    cursor: var(--cursor-paint-6);
+  }
+
+  .scene[data-tool='eraser'] svg {
+    cursor: var(--cursor-eraser);
+  }
+
+  .scene:not([data-tool='off']) :is(.spot, .tool) {
+    cursor: pointer;
   }
 
   /* ---- Bird ---- */

@@ -31,6 +31,10 @@ Home's forest scene (`ForestScene`):
 - The bird is a paper cut-out colored in with pencil: a light blue edge and dark blue coloring (the `--bird-*` role tokens), sitting on top of the drawing with no blend mode. Alex set the colors himself with color pickers.
 - The motion waits for the drawing to load. Until then the scene shows a blurred thumbnail of it and nothing moves. If the drawing takes more than 4 seconds, both labels show without waiting for the bird.
 - The words on the "Pause motion" button are a placeholder.
+- A painter's palette leans on the near rock on the left (Alex placed it with sliders, 2026-11-19). It's a paper cut-out colored in as wood, like the bird, with six paints in the pencil colors, a graphite dab in the middle and a pink eraser.
+- Picking a paint turns the pencil cursor that color and lets you draw on the drawing: a grainy pencil line, above the drawing and under the needles, links and bird. The middle dab turns into an X that stops drawing, and picking the same paint again also stops. The eraser rubs out what's already drawn. Marks stay until you leave the page; nothing is saved.
+- Mouse and pen only. Without a fine pointer the palette doesn't show, and phones never show that part of the drawing anyway. The paints work from the keyboard too.
+- The palette's accessible names ("Paints", the color names, "Eraser", "Stop drawing") are placeholders.
 
 Home's "What I do" (`SituationScraps`, hidden since 2026-11-14):
 - Situations a visitor might be in, as small scraps of paper tossed on the hatching, each tilted and in its own pencil color. Picking one lifts and straightens it, colors it in, swaps its scribble for a drawn underline, and shows the reply on a larger scrap in that color. One reply always shows, so something is on screen without clicking.
@@ -55,6 +59,7 @@ The look:
 
 The pencil cursor:
 - A classic yellow pencil with an eraser, and a blue colored pencil with hatch lines on its body.
+- Drawing on the hatching around the paper, with a color wheel fixed in a corner. At most window widths the paper covers the hatching, so there was nowhere to draw, and the wheel covered text.
 
 Home's "What I do":
 - Skill names as the list. They read like any consultant's menu; the scraps list the visitor's situations instead.
