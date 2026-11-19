@@ -103,6 +103,11 @@ const dab = (r: number) =>
           <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" result="cut" />
           <feDropShadow in="cut" dx="0.8" dy="1.8" stdDeviation="1" flood-opacity="0.4" style="flood-color: var(--bird-shadow)" />
         </filter>
+        {/* The rough cut edge of the paper behind the name, which is outside this SVG. */}
+        <filter id="forest-name-cut" x="-5%" y="-20%" width="110%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" seed="8" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
         {/* Breaks the pencil strokes up with paper grain. */}
         <filter id="forest-grain" x="-20%" y="-20%" width="140%" height="140%">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="g" />
@@ -389,8 +394,9 @@ const dab = (r: number) =>
     height: 100%;
   }
 
-  /* Name: a scrap of paper rubbed out of the sky. A local copy of .patch, because the real one
-     puts its paper in the page's bottom layer, which here would be behind the drawing. */
+  /* Name: a paper cut-out laid on the drawing, like the bird and the palette. Its own paper
+     rather than .patch, because .patch puts its paper in the page's bottom layer, which here
+     would be behind the drawing. */
   .name {
     position: absolute;
     top: clamp(var(--space-4), 5vh, var(--space-7));
@@ -400,15 +406,28 @@ const dab = (r: number) =>
     pointer-events: none;
   }
 
-  .name::before {
+  /* The card: a rough cut edge (the forest-name-cut filter), slightly softened, with a shadow. */
+  .name::before,
+  .name::after {
     content: '';
     position: absolute;
-    inset: calc(-1 * var(--space-5)) calc(-1 * var(--space-6));
+    inset: calc(-1 * var(--space-3)) calc(-1 * var(--space-5));
     z-index: -1;
     background: var(--patch-bg);
-    /* The small-patch mask; the big one fades out entirely at this size. */
-    mask: var(--scrap-mask);
-    rotate: var(--patch-tilt);
+    rotate: var(--name-paper-tilt);
+  }
+
+  .name::before {
+    filter: url(#forest-name-cut) blur(var(--name-paper-edge-blur)) var(--name-paper-shadow);
+  }
+
+  /* A faint haze of paper around the card. */
+  .name::after {
+    inset: calc(-1 * var(--space-3) - var(--name-paper-glow-reach)) calc(-1 * var(--space-5) - var(--name-paper-glow-reach));
+    z-index: -2;
+    border-radius: var(--name-paper-glow-reach);
+    opacity: var(--name-paper-glow-opacity);
+    filter: blur(var(--name-paper-glow-blur));
   }
 
   .name h1 {

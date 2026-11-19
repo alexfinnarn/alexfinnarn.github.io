@@ -99,6 +99,14 @@
   --needle-1: var(--pencil-green);
   --needle-2: var(--cutout-orange);
   --needle-3: var(--pencil-yellow);
+  /* Home's name: a paper cut-out laid on the forest, with a rough cut edge, a shadow, and a
+     faint haze of paper around it. Values set by Alex with sliders (2026-11-19). */
+  --name-paper-tilt: -1.5deg;
+  --name-paper-edge-blur: 0.75px;
+  --name-paper-shadow: drop-shadow(1px 3px 5px color-mix(in srgb, var(--graphite-600) 35%, transparent));
+  --name-paper-glow-reach: 20px;
+  --name-paper-glow-blur: 18px;
+  --name-paper-glow-opacity: 0.35;
 
   /* The pointer over the hatching and drawings: a pencil, its hotspot on the lead tip. Paper
      keeps the normal cursors (the .patch rule in global.css). */

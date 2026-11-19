@@ -27,6 +27,7 @@ Picked in comparisons, so don't change these without asking:
 - Patches reach well past their text, with ragged, rounded edges.
 
 Home's forest scene (`ForestScene`):
+- The name sits on a paper cut-out laid on the drawing, like the bird and the palette: a rough cut edge, a slight tilt, a shadow, and a faint haze of paper around it (picked 2026-11-19; Alex set the blur and haze with sliders, the `--name-paper-*` role tokens).
 - Two links, Writing and Contact, both next to the hiker so a phone shows them: Writing on the young pine to his left, Contact on his backpack. The bird lands on the first label as it appears, then moves to its perch on the backpack as the second appears.
 - The bird is a paper cut-out colored in with pencil: a light blue edge and dark blue coloring (the `--bird-*` role tokens), sitting on top of the drawing with no blend mode. Alex set the colors himself with color pickers.
 - The motion waits for the drawing to load. Until then the scene shows a blurred thumbnail of it and nothing moves. If the drawing takes more than 4 seconds, both labels show without waiting for the bird.
@@ -74,6 +75,8 @@ Home's forest scene:
 - Links on the left of the drawing. They were off screen on a phone.
 - An "overlay" blend on the bird. It was too hard to see in front of a dark tree trunk.
 - A cream outline on the bird.
+- A soft blob of paper behind the name. It melted into the pale sky and read as a hole in the drawing.
+- No paper behind the name, with the top of the drawing fading to paper instead.
 
 ## Constraints learned along the way
 
