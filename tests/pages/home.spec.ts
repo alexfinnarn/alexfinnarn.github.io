@@ -24,12 +24,13 @@ test.describe('forest scene on a phone', () => {
   // rely on each browser's default.
   test.use({ viewport: { width: 390, height: 844 }, contextOptions: { reducedMotion: 'no-preference' } });
 
-  test('motion holds until a slow drawing arrives, then the links appear in view', async ({ page, browserName }) => {
-    // WebKit on Linux CI shows the first label while the scene waits; not worth chasing.
-    test.skip(browserName === 'webkit', 'Fails only on Linux WebKit in CI');
-    // Stop the page's timers so the slow-connection fallback can't fire while the test looks.
-    // CSS animations still run in real time.
-    await page.clock.install();
+  test('motion holds until a slow drawing arrives, then the links appear in view', async ({ page }) => {
+    // Stop the page's timers so the slow-connection fallback can't fire while the test looks,
+    // however long the page takes to load. install() alone fakes the clock but lets it keep
+    // running; pausing it holds every timer. CSS animations still run in real time.
+    const start = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: start });
+    await page.clock.pauseAt(new Date(start.getTime() + 1000));
     // Hold the drawing until the test has checked the waiting state, however slow the server is.
     let release = () => {};
     const released = new Promise<void>((resolve) => (release = resolve));
