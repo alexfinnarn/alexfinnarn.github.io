@@ -79,7 +79,7 @@ const roleOther = [
   ['--measure', 'Reading width'],
 ] as const;
 
-const typeScale = ['--size-sm', '--size-md', '--size-lg', '--size-xl', '--size-2xl', '--size-3xl', '--size-4xl'];
+const typeScale = ['--size-sm', '--size-md', '--size-lg', '--size-xl'];
 const spaceScale = ['--space-1', '--space-2', '--space-3', '--space-4', '--space-5', '--space-6', '--space-7', '--space-8', '--space-9'];
 
 const lorem =
@@ -115,7 +115,7 @@ const situationSamples = [
 
     <div class="container sg-intro">
       <p class="sg-note">
-        All text below is dummy text. Components use only role tokens, so the site's look lives in <code>src/styles/tokens/themes.css</code>. How it was chosen is in <code>docs/design/decisions.md</code>.
+        All text below is dummy text. Components get their colors and fonts from role tokens, so the site's look lives in <code>src/styles/tokens/themes.css</code>. How it was chosen is in <code>docs/design/decisions.md</code>.
       </p>
       <nav class="sg-toc" aria-label="Sections">
         <a href="#paper">Paper and pencil</a>
@@ -156,7 +156,7 @@ const situationSamples = [
       <p class="sg-desc">
         <strong>Base tokens</strong> are the raw palette and scales (<code>tokens/base.css</code>); they're the
         source the role tokens draw from. <strong>Role tokens</strong> say what a value is for
-        (<code>tokens/themes.css</code>); components use only these.
+        (<code>tokens/themes.css</code>). Components use role tokens, plus the base type-size, spacing, and line scales.
       </p>
 
       <h3 class="sg-sub">Role tokens: color</h3>
@@ -370,7 +370,7 @@ const situationSamples = [
           <span><ProfileIcon name="github" /> GitHub</span>
           <span><ProfileIcon name="medium" /> Medium</span>
           <a href="#components"><ProfileIcon name="github" /> As a link</a>
-          <span style="font-size: var(--size-2xl)"><ProfileIcon name="medium" /> Larger text</span>
+          <span style="font-size: var(--h2-size)"><ProfileIcon name="medium" /> Larger text</span>
         </div>
       </article>
 
