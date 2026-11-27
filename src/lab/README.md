@@ -19,6 +19,6 @@ Dev-only pages for eye-test rounds: comparing design options with the "1 or 2?" 
 
 ## After Alex picks
 
-- Build the winner into the real component, using only role tokens.
+- Build the winner into the real component, following the styling rule in [AGENTS.md](../../AGENTS.md).
 - Update [docs/design/decisions.md](../../docs/design/decisions.md): rewrite "Current choice" to match the winner, and add one line for each loser under "Tried and ruled out", with his reason if he gave one. Don't log the round itself.
 - Delete the lab files and their route, so this folder is back to just this README.

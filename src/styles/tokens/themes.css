@@ -1,5 +1,6 @@
 /*
- * Role tokens: what each value is FOR. Components only use these, never base tokens.
+ * Role tokens: what each value is FOR. Components use these for everything except the
+ * type-size, spacing, and line scales in base.css, which they may use directly.
  *
  * The site's look ("Erased" in docs/design/decisions.md): the page is loose colored-pencil
  * hatching that scrolls with the content, warm at the top and cool at the bottom. Content

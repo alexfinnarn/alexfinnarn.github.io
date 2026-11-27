@@ -1,4 +1,4 @@
-/* Element defaults and shared helpers. Uses role tokens only (see tokens/themes.css). */
+/* Element defaults and shared helpers. Uses role tokens and the base type-size, spacing, and line scales. */
 @import './tokens/base.css';
 @import './tokens/themes.css';
 
