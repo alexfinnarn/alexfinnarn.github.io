@@ -154,6 +154,9 @@
   --space-section: var(--space-9);
   --space-block: var(--space-6);
   --measure: 44rem;
+  /* An article's paper: narrowed to its text column and centered, so the hatching shows on
+     both sides. In ch, so it follows the body font. */
+  --article-width: 68ch;
   --container: 72rem;
   /* Everything is sized in rem, so this scales the whole site: 16px up to a 1280px screen,
      growing to 20px by about 2100px. */
