@@ -1,6 +1,6 @@
 # Notes for AI agents
 
-Alex Finnarn's personal site: a static Astro site deployed to GitHub Pages from the `astro` branch. What each page is for is in [docs/ia/](docs/ia/).
+Alex Finnarn's personal site: a static Astro site deployed to GitHub Pages from the `main` branch. What each page is for is in [docs/ia/](docs/ia/).
 
 ## How Alex wants to work
 
