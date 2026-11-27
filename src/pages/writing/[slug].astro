@@ -24,7 +24,7 @@ const { Content } = await render(article);
 ---
 
 <Base title={title} description={description} article={{ publishedDate, updatedDate, topics }}>
-  <article class="container patch page">
+  <article class="container patch page article">
     <ArticleHeader
       title={title}
       description={description}
@@ -48,6 +48,12 @@ const { Content } = await render(article);
 </Base>
 
 <style>
+  /* The paper narrows to the text column and centers; everything inside fills it. */
+  .article {
+    max-width: calc(var(--article-width) + 2 * var(--gutter));
+    --measure: 100%;
+  }
+
   .body {
     padding-top: var(--space-block);
   }
