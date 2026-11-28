@@ -11,7 +11,7 @@ interface Props {
   description?: string;
   image?: ImageMetadata;
   imageAlt?: string;
-  /** Links off the site, e.g. to Medium. Shown as a small mark after the date. */
+  /** Links off the site, e.g. to Medium. Shown after the date. */
   external?: string;
   /** A short tag before the title, e.g. a work example's kind. */
   label?: string;
@@ -26,15 +26,18 @@ const Heading = `h${level}` as const;
 <li class:list={['article', { 'has-image': image }]}>
   {image && <Image class="thumb" src={image} alt={imageAlt} width={240} />}
   <div>
-    {(date || external || label) && (
-      <p class="meta">
-        {label && <span class="kind">{label}</span>}
-        {date && <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>}
-        {external && <span>On {external}</span>}
-      </p>
-    )}
+    {label && <p class="kind">{label}</p>}
     <Heading class="title"><a class="title-link" href={href}>{title}</a></Heading>
     {description && <p class="description">{description}</p>}
+    <div class="foot">
+      {(date || external) && (
+        <p class="meta">
+          {date && <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>}
+          {external && <span>On {external}</span>}
+        </p>
+      )}
+      <a class="read-more" href={href}>Read more<span class="visually-hidden">: {title}</span> →</a>
+    </div>
   </div>
 </li>
 
@@ -58,17 +61,77 @@ const Heading = `h${level}` as const;
     border-radius: var(--radius);
   }
 
-  .meta {
-    display: flex;
-    gap: var(--space-3);
+  .kind {
     font-family: var(--font-label);
     font-size: var(--size-sm);
     color: var(--color-text-muted);
+    text-transform: capitalize;
     margin-bottom: var(--space-1);
   }
 
-  .kind {
-    text-transform: capitalize;
+  /* Under the description: the date on the left, "Read more" on the right. */
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    max-width: var(--measure);
+    margin-top: var(--space-4);
+  }
+
+  .meta {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+    font-family: var(--font-label);
+    font-size: var(--size-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* The post's pencil color (--post-mark, set by ArticleList) as a short dash before the
+     date and as the underline of "Read more". Blue outside a list. */
+  time {
+    position: relative;
+    padding-inline-start: 1.9em;
+  }
+
+  time::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.3em;
+    width: 1.6em;
+    height: 0.75em;
+    background: var(--post-mark, var(--mark-5));
+    mask: var(--link-underline) 0 0 / 100% 100% no-repeat;
+  }
+
+  .read-more {
+    position: relative;
+    margin-inline-start: auto;
+    padding-bottom: var(--link-underline-gap);
+    color: var(--color-text);
+    font-family: var(--font-label);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .read-more::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: var(--link-underline-size);
+    background: var(--post-mark, var(--mark-5));
+    mask: var(--link-underline) 0 0 / 100% 100% no-repeat;
+  }
+
+  .read-more:hover {
+    color: var(--color-accent);
+  }
+
+  .read-more:hover::after {
+    height: var(--link-underline-hover-size);
   }
 
   /* Looks the same at either heading level. */

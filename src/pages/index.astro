@@ -38,7 +38,7 @@ const forest = await getForest();
 
   {featured.length > 0 && (
     <section class="container section writing">
-      <h2 class="patch tilt">Writing</h2>
+      <h2 class="cutout">Writing</h2>
       <ArticleList>
         {featured.map((article) => (
           <ArticleListItem
@@ -76,7 +76,6 @@ const forest = await getForest();
 
   .scraps h2,
   .scraps .more,
-  .writing h2,
   .writing .more {
     --patch-reach-block: var(--space-4);
     --patch-reach-inline: var(--space-5);
@@ -88,24 +87,21 @@ const forest = await getForest();
     margin-inline: auto;
   }
 
-  /* Writing: the heading and the link get small scraps; each post has its own patch. */
+  /* Writing: the heading is a paper cut-out lying across the top of the first post's
+     paper; each post has its own patch; the link gets a small scrap. */
   .writing {
     margin-block: var(--space-8) var(--space-section);
   }
 
-  /* A wider scrap than "What I do" uses, so the hatching around the posts doesn't show
-     through behind the words. */
-  .writing h2,
+  .writing h2 {
+    margin-bottom: calc(-1 * var(--space-3));
+  }
+
+  /* A wider scrap than "What I do" uses, so the hatching doesn't show through behind the
+     words. */
   .writing .more {
     --patch-reach-block: var(--space-6);
     --patch-reach-inline: var(--space-7);
-  }
-
-  .writing h2 {
-    margin-bottom: var(--space-8);
-  }
-
-  .writing .more {
     margin-top: var(--space-9);
   }
 

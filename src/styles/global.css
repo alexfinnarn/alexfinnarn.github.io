@@ -170,6 +170,35 @@ img {
   padding-bottom: var(--space-7);
 }
 
+/* A paper cut-out lying on the page, like the name on Home's forest: a rough cut edge, a
+   slight tilt and a small shadow. For a short label such as a section heading. It sits above
+   the patches around it, so it can lie across a patch's edge. */
+.cutout {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: fit-content;
+  padding: var(--space-2) var(--space-4);
+}
+
+.cutout::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--space-3)) calc(-1 * var(--space-5));
+  z-index: -1;
+  background: var(--patch-bg);
+  rotate: var(--cutout-tilt);
+  filter: url(#paper-cut) blur(var(--name-paper-edge-blur)) var(--name-paper-shadow);
+}
+
+/* Holds SVG filters for the page; takes no room. */
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 /* A drawing that fades into the paper at ragged edges. */
 .art {
   mask: var(--art-mask);

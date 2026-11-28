@@ -18,7 +18,7 @@ Applied to the whole site, not just the home page:
 - `.patch` (in `global.css`) makes a block a paper patch. The header bar, the footer, the home hero and home sections are tilted patches; each inner page's body is one straight patch, so a long article doesn't swing off its text.
 - On Home, the forest drawing fills the screen and two spots in it are links, introduced by a paper cut-out bird (`ForestScene`, 2026-11-14). On phones the drawing pans sideways and opens on the hiker. The `Hero` component, which runs a drawing edge to edge behind a text patch, is not used on any page now; it is shown in the style guide.
 - Over the hatching and the forest drawing, the mouse pointer is a small graphite pencil drawn in a sketchy line, with the lead tip as the hotspot (`pencil.svg`, the `--cursor-page` role token, 2026-11-19). On paper, text and links keep their usual cursors. Touch screens don't show it.
-- Post lists (Writing, topic pages, Home's featured writing) put each post on its own patch of paper, tilted a little and alternating, with hatching between posts (`ArticleList`, picked 2026-11-27). Each post gets a pencil color in turn (red, green, blue, violet, pink), drawn as a loop around its date (`outline.svg`) so the date stays on clean paper. The page heading and topics share one patch; on Home the "Writing" heading and the "All writing" link get small scraps.
+- Post lists (Writing, topic pages, Home's featured writing) put each post on its own patch of paper, tilted a little and alternating, with hatching between posts (`ArticleList`, picked 2026-11-27). Each post gets a pencil color in turn (red, green, blue, violet, pink). Under the description, the date sits on the left with a short dash in that color, and "Read more →" sits on the right, underlined in the same color. The page heading and topics share one patch. On Home, the "Writing" heading is a paper cut-out like the name on the forest (`.cutout`, picked 2026-11-27), lying across the top of the first post's paper, and the "All writing" link gets a small scrap.
 - Articles sit on one narrow patch of paper, centered, as wide as the text column (`--article-width: 68ch`, picked 2026-11-27), with hatching showing on both sides. At a 1728px window that is about 90 characters a line.
 - Everything scales up on wide screens (`--root-size`, 2026-11-01): 16px up to a 1280px screen, about 19px at 1920px. The container is 72rem.
 - The patch shape (`patch.svg`) is drawn in pixels, so its edge is the same size on a short card and a long article. The lab version stretched to fit, which would have eaten into long pages.
@@ -71,6 +71,9 @@ Post lists:
 - One straight patch for the whole list with a rule between posts, with or without a pencil color per post.
 - One patch per post with no color.
 - A pencil scribble behind each date. The date was hard to read on the color.
+- A pencil loop around each date, tight or loose. It looked like a form field.
+- The date above the title.
+- Home's "Writing" heading on its own small scrap, either floating above the posts or set right on top of the first post's paper; or on the first post's paper with no paper of its own.
 
 Article width:
 - The full-width paper with a 44rem text column on its left, leaving a wide empty margin on the right.

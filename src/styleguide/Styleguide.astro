@@ -234,6 +234,7 @@ const situationSamples = [
           <p>Body paragraph. {lorem} <a href="#type">An inline link</a> sits in the middle of the text. {loremShort}</p>
           <h3>Heading level three sample</h3>
           <h3><a class="title-link" href="#type">A heading that is a link (.title-link)</a></h3>
+          <h2 class="cutout">Cut-out heading (.cutout)</h2>
           <ul>
             <li>List item one. {loremShort}</li>
             <li>List item two. {loremShort}</li>
@@ -306,7 +307,7 @@ const situationSamples = [
       </article>
 
       <article class="sg-component">
-        <header><h3>Article list</h3><p>Writing, topic pages and Home. Each post sits on its own patch of paper over the hatching, with its date circled in a pencil color that changes from post to post. Never put it inside a .patch.</p></header>
+        <header><h3>Article list</h3><p>Writing, topic pages and Home. Each post sits on its own patch of paper over the hatching. Under the description, the date has a short dash in the post's pencil color, which changes from post to post, and Read more on the right is underlined in the same color. Never put it inside a .patch.</p></header>
         <div class="sg-frame sg-hatch">
           <ArticleList>
             <ArticleListItem title="Article title sample one" href="#components" date={new Date('2026-10-01')} description={loremShort} />

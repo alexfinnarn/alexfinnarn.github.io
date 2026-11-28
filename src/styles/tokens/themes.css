@@ -88,7 +88,6 @@
   --mark-6: var(--pencil-violet);
   --mark-band: url('../textures/scribble-band.svg');
   --mark-fill: url('../textures/scribble.svg');
-  --mark-outline: url('../textures/outline.svg');
 
   /* Post lists (ArticleList): each post on its own patch of paper, tilted a little less than
      a short patch since a post is wider, alternating. */
@@ -114,6 +113,9 @@
   --name-paper-glow-reach: 20px;
   --name-paper-glow-blur: 18px;
   --name-paper-glow-opacity: 0.35;
+  /* .cutout (global.css): the same paper as the name, for a short label such as Home's
+     "Writing" heading. Its edge blur and shadow are the name's. */
+  --cutout-tilt: -2deg;
 
   /* Links are underlined with a hand-drawn blue pencil stroke that thickens on hover (the link
      rules in global.css). Values set by Alex with sliders (2026-11-27). The stroke is blue
