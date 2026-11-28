@@ -57,13 +57,37 @@ ol {
 
 a {
   color: var(--color-accent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
 }
 
 a:hover {
   color: var(--color-accent-hover);
-  text-decoration-thickness: 2px;
+}
+
+/* Links sit on a hand-drawn pencil underline instead of a plain one. This covers links with
+   no class (in text, the footer) and .title-link. A component that styles its own links
+   (buttons, chips, the menu) overrides it, since :where() adds no specificity. Each line of
+   a wrapped link gets its own stroke. */
+:where(a:not([class])),
+.title-link {
+  text-decoration: none;
+  padding-bottom: var(--link-underline-gap);
+  background: var(--link-underline) left bottom / 100% var(--link-underline-size) no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+:where(a:not([class])):hover,
+.title-link:hover {
+  background-size: 100% var(--link-underline-hover-size);
+}
+
+/* A heading that is a link, such as a post title in a list: graphite, blue on hover. */
+.title-link {
+  color: var(--color-text);
+}
+
+.title-link:hover {
+  color: var(--color-accent);
 }
 
 :focus-visible {

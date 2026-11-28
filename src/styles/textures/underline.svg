@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 12" preserveAspectRatio="none">
+  <!-- A hand-drawn underline in blue colored pencil: one firm stroke and a lighter second pass.
+       It stretches to the width of the text, so a title of any length gets one stroke. -->
+  <path d="M2 7 C40 4 80 9 120 6 S180 5 198 7" fill="none" stroke="#2f6db5" stroke-width="3.2" stroke-linecap="round" opacity=".9"/>
+  <path d="M6 9 C50 7 100 10 150 8 S190 8 196 9" fill="none" stroke="#2f6db5" stroke-width="1.6" stroke-linecap="round" opacity=".35"/>
+</svg>

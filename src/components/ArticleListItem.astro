@@ -33,7 +33,7 @@ const Heading = `h${level}` as const;
         {external && <span>On {external}</span>}
       </p>
     )}
-    <Heading class="title"><a href={href}>{title}</a></Heading>
+    <Heading class="title"><a class="title-link" href={href}>{title}</a></Heading>
     {description && <p class="description">{description}</p>}
   </div>
 </li>
@@ -75,16 +75,6 @@ const Heading = `h${level}` as const;
   .title {
     font-size: var(--size-xl);
     margin-bottom: var(--space-2);
-  }
-
-  .title a {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-
-  .title a:hover {
-    color: var(--color-accent);
-    text-decoration: underline;
   }
 
   .description {

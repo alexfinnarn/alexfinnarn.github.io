@@ -11,7 +11,8 @@ What Erased is, in plain terms:
 - Content sits on patches of cream paper (`#F6EDDA`, the drawings' paper) that look rubbed out of the hatching with an eraser: ragged, grainy, rounded edges, short ones a little tilted, with plenty of paper around the text.
 - Drawings fade into the page at ragged edges.
 - Graphite text; heavy, tightly spaced sans headlines; small uppercase labels.
-- Links in deep pencil blue. Plain buttons: graphite, and outlined.
+- Links sit on a hand-drawn blue pencil underline that thickens on hover (`underline.svg`, the `--link-underline*` role tokens; Alex set the values with sliders, 2026-11-27). Links in text and the footer are deep pencil blue. A heading that is a link, such as a post title in a list, stays graphite and turns blue on hover (`.title-link`). In the menu the stroke shows only under the current page and on hover. Buttons and topic chips have no underline.
+- Plain buttons: graphite, and outlined.
 
 Applied to the whole site, not just the home page:
 - `.patch` (in `global.css`) makes a block a paper patch. The header bar, the footer, the home hero and home sections are tilted patches; each inner page's body is one straight patch, so a long article doesn't swing off its text.
@@ -58,6 +59,12 @@ The look:
 - Crisp, thin hatching, and denser hatching with more color.
 - Hatching fixed in place while the content scrolls over it. It felt like parallax and was harder to scroll.
 - The big-head drawing in the middle of Home with the page links placed around it.
+
+Links:
+- The browser's plain underline on links in text, and a plain red line under the menu's current page.
+- Graphite titles underlined only on hover. They didn't look clickable.
+- Deep-blue titles, underlined only on hover or always underlined like links in body text.
+- Graphite titles with a blue "Read →" link under each description.
 
 Article width:
 - The full-width paper with a 44rem text column on its left, leaving a wide empty margin on the right.

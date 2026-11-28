@@ -82,15 +82,16 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     font-size: var(--size-md);
     font-weight: 600;
     text-decoration: none;
-    border-bottom: var(--line-2) solid transparent;
-  }
-
-  nav a:hover {
-    border-bottom-color: currentColor;
+    /* The pencil underline shows only under the current page, and on hover. */
+    background: var(--link-underline) left bottom / 0% var(--link-underline-size) no-repeat;
   }
 
   nav a[aria-current='page'] {
-    border-bottom-color: var(--header-current);
+    background-size: 100% var(--link-underline-size);
+  }
+
+  nav a:hover {
+    background-size: 100% var(--link-underline-hover-size);
   }
 
   @media (max-width: 40rem) {
