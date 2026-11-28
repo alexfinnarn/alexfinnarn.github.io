@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ForestScene from '../components/ForestScene.astro';
+import ArticleList from '../components/ArticleList.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import { getArticles, articleHref } from '../lib/content';
 import { getForest } from '../lib/forest';
@@ -36,9 +37,9 @@ const forest = await getForest();
   */}
 
   {featured.length > 0 && (
-    <section class="container section patch tilt">
-      <h2>Writing</h2>
-      <ul class="list">
+    <section class="container section writing">
+      <h2 class="patch tilt">Writing</h2>
+      <ArticleList>
         {featured.map((article) => (
           <ArticleListItem
             title={article.data.title}
@@ -48,8 +49,8 @@ const forest = await getForest();
             external={article.data.externalUrl ? 'Medium' : undefined}
           />
         ))}
-      </ul>
-      <p class="more"><a href="/writing/">All writing</a></p>
+      </ArticleList>
+      <p class="more patch tilt"><a href="/writing/">All writing</a></p>
     </section>
   )}
 </Base>
@@ -74,7 +75,9 @@ const forest = await getForest();
   }
 
   .scraps h2,
-  .scraps .more {
+  .scraps .more,
+  .writing h2,
+  .writing .more {
     --patch-reach-block: var(--space-4);
     --patch-reach-inline: var(--space-5);
     --patch-mask: var(--scrap-mask);
@@ -85,9 +88,25 @@ const forest = await getForest();
     margin-inline: auto;
   }
 
-  .list {
-    margin: 0;
-    padding: 0;
+  /* Writing: the heading and the link get small scraps; each post has its own patch. */
+  .writing {
+    margin-block: var(--space-8) var(--space-section);
+  }
+
+  /* A wider scrap than "What I do" uses, so the hatching around the posts doesn't show
+     through behind the words. */
+  .writing h2,
+  .writing .more {
+    --patch-reach-block: var(--space-6);
+    --patch-reach-inline: var(--space-7);
+  }
+
+  .writing h2 {
+    margin-bottom: var(--space-8);
+  }
+
+  .writing .more {
+    margin-top: var(--space-9);
   }
 
   .more {

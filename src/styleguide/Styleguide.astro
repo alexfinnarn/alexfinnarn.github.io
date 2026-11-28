@@ -11,6 +11,7 @@ import ProfileIcon from '../components/ProfileIcon.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SituationScraps from '../components/SituationScraps.astro';
 import CaseStudy from '../components/CaseStudy.astro';
+import ArticleList from '../components/ArticleList.astro';
 import ArticleListItem from '../components/ArticleListItem.astro';
 import Portrait from '../components/Portrait.astro';
 import CtaCard from '../components/CtaCard.astro';
@@ -305,12 +306,13 @@ const situationSamples = [
       </article>
 
       <article class="sg-component">
-        <header><h3>Article list</h3><p>Writing index and Home (featured).</p></header>
-        <div class="sg-frame">
-          <ul class="sg-list">
+        <header><h3>Article list</h3><p>Writing, topic pages and Home. Each post sits on its own patch of paper over the hatching, with its date circled in a pencil color that changes from post to post. Never put it inside a .patch.</p></header>
+        <div class="sg-frame sg-hatch">
+          <ArticleList>
             <ArticleListItem title="Article title sample one" href="#components" date={new Date('2026-10-01')} description={loremShort} />
             <ArticleListItem title="Article title sample two, a little longer than the first" href="#components" date={new Date('2026-09-01')} description={lorem} />
-          </ul>
+            <ArticleListItem title="Article title sample three" href="#components" date={new Date('2026-08-01')} description={loremShort} />
+          </ArticleList>
         </div>
       </article>
 
@@ -640,9 +642,10 @@ const situationSamples = [
     align-items: flex-start;
   }
 
-  .sg-list {
-    margin: 0;
-    padding: 0;
+  /* Room around a component whose paper reaches past its text. */
+  .sg-hatch {
+    background: none;
+    padding: var(--space-8) var(--space-9);
   }
 
   @media (max-width: 30rem) {

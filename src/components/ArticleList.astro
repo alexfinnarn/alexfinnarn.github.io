@@ -1,0 +1,74 @@
+---
+// A list of posts (ArticleListItem), each on its own patch of paper with hatching between
+// them. Each post gets a pencil color, drawn as a loop around its date. Put it outside any
+// .patch, so the hatching shows between posts.
+---
+
+<ul class="article-list"><slot /></ul>
+
+<style>
+  .article-list {
+    display: grid;
+    gap: var(--space-9);
+    max-width: 54rem;
+    margin: 0;
+    padding: var(--space-6) 0 0;
+  }
+
+  /* The paper: the site's patch mask, reaching far enough past the text that its ragged
+     edge never thins out behind a word. The text stays straight; only the paper tilts. */
+  .article-list > :global(li) {
+    position: relative;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 0;
+  }
+
+  .article-list > :global(li)::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--space-8)) calc(-1 * var(--space-9));
+    z-index: -1;
+    background: var(--patch-bg);
+    mask: var(--patch-mask);
+    rotate: var(--post-tilt);
+  }
+
+  .article-list > :global(li:nth-child(even))::before {
+    rotate: var(--post-tilt-alt);
+  }
+
+  /* Each post's pencil color, in turn. No yellow: it barely shows on the cream paper. */
+  .article-list > :global(li:nth-child(5n + 1)) { --post-mark: var(--mark-2); } /* red */
+  .article-list > :global(li:nth-child(5n + 2)) { --post-mark: var(--mark-4); } /* green */
+  .article-list > :global(li:nth-child(5n + 3)) { --post-mark: var(--mark-5); } /* blue */
+  .article-list > :global(li:nth-child(5n + 4)) { --post-mark: var(--mark-6); } /* violet */
+  .article-list > :global(li:nth-child(5n + 5)) { --post-mark: var(--mark-3); } /* pink */
+
+  /* The date, circled in the post's pencil color. The date itself stays on clean paper. */
+  .article-list :global(time) {
+    position: relative;
+    z-index: 0;
+    padding: 0.1em 0.55em;
+    margin-inline-start: -0.55em;
+    color: var(--color-text);
+  }
+
+  .article-list :global(time)::before {
+    content: '';
+    position: absolute;
+    inset: -0.15em -0.1em;
+    z-index: -1;
+    background: var(--post-mark);
+    mask: var(--mark-outline) 0 0 / 100% 100% no-repeat;
+  }
+
+  @media (max-width: 40rem) {
+    .article-list {
+      gap: var(--space-8);
+    }
+
+    .article-list > :global(li) {
+      padding-inline: 0;
+    }
+  }
+</style>

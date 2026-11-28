@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+  <!-- An alpha mask for a loop drawn around a word in colored pencil: one quick pass that
+       overshoots where it closes, and a lighter second pass. It stretches to fit the word; the
+       strokes keep their width at any size. Put a pencil color behind it. -->
+  <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+    <path d="M9 7 C40 3 84 3 113 6 C117 15 117 26 114 34 C82 38 40 38 7 35 C3 26 3 15 8 5 L24 3" stroke-width="2" vector-effect="non-scaling-stroke" />
+    <path d="M12 9 C45 5 86 6 111 9 C113 17 113 27 111 32 C80 35 42 35 10 33 C7 25 7 16 11 8" stroke-width="1" opacity=".45" vector-effect="non-scaling-stroke" />
+  </g>
+</svg>

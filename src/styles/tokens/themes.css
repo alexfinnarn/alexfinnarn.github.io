@@ -88,6 +88,12 @@
   --mark-6: var(--pencil-violet);
   --mark-band: url('../textures/scribble-band.svg');
   --mark-fill: url('../textures/scribble.svg');
+  --mark-outline: url('../textures/outline.svg');
+
+  /* Post lists (ArticleList): each post on its own patch of paper, tilted a little less than
+     a short patch since a post is wider, alternating. */
+  --post-tilt: -0.8deg;
+  --post-tilt-alt: 0.7deg;
 
   /* Home's forest scene: the paper cut-out bird, and the pine needles that drift down.
      Fills only, never text. */
